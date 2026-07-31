@@ -1,156 +1,332 @@
-<div class="flex w-full flex-wrap m-4">
+<div class="flex flex-col w-full space-y-5">
 
-    <div class="flex-row w-full">
-        <x-frk.components.select label="Tipo" :disabled="$disabledTipo" error="tipo_id" wire:model.live="tipo_id">
-            <option value="">-- Seleccione --</option>
-            @foreach ($this->tipos as $data)
-                <option value="{{ $data->id }}" @if(!$data->estado) disabled @endif wire:key="tipo-{{ $data->id }}">
-                    {{ $data->nombre }}
-                </option>
-            @endforeach
-        </x-frk.components.select>
+    {{-- CLASIFICACION --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <x-frk.components.select label="Diseño" :disabled="$disabledDisenio" wire:model.live="disenio_id">
-            <option value="">-- Seleccione --</option>
-            @foreach ($this->disenios as $data)
-                <option value="{{ $data->id }}" @if(!$data->estado) disabled @endif wire:key="forma-{{ $data->id }}">
-                    {{ $data->nombre }}
-                </option>
-            @endforeach
-        </x-frk.components.select>
+        <div class="flex items-center gap-2 mb-4">
 
-        <x-frk.components.select label="Marca" :disabled="$disabledMarca" wire:model.live="marca_id">
-            <option value="">-- Seleccione --</option>
-            @foreach ($this->marcas as $data)
-                <option value="{{ $data->id }}" @if(!$data->estado) disabled @endif wire:key="marca-{{ $data->id }}">
-                    {{ $data->nombre }}
-                </option>
-            @endforeach
-        </x-frk.components.select>
+            <i class="fa-solid fa-layer-group text-orange-500"></i>
 
-        <x-frk.components.select label="Material" :disabled="$disabledMaterial" wire:model.live="material_id">
-            <option value="">-- Seleccione --</option>
-            @foreach ($this->materiales as $data)
-                <option value="{{ $data->id }}" @if(!$data->estado) disabled @endif wire:key="material-{{ $data->id }}">
-                    {{ $data->nombre }}
-                </option>
-            @endforeach
-        </x-frk.components.select>
+            <h3 class="font-semibold text-gray-700">
+                Clasificación del Producto
+            </h3>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <x-frk.components.select
+                label="Tipo"
+                :disabled="$disabledTipo"
+                error="tipo_id"
+                wire:model.live="tipo_id">
+
+                <option value="">-- Seleccione --</option>
+
+                @foreach ($this->tipos as $data)
+
+                    <option
+                        value="{{ $data->id }}"
+                        @if(!$data->estado) disabled @endif
+                        wire:key="tipo-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
+            <x-frk.components.select
+                label="Diseño"
+                :disabled="$disabledDisenio"
+                wire:model.live="disenio_id">
+
+                <option value="">-- Seleccione --</option>
+
+                @foreach ($this->disenios as $data)
+
+                    <option
+                        value="{{ $data->id }}"
+                        @if(!$data->estado) disabled @endif
+                        wire:key="disenio-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
+            <x-frk.components.select
+                label="Marca"
+                :disabled="$disabledMarca"
+                wire:model.live="marca_id">
+
+                <option value="">-- Seleccione --</option>
+
+                @foreach ($this->marcas as $data)
+
+                    <option
+                        value="{{ $data->id }}"
+                        @if(!$data->estado) disabled @endif
+                        wire:key="marca-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
+            <x-frk.components.select
+                label="Material"
+                :disabled="$disabledMaterial"
+                wire:model.live="material_id">
+
+                <option value="">-- Seleccione --</option>
+
+                @foreach ($this->materiales as $data)
+
+                    <option
+                        value="{{ $data->id }}"
+                        @if(!$data->estado) disabled @endif
+                        wire:key="material-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
+        </div>
+
     </div>
 
-    <x-frk.components.divisor-line />
+ {{-- CARACTERISTICAS --}}
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
 
-    {{-- ✅ CALIBRE --}}
-    <div class="flex w-full gap-2 items-end">
-        <div class="w-full md:w-1/4">
-            <x-frk.components.toggle-calibre :disabled="$disabled" label="Usar Calibre" />
-        </div>
-        @if($usa_calibre)
-            <div class="w-full md:w-3/4">
-                <x-frk.components.label-input label="Calibre" :disabled="$disabled"
-                    wire:model.live="calibre" placeholder="Ej: 12, 14, 18..." />
-            </div>
-        @endif
+    <div class="flex items-center gap-2 mb-4">
+
+        <i class="fa-solid fa-ruler-combined text-orange-500"></i>
+
+        <h3 class="font-semibold text-gray-700">
+            Características del Producto
+        </h3>
+
     </div>
 
-    {{-- ✅ LONGITUD --}}
-    <div class="flex w-full gap-2 items-end mt-2">
-        <div class="w-full md:w-1/4">
-            <x-frk.components.toggle-longitud :disabled="$disabled" label="Usar Longitud" />
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+        {{-- CALIBRE --}}
+        <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
+
+            <x-frk.components.toggle-calibre
+                :disabled="$disabled"
+                label="Usar Calibre" />
+
+            @if($usa_calibre)
+
+                <div class="mt-3">
+
+                    <x-frk.components.label-input
+                        label="Calibre"
+                        :disabled="$disabled"
+                        wire:model.live="calibre"
+                        placeholder="Ej: 12, 14, 18..." />
+
+                </div>
+
+            @endif
+
         </div>
 
-        @if($usa_longitud)
-            <div class="w-full md:w-1/4">
-                <x-frk.components.select label="Tipo Longitud" :disabled="$disabledLongitud" wire:model.live="tipo_longitud">
-                    <option value="">--</option>
-                    @foreach ($this->longitudes as $key => $data)
-                        <option value="{{ $key }}">{{ $data }}</option>
-                    @endforeach
-                </x-frk.components.select>
-            </div>
+        {{-- LONGITUD --}}
+        <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
 
-            <div class="w-full md:w-1/2">
-                <x-frk.components.label-input label="Cantidad Longitud" :disabled="$disabled"
-                    wire:model.live="longitud" placeholder="Ej: 6, 12, 20..." />
-            </div>
-        @endif
+            <x-frk.components.toggle-longitud
+                :disabled="$disabled"
+                label="Usar Longitud" />
+
+            @if($usa_longitud)
+
+                <div class="grid grid-cols-2 gap-3 mt-3">
+
+                    <x-frk.components.select
+                        label="Tipo"
+                        :disabled="$disabledLongitud"
+                        wire:model.live="tipo_longitud">
+
+                        <option value="">--</option>
+
+                        @foreach ($this->longitudes as $key => $data)
+
+                            <option value="{{ $key }}">
+                                {{ $data }}
+                            </option>
+
+                        @endforeach
+
+                    </x-frk.components.select>
+
+                    <x-frk.components.label-input
+                        label="Cantidad"
+                        :disabled="$disabled"
+                        wire:model.live="longitud" />
+
+                </div>
+
+            @endif
+
+        </div>
+
+        {{-- PESO --}}
+        <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
+
+            <x-frk.components.toggle-peso
+                :disabled="$disabled"
+                label="Usar Peso" />
+
+            @if($usa_peso)
+
+                <div class="grid grid-cols-2 gap-3 mt-3">
+
+                    <x-frk.components.select
+                        label="Tipo"
+                        :disabled="$disabledPeso"
+                        wire:model.live="tipo_peso">
+
+                        <option value="">--</option>
+
+                        @foreach ($this->pesos as $key => $data)
+
+                            <option value="{{ $key }}">
+                                {{ $data }}
+                            </option>
+
+                        @endforeach
+
+                    </x-frk.components.select>
+
+                    <x-frk.components.label-input
+                        label="Cantidad"
+                        :disabled="$disabled"
+                        wire:model.live="peso" />
+
+                </div>
+
+            @endif
+
+        </div>
+
+        {{-- DIAMETRO --}}
+        <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
+
+            <x-frk.components.toggle-diametro
+                :disabled="$disabled"
+                label="Usar Diámetro" />
+
+            @if($usa_diametro)
+
+                <div class="grid grid-cols-2 gap-3 mt-3">
+
+                    <x-frk.components.select
+                        label="Tipo"
+                        :disabled="$disabledDiametro"
+                        wire:model.live="tipo_diametro">
+
+                        <option value="">--</option>
+
+                        @foreach ($this->diametros as $key => $data)
+
+                            <option value="{{ $key }}">
+                                {{ $data }}
+                            </option>
+
+                        @endforeach
+
+                    </x-frk.components.select>
+
+                    <x-frk.components.label-input
+                        label="Cantidad"
+                        :disabled="$disabled"
+                        wire:model.live="diametro" />
+
+                </div>
+
+            @endif
+
+        </div>
+
     </div>
 
-    {{-- ✅ PESO --}}
-    <div class="flex w-full gap-2 items-end mt-2">
-        <div class="w-full md:w-1/4">
-            <x-frk.components.toggle-peso :disabled="$disabled" label="Usar Peso" />
+</div>
+
+    {{-- PRECIOS --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-money-bill-wave text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Información Comercial
+            </h3>
+
         </div>
 
-        @if($usa_peso)
-            <div class="w-full md:w-1/4">
-                <x-frk.components.select label="Tipo Peso" :disabled="$disabledPeso" wire:model.live="tipo_peso">
-                    <option value="">--</option>
-                    @foreach ($this->pesos as $key => $data)
-                        <option value="{{ $key }}">{{ $data }}</option>
-                    @endforeach
-                </x-frk.components.select>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-            <div class="w-full md:w-1/2">
-                <x-frk.components.label-input label="Cantidad Peso" :disabled="$disabled"
-                    wire:model.live="peso" placeholder="Ej: 10, 25..." />
-            </div>
-        @endif
+            <x-frk.components.label-input
+                label="Código"
+                :disabled="true"
+                wire:model="codigo" />
+
+            <x-frk.components.label-input-moneyy
+                label="Precio Unitario"
+                wire:model.live="precio_unitario" />
+
+            <x-frk.components.label-input-moneyy
+                label="Precio Final"
+                :disabled="true"
+                wire:model.live="precio_final" />
+
+        </div>
+
     </div>
 
-    {{-- ✅ DIAMETRO --}}
-    <div class="flex w-full gap-2 items-end mt-2">
-        <div class="w-full md:w-1/4">
-            <x-frk.components.toggle-diametro :disabled="$disabled" label="Usar Diámetro" />
+    {{-- NOMBRES --}}
+    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-tags text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Descripción Comercial
+            </h3>
+
         </div>
 
-        @if($usa_diametro)
-            <div class="w-full md:w-1/4">
-                <x-frk.components.select label="Tipo Diámetro" :disabled="$disabledDiametro" wire:model.live="tipo_diametro">
-                    <option value="">--</option>
-                    @foreach ($this->diametros as $key => $data)
-                        <option value="{{ $key }}">{{ $data }}</option>
-                    @endforeach
-                </x-frk.components.select>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-            <div class="w-full md:w-1/2">
-                <x-frk.components.label-input label="Cantidad Diámetro" :disabled="$disabled"
-                    wire:model.live="diametro" placeholder="Ej: 1/2, 3/4, 2..." />
-            </div>
-        @endif
+            <x-frk.components.label-input
+                label="Nombre"
+                :disabled="true"
+                wire:model="nombre" />
+
+            <x-frk.components.label-input
+                label="Nombre Venta"
+                :disabled="$disabledNombreVenta"
+                wire:model="nombre_venta" />
+
+        </div>
+
     </div>
-
-    <x-frk.components.divisor-line />
-
-            {{-- ✅ CODIGO Y NOMBRE AUTOMATICOS --}}
-    <div class="flex w-full">
-        <div class="w-full md:w-2/6">
-            <x-frk.components.label-input label="Código" :disabled="true" wire:model="codigo" />
-        </div>
-        <div class="w-full md:w-2/6">
-            <x-frk.components.label-input-moneyy label="Precio Unitario" wire:model.live="precio_unitario" @blur=" let v = parseFloat($event.target.value || 0); $event.target.value = v.toFixed(2);" />
-        </div>
-        <div class="w-full md:w-2/6">
-
-            <x-frk.components.label-input-moneyy label="Precio Final" :disabled="true" wire:model.live="precio_final" @blur=" let v = parseFloat($event.target.value || 0); $event.target.value = v.toFixed(2);" />
-        </div>
-    </div>
-
-
-    {{-- ✅ CODIGO Y NOMBRE AUTOMATICOS --}}
-    <div class="flex w-full">
-
-        <div class="w-full md:w-3/6">
-            <x-frk.components.label-input label="Nombre" :disabled="true" wire:model="nombre" />
-        </div>
-        <div class="w-full md:w-3/6">
-            <x-frk.components.label-input label="Nombre Venta" :disabled="$disabledNombreVenta" wire:model="nombre_venta" />
-        </div>
-    </div>
-
-
-
 
 </div>

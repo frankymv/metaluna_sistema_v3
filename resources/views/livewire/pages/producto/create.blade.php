@@ -1,7 +1,12 @@
 
     <x-frk.components.template-crud maxWidth="5xl">
         <x-slot:title>
-            <x-frk.components.title label="Nuevo {{$title}}" />
+
+
+
+                   <x-frk.components.title label="Nuevo {{$title}}" />
+
+
         </x-slot>
         <x-slot:body>
             @include('livewire.pages.producto.form')

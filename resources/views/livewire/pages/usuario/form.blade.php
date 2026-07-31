@@ -1,170 +1,329 @@
-<div class="flex flex-wrap w-full">
+<div class="flex flex-col w-full space-y-5">
 
-    <div class="flex w-full ">
-        <div class="w-full md:w-1/6 ">
-            <x-frk.components.label-input label="codigo" :disabled="$disabled" wire:model="codigo" />
-        </div>
-        <div class="w-full md:w-1/6 ">
-            <x-frk.components.label-input label="cui" :disabled="$disabled" wire:model="cui" />
+    {{-- INFORMACION PERSONAL --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-id-card text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Información Personal
+            </h3>
+
         </div>
 
-        <div class="w-full md:w-2/6 ">
-            <x-frk.components.label-input label="nombres" :disabled="$disabled" wire:model="nombres" />
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+
+            <x-frk.components.label-input
+                label="Código"
+                :disabled="$disabled"
+                wire:model="codigo" />
+
+            <x-frk.components.label-input
+                label="CUI"
+                :disabled="$disabled"
+                wire:model="cui" />
+
+            <div class="md:col-span-2">
+
+                <x-frk.components.label-input
+                    label="Nombres"
+                    :disabled="$disabled"
+                    wire:model="nombres" />
+
+            </div>
+
+            <div class="md:col-span-2">
+
+                <x-frk.components.label-input
+                    label="Apellidos"
+                    :disabled="$disabled"
+                    wire:model="apellidos" />
+
+            </div>
+
         </div>
-        <div class="w-full md:w-2/6 ">
-            <x-frk.components.label-input label="apellidos" :disabled="$disabled" wire:model="apellidos" />
-        </div>
+
     </div>
 
-    <div class="flex w-full ">
-        <div class="w-full md:w-1/5 ">
-            <x-frk.components.date-picker wire:model="fecha_nacimiento" :disabled="$disabled"  label="Fecha de nacimiento"/>
+    {{-- DATOS GENERALES --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-user text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Datos Generales
+            </h3>
+
         </div>
-        <div class="w-full md:w-1/5">
-            <x-frk.components.label-input label="telefono_principal" :disabled="$disabled" wire:model="telefono_principal" />
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+            <x-frk.components.date-picker
+                wire:model="fecha_nacimiento"
+                :disabled="$disabled"
+                label="Fecha de Nacimiento" />
+
+            <x-frk.components.label-input
+                label="Teléfono Principal"
+                :disabled="$disabled"
+                wire:model="telefono_principal" />
+
+            <x-frk.components.label-input
+                label="Teléfono Secundario"
+                :disabled="$disabled"
+                wire:model="telefono_secundario" />
+
+            <x-frk.components.label-input
+                label="Tipo Sangre"
+                :disabled="$disabled"
+                wire:model="tipo_sangre" />
+
+            <x-frk.components.label-input
+                label="No. Licencia"
+                :disabled="$disabled"
+                wire:model="no_licencia" />
+
         </div>
-        <div class="w-full md:w-1/5">
-            <x-frk.components.label-input label="telefono_secundario" :disabled="$disabled" wire:model="telefono_secundario" />
-        </div>
-        <div class="w-full md:w-1/5 ">
-            <x-frk.components.label-input label="tipo_sangre" :disabled="$disabled" wire:model="tipo_sangre" />
-        </div>
-        <div class="w-full md:w-1/5 ">
-            <x-frk.components.label-input label="no_licencia" :disabled="$disabled" wire:model="no_licencia" />
-        </div>
+
     </div>
 
-    <div class="flex w-full ">
-        <div class="w-full md:w-2/4 ">
-            <x-frk.components.label-input label="email" :disabled="$disabled" wire:model="email" />
+    {{-- CONTACTO Y TRABAJO --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-briefcase text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Información Laboral
+            </h3>
+
         </div>
-        <div class="flex w-full md:w-1/2  ">
-            <x-frk.components.date-picker wire:model="inicio_labores" :disabled="$disabled"  label="Fecha Inicio de Labores"/>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+            <div class="md:col-span-2">
+
+                <x-frk.components.label-input
+                    label="Correo Electrónico"
+                    :disabled="$disabled"
+                    wire:model="email" />
+
+            </div>
+
+            <x-frk.components.date-picker
+                wire:model="inicio_labores"
+                :disabled="$disabled"
+                label="Inicio de Labores" />
+
+            <x-frk.components.date-picker
+                wire:model="fin_labores"
+                :disabled="$disabled"
+                label="Fin de Labores" />
+
         </div>
-        <div class="flex w-full md:w-1/2   ">
-            <x-frk.components.date-picker wire:model="fin_labores" :disabled="$disabled"  label="Fecha Fin de Labores"/>
-        </div>
+
     </div>
-    <div class="w-full ">
-        <x-frk.components.subtitle-section label="direccion domiciliar"  />
-    </div>
 
+    {{-- DIRECCION --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
-    <div class="flex w-full ">
+        <div class="flex items-center gap-2 mb-4">
 
+            <i class="fa-solid fa-location-dot text-orange-500"></i>
 
-        <div class="w-full md:w-2/4">
-            <x-frk.components.label-input label="direccion" error="direccion_fisica" :disabled="$disabled" wire:model="direccion_fisica" />
+            <h3 class="font-semibold text-gray-700">
+                Dirección Domiciliar
+            </h3>
+
         </div>
 
-        <div class="w-full md:w-1/4">
-            <x-frk.components.select label="departamento" error="direccion_departamento" :disabled="$disabled" wire:model.live="direccion_departamento" >
-            @foreach ($this->departamentos as $data)
-                <option value="{{ $data['id'] }}" wire:key="data-{{ $data['id'] }}">{{ $data['nombre'] }}</option>
-            @endforeach
-            </x-frk.components.select>
-        </div>
-        <div class="w-full md:w-1/4">
-            <x-frk.components.select label="municipio" error="direccion_municipio" :disabled="$disabled" wire:model="direccion_municipio">
-                @foreach ($this->municipios as $data)
-                    <option value="{{ $data['id']}}" wire:key="data-{{ $data['id'] }}">{{ $data['nombre'] }}</option>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+            <div class="md:col-span-2">
+
+                <x-frk.components.label-input
+                    label="Dirección"
+                    error="direccion_fisica"
+                    :disabled="$disabled"
+                    wire:model="direccion_fisica" />
+
+            </div>
+
+            <x-frk.components.select
+                label="Departamento"
+                error="direccion_departamento"
+                :disabled="$disabled"
+                wire:model.live="direccion_departamento">
+
+                @foreach ($this->departamentos as $data)
+
+                    <option value="{{ $data['id'] }}">
+                        {{ $data['nombre'] }}
+                    </option>
+
                 @endforeach
+
             </x-frk.components.select>
+
+            <x-frk.components.select
+                label="Municipio"
+                error="direccion_municipio"
+                :disabled="$disabled"
+                wire:model="direccion_municipio">
+
+                @foreach ($this->municipios as $data)
+
+                    <option value="{{ $data['id'] }}">
+                        {{ $data['nombre'] }}
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
         </div>
+
     </div>
 
-    <div class="flex w-full ">
-        <div class="w-full md:w-1/3 ">
-            <x-frk.components.label-input label="usuario" :disabled="$disabled" wire:model="usuario" />
-        </div>
-        <div class="w-full md:w-1/3 ">
-            <x-frk.components.label-input label="password" :disabled="$disabled" wire:model="password" />
+    {{-- ACCESO AL SISTEMA --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-user-shield text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Acceso al Sistema
+            </h3>
+
         </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-        <div class="w-full md:w-1/3">
-            <x-frk.components.select label="rol" error="role_id" :disabled="$disabled" wire:model="role_id" >
-            @foreach ($this->roles as $data)
-                <option value="{{ $data['id'] }}" wire:key="data-{{ $data['id'] }}">{{ $data->name }}</option>
+            <x-frk.components.label-input
+                label="Usuario"
+                :disabled="$disabled"
+                wire:model="usuario" />
+
+            <x-frk.components.label-input
+                label="Password"
+                :disabled="$disabled"
+                wire:model="password" />
+
+            <x-frk.components.select
+                label="Rol"
+                error="role_id"
+                :disabled="$disabled"
+                wire:model="role_id">
+
+                @foreach ($this->roles as $data)
+
+                    <option value="{{ $data['id'] }}">
+                        {{ $data->name }}
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
+        </div>
+
+    </div>
+
+    {{-- SUCURSAL --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-building text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Sucursal Asignada
+            </h3>
+
+        </div>
+
+        <x-frk.components.select
+            label="Sucursal"
+            error="sucursal"
+            :disabled="$disabled"
+            wire:model="sucursal_id">
+
+            @foreach ($this->sucursales as $data)
+
+                <option value="{{ $data->id }}">
+                    {{ $data->nombre }}
+                </option>
+
             @endforeach
-            </x-frk.components.select>
-        </div>
 
+        </x-frk.components.select>
 
     </div>
 
+    {{-- ESTADO --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
+        <div class="flex items-center gap-2 mb-4">
 
+            <i class="fa-solid fa-toggle-on text-orange-500"></i>
 
-
-
-    <div class="flex w-full">
-        <div class="w-full md:w-3/4">
-            <x-frk.components.select label="sucursal" error="sucursal" :disabled="$disabled" wire:model="sucursal_id" >
-              @foreach ($this->sucursales as $data)
-                <option value="{{ $data->id }}" wire:key="data-{{ $data->id }}">{{ $data->nombre }}</option>
-              @endforeach
-            </x-frk.components.select>
-          </div>
-
-
-
-{{--   <div class="flex w-full md:w-1/4">
-            <x-frk.buttons.create label="agregar {{$title}}" wire:click.prevent="addSucursal()" />
-
+            <h3 class="font-semibold text-gray-700">
+                Estado del Registro
+            </h3>
 
         </div>
-        --}}
-       
-    </div>
 
+        <div class="max-w-xs">
 
-    {{--
-        <div class="flex w-full flex-col">
-            <div class="flex w-full w-grap">
-                <div class="flex w-full md:w-3/4">
-                    <x-frk.components.label label="Sucursal"  />
-                </div>
+            <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
 
+                <x-frk.components.toggle
+                    :disabled="$disabled"
+                    label="Estado" />
 
-
-                <div class="flex w-full  md:w-1/4">
-                    <x-frk.components.label label="Accion" />
-                </div>
             </div>
 
-            @foreach($inputs as $key => $value)
-            <div class="flex w-full w-grap">
-                <div class="flex w-full md:w-3/4">
-                    <x-frk.components.label-input :disabled="$disabled" wire:model="nombresDetalle.{{$value}}" />
-                </div>
-
-                @if (!$isShow)
-                    <div class="flex w-full md:w-1/4">
-                        <x-frk.buttons.create label="Remover" wire:click.prevent="removeDetalle({{$key}})" />
-                    </div>
-                @endif
-            </div>
-            @endforeach
-
         </div>
 
+    </div>
 
-    --}}
-
-
-
-
-
-                <x-frk.components.toggle :disabled="$disabled" label="estado"  />
-
-
-
-
+    {{-- AUDITORIA --}}
     @if ($isShow)
-        <div class="flex w-full ">
-            <x-frk.components.label-input label="Fecha creacion" :disabled="$disabled" wire:model="created_at" />
-            <x-frk.components.label-input label="Fecha Modificación" :disabled="$disabled" wire:model="updated_at" />
+
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+
+            <div class="flex items-center gap-2 mb-4">
+
+                <i class="fa-solid fa-clock text-orange-500"></i>
+
+                <h3 class="font-semibold text-gray-700">
+                    Auditoría
+                </h3>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <x-frk.components.label-input
+                    label="Fecha Creación"
+                    :disabled="$disabled"
+                    wire:model="created_at" />
+
+                <x-frk.components.label-input
+                    label="Fecha Modificación"
+                    :disabled="$disabled"
+                    wire:model="updated_at" />
+
+            </div>
+
         </div>
+
     @endif
+
 </div>

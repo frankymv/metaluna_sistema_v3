@@ -160,10 +160,6 @@ final class AbonoTable extends PowerGridComponent
     public function actions(Abono $row): array
     {
         return [
-            Button::add('edit')
-                ->icon('default-edit')
-                ->class('bg-green-500 text-white rounded-md  px-1 py-1')
-                ->dispatch('edit', ['rowId' => $row->id]),
             Button::add('show')
                 ->icon('default-show')
                 ->class('bg-orange-500 text-white rounded-md  px-1 py-1')

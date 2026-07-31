@@ -1,177 +1,333 @@
-<div class="flex flex-wrap">
-    <!-- //////////Base/////////////-->
-    <div class="flex w-full">
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.label-input label="no envio" error="envio_no" :disabled="$disabled_envio_no" wire:model="envio_no" />
+<div class="flex flex-col w-full space-y-5">
+
+    {{-- INFORMACION ENVIO --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-truck-fast text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Información del Envío
+            </h3>
+
         </div>
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.date-picker wire:model="envio_fecha" error="envio_fecha" label="envio_fecha"/>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            <x-frk.components.label-input
+                label="No Envío"
+                error="envio_no"
+                :disabled="$disabled_envio_no"
+                wire:model="envio_no" />
+
+            <x-frk.components.date-picker
+                wire:model="envio_fecha"
+                error="envio_fecha"
+                label="Fecha Envío" />
+
+            <x-frk.components.select
+                label="Ruta"
+                error="ruta_id"
+                :disabled="$disabled"
+                wire:model="ruta_id">
+
+                @foreach ($this->rutas as $data)
+
+                    <option
+                        value="{{ $data->id }}"
+                        wire:key="ruta-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
+                @endforeach
+
+            </x-frk.components.select>
+
         </div>
 
     </div>
 
-    <div class="flex w-full">
-                <x-frk.components.select label="ruta_id" error="ruta_id" :disabled="$disabled" wire:model="ruta_id" >
-            @foreach ($this->rutas as $data)
-                <option value="{{ $data->id }}" wire:key="data-{{ $data->id }}">{{ $data->nombre }}</option>
-            @endforeach
-        </x-frk.components.select>
-    </div>
+    {{-- ASIGNACIONES --}}
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
 
-    <div class="flex w-full">
-        <!-- //////////Ventas/////////////-->
-        <div class=" flex-row w-full p-2 md:w-3/9 max-w-sm rounded overflow-hidden shadow-lg ">
-            <div class="flex">
-                <x-frk.components.select label="Ventas" error="venta_id" :disabled="$disabled" wire:model="venta_id" >
-                    @foreach ($this->ventas as $data)
-                        <option value="{{ $data->id }}" wire:key="data-{{ $data->no_venta }}">No. Venta: {{ $data->no_venta }}-{{ $data->cliente->nombres_cliente }} Total: {{ $data->total_venta }}</option>
-                    @endforeach
-                </x-frk.components.select>
-                <x-frk.components.button-icon icon="fa-solid fa-plus" wire:click.prevent="addDetalleVenta()" />
+        {{-- VENTAS --}}
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+            <div class="bg-orange-400 text-white px-5 py-3">
+
+                <h3 class="font-semibold">
+                    Ventas Asignadas
+                </h3>
+
             </div>
-            <section class="container mx-auto mt-2 ">
-                <div class="w-full shadow-md sm:rounded-lg">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-200 uppercase border-gray-900">
-                                <th class="px-2 py-1 w-5/6">
-                                    Venta Asignada
-                                </th>
-                                <th class="px-2 py-1 w-1/6">
-                                    Accion
-                                </th>
-                            </tr>
-                        </thead>
-                        <div class="flex w-full md:w-1/3">
-                            <x-frk.components.error error="i" />
-                        </div>
-                        <tbody>
-                            @foreach($inputsVenta as $key => $value)
-                                <tr class="text-gray-700">
-                                    <td class="px-4 py-1 text-sm border">
-                                        <p>No:.  {{$noVenta[$value]}}, Total: {{$totalVenta[$value]}}</p>
-                                        <p>Cliente:  {{$nombreCliente[$value]}}</p>
-                                    </td>
-                                    <td class="px-4 py-1 text-sm border">
-                                        <x-frk.components.button label="-" color="red" wire:click.prevent="removeDetalleVenta({{$value}})" />
-                                    </td>
-                                </tr>
+
+            <div class="p-4">
+
+                <div class="flex gap-2 mb-4">
+
+                    <div class="flex-1">
+
+                        <x-frk.components.select
+                            label="Ventas"
+                            error="venta_id"
+                            :disabled="$disabled"
+                            wire:model="venta_id">
+
+                            @foreach ($this->ventas as $data)
+
+                                <option
+                                    value="{{ $data->id }}"
+                                    wire:key="venta-{{ $data->id }}">
+
+                                    No. {{ $data->no_venta }}
+                                    - {{ $data->cliente->nombres_cliente }}
+
+                                </option>
+
                             @endforeach
-                        </tbody>
-                    </table>
-                    <div class="flex w-full md:w-1/3">
-                        <x-frk.components.error error="i" />
+
+                        </x-frk.components.select>
+
                     </div>
-                </div>
-            </section>
-        </div>
 
-        <!-- //////////Usuarios/////////////-->
-        <div class=" flex-row w-full p-2 md:w-3/9 max-w-sm rounded overflow-hidden shadow-lg">
-            <div class="flex">
-                <x-frk.components.select label="usuario" error="user_id" :disabled="$disabled" wire:model="user_id" >
-                    @foreach ($this->usuarios as $data)
-                        <option value="{{ $data->id }}" wire:key="data-{{ $data->no_venta }}">{{ $data->nombres }}</option>
-                    @endforeach
-                </x-frk.components.select>
-                <x-frk.components.button-icon icon="fa-solid fa-plus" wire:click.prevent="addDetalleUsuario()" />
-            </div>
+                    <div class="flex items-end">
 
+                        <x-frk.components.button-icon
+                            icon="fa-solid fa-plus"
+                            wire:click.prevent="addDetalleVenta()" />
 
-            <section class="container mx-auto mt-2 ">
-                <div class="w-full  rounded-lg shadow-lg">
-                    <div class="w-full overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-200 uppercase border-gray-900">
-                                    <th class="px-2 py-1 w-5/6">
-                                        Usuario
-                                    </th>
-                                    <th class="px-2 py-1 w-1/6">
-                                        Accion
-                                    </th>
-                                </tr>
-                            </thead>
-                            <div class="flex w-full md:w-1/3">
-                                <x-frk.components.error error="j" />
-                            </div>
-                            <tbody>
-                                @foreach($inputsUsuario as $key => $value)
-                                    <tr class="text-gray-700">
-                                        <td class="px-4 py-1 text-sm border">
-                                            <p>{{$usuarioDetalle[$value]}}</p>
-                                        </th>
-                                        <td class="px-4 py-1 text-sm border">
-                                            <x-frk.components.button label="-" color="red" wire:click.prevent="removeDetalleUsuario({{$value}})" />
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
+
                 </div>
-            </section>
-        </div>
 
+                <div class="space-y-2 max-h-72 overflow-auto">
 
-        <!-- //////////vehiculos/////////////-->
-        <div class=" flex-row w-full p-2 md:w-3/9 max-w-sm rounded overflow-hidden shadow-lg">
-            <div class="flex">
-                <x-frk.components.select label="vehiculos" error="vehiculo_id" :disabled="$disabled" wire:model="vehiculo_id" >
-                    @foreach ($this->vehiculos as $data)
-                        <option value="{{ $data->id }}" wire:key="data-{{ $data->no_venta }}">{{ $data->alias}}</option>
-                    @endforeach
-                </x-frk.components.select>
-                <x-frk.components.button-icon icon="fa-solid fa-plus" wire:click.prevent="addDetalleVehiculo()" />
-            </div>
+                    @foreach($inputsVenta as $value)
 
-            <section class="container mx-auto mt-2 ">
-                <div class="w-full  rounded-lg shadow-lg">
-                    <div class="w-full overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                               <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-200 uppercase border-gray-900">
-                                    <th class="px-2 py-1 w-5/6">
-                                        Vehiculo Asignado
-                                    </th>
-                                    <th class="px-2 py-1 w-1/6">
-                                        Accion
-                                    </th>
-                                </tr>
-                            </thead>
-                            <div class="flex w-full md:w-1/3">
-                                <x-frk.components.error error="k" />
+                        <div class="border rounded-xl p-3">
+
+                            <div class="flex justify-between items-start">
+
+                                <div>
+
+                                    <p class="font-medium">
+                                        Venta #{{ $noVenta[$value] }}
+                                    </p>
+
+                                    <p class="text-sm text-gray-500">
+                                        {{ $nombreCliente[$value] }}
+                                    </p>
+
+                                    <p class="text-sm text-orange-500">
+                                        Q {{ $totalVenta[$value] }}
+                                    </p>
+
+                                </div>
+
+                                <x-frk.components.button
+                                    label="-"
+                                    color="red"
+                                    wire:click.prevent="removeDetalleVenta({{ $value }})" />
+
                             </div>
 
-                            <tbody>
-                                @foreach($inputsVehiculo as $key => $value)
-                                    <tr class="text-gray-700">
-                                        <td class="px-4 py-1 text-sm border">
-                                            <p>Codigo:.  {{$codigoVehiculo[$value]}}
-                                            <p>Alias:  {{$aliasVehiculo[$value]}}</p>
-                                        </th>
-                                        <td class="px-4 py-1 text-sm border">
-                                            <x-frk.components.button label="-" color="red" wire:click.prevent="removeDetalleVehiculo({{$value}})" />
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                        </div>
+
+                    @endforeach
+
                 </div>
-            </section>
+
+            </div>
+
         </div>
+
+        {{-- USUARIOS --}}
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+            <div class="bg-orange-400 text-white px-5 py-3">
+
+                <h3 class="font-semibold">
+                    Personal Asignado
+                </h3>
+
+            </div>
+
+            <div class="p-4">
+
+                <div class="flex gap-2 mb-4">
+
+                    <div class="flex-1">
+
+                        <x-frk.components.select
+                            label="Usuario"
+                            error="user_id"
+                            :disabled="$disabled"
+                            wire:model="user_id">
+
+                            @foreach ($this->usuarios as $data)
+
+                                <option
+                                    value="{{ $data->id }}"
+                                    wire:key="usuario-{{ $data->id }}">
+
+                                    {{ $data->nombres }}
+
+                                </option>
+
+                            @endforeach
+
+                        </x-frk.components.select>
+
+                    </div>
+
+                    <div class="flex items-end">
+
+                        <x-frk.components.button-icon
+                            icon="fa-solid fa-plus"
+                            wire:click.prevent="addDetalleUsuario()" />
+
+                    </div>
+
+                </div>
+
+                <div class="space-y-2 max-h-72 overflow-auto">
+
+                    @foreach($inputsUsuario as $value)
+
+                        <div class="border rounded-xl p-3">
+
+                            <div class="flex justify-between items-center">
+
+                                <span>
+                                    {{ $usuarioDetalle[$value] }}
+                                </span>
+
+                                <x-frk.components.button
+                                    label="-"
+                                    color="red"
+                                    wire:click.prevent="removeDetalleUsuario({{ $value }})" />
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- VEHICULOS --}}
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+            <div class="bg-orange-400 text-white px-5 py-3">
+
+                <h3 class="font-semibold">
+                    Vehículos Asignados
+                </h3>
+
+            </div>
+
+            <div class="p-4">
+
+                <div class="flex gap-2 mb-4">
+
+                    <div class="flex-1">
+
+                        <x-frk.components.select
+                            label="Vehículo"
+                            error="vehiculo_id"
+                            :disabled="$disabled"
+                            wire:model="vehiculo_id">
+
+                            @foreach ($this->vehiculos as $data)
+
+                                <option
+                                    value="{{ $data->id }}"
+                                    wire:key="vehiculo-{{ $data->id }}">
+
+                                    {{ $data->alias }}
+
+                                </option>
+
+                            @endforeach
+
+                        </x-frk.components.select>
+
+                    </div>
+
+                    <div class="flex items-end">
+
+                        <x-frk.components.button-icon
+                            icon="fa-solid fa-plus"
+                            wire:click.prevent="addDetalleVehiculo()" />
+
+                    </div>
+
+                </div>
+
+                <div class="space-y-2 max-h-72 overflow-auto">
+
+                    @foreach($inputsVehiculo as $value)
+
+                        <div class="border rounded-xl p-3">
+
+                            <div class="flex justify-between items-start">
+
+                                <div>
+
+                                    <p>
+                                        {{ $codigoVehiculo[$value] }}
+                                    </p>
+
+                                    <p class="text-sm text-gray-500">
+                                        {{ $aliasVehiculo[$value] }}
+                                    </p>
+
+                                </div>
+
+                                <x-frk.components.button
+                                    label="-"
+                                    color="red"
+                                    wire:click.prevent="removeDetalleVehiculo({{ $value }})" />
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
+    {{-- OBSERVACIONES --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
+        <div class="flex items-center gap-2 mb-4">
 
+            <i class="fa-solid fa-comment text-orange-500"></i>
 
+            <h3 class="font-semibold text-gray-700">
+                Observaciones
+            </h3>
 
+        </div>
 
+        <x-frk.components.text-area
+            label="Observación"
+            :disabled="$disabled_observaciones_inicio_envio"
+            wire:model="observaciones_inicio_envio" />
 
-
-    <div class="flex w-full ">
-        <x-frk.components.text-area label="observacion" :disabled="$disabled_observaciones_inicio_envio" wire:model="observaciones_inicio_envio" />
     </div>
 
 </div>

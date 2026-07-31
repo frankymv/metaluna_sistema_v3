@@ -1,112 +1,292 @@
-<div class="flex flex-wrap">
-    <div class="flex w-full ">
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.label-input label="No Traslado" error="traslado_no" :disabled="$disabled" wire:model="traslado_no" />
+<div class="flex flex-col w-full space-y-5">
+
+    {{-- INFORMACION GENERAL --}}
+    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-truck-moving text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Información del Traslado
+            </h3>
+
         </div>
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.date-picker wire:model="traslado_fecha" error="traslado_fecha" label="Traslado Fecha"/>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <x-frk.components.label-input
+                label="No. Traslado"
+                error="traslado_no"
+                :disabled="$disabled"
+                wire:model="traslado_no" />
+
+            <x-frk.components.date-picker
+                wire:model="traslado_fecha"
+                error="traslado_fecha"
+                label="Fecha Traslado" />
+
         </div>
 
     </div>
-    <div class="flex w-full">
-        <div class="flex w-full md:w-1/2">
-            <x-frk.components.select label="origen" error="sucursal_origen_id"  wire:model.live="sucursal_origen_id" >
+
+    {{-- SUCURSALES --}}
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+
+        <div class="flex items-center gap-2 mb-4">
+
+            <i class="fa-solid fa-building text-orange-500"></i>
+
+            <h3 class="font-semibold text-gray-700">
+                Origen y Destino
+            </h3>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <x-frk.components.select
+                label="Sucursal Origen"
+                error="sucursal_origen_id"
+                wire:model.live="sucursal_origen_id">
+
                 @foreach ($this->sucursals_origen as $data)
-                <option value="{{ $data->id }}" wire:key="data-{{ $data->id }}">{{ $data->nombre }}</option>
+
+                    <option
+                        value="{{ $data->id }}"
+                        wire:key="origen-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
                 @endforeach
-            </x-forms.select>
-        </div>
-        <div class="flex w-full md:w-1/2">
-            <x-frk.components.select label="destino" error="sucursal_destino" :disabled="$disabledSucursalDestino" wire:model.live="sucursal_destino_id" >
+
+            </x-frk.components.select>
+
+            <x-frk.components.select
+                label="Sucursal Destino"
+                error="sucursal_destino"
+                :disabled="$disabledSucursalDestino"
+                wire:model.live="sucursal_destino_id">
+
                 @foreach ($this->sucursals_destino as $data)
-                <option value="{{ $data->id }}" wire:key="data-{{ $data->id }}">{{ $data->nombre }}</option>
+
+                    <option
+                        value="{{ $data->id }}"
+                        wire:key="destino-{{ $data->id }}">
+
+                        {{ $data->nombre }}
+
+                    </option>
+
                 @endforeach
-            </x-forms.select>
+
+            </x-frk.components.select>
+
         </div>
+
     </div>
+
     @if (!$isShow)
-    <div class="flex w-full ">
-        <div class="flex w-full md:w-4/6">
-            <x-frk.components.select label="producto" error="producto_id" :disabled="$disabled" wire:model.live="producto_id" id="producto_id">
-                @foreach ($this->productos as $data)
-                <option value="{{ $data->id }}" wire:key="data-{{ $data->id }}">{{ $data->nombre }}</option>
-                @endforeach
-            </x-forms.select>
-        </div>
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.label-input label="existencia" error="cantidad_existencia" :disabled="$disabled_existencia" wire:model="cantidad_existencia" />
-        </div>
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.label-input label="trasladar" error="trasladar" error="cantidad_transferir" :disabled="$disabled" wire:model.live="cantidad_transferir" />
-        </div>
-        <div class="flex w-full  flex-wrap md:w-1/6">
-            <x-frk.components.label label="Accion"  />
-            <x-frk.components.button color="blue" label="agregar" wire:click.prevent="addDetalle()" />
-        </div>
-    </div>
 
-     <section class="container mx-auto ">
-        <div class="w-full  rounded-lg shadow-lg">
-          <div class="w-full overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-200 uppercase border-gray-900">
-                        <th class="px-4 py-2">Productos</th>
-                        <th class="px-4 py-2">Cantidad</th>
-                        <th class="px-4 py-2">Accion</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    @if ($inputs!=null)
-                        @foreach($inputs as $key => $value)
-                            <tr class="text-gray-700">
-                                <td class="px-4 py-1 text-sm border">
-                                    {{$nombresDetalle[$value]}}
-                                </td>
-                                <td class="px-4 py-1 text-sm border">
-                                     {{$cantidadesDetalle[$value]}}
-                                </td>
-                                <td class="px-4 py-1 text-sm border">
-                                    @if (!$isShow)
-                                        <x-frk.components.button label="-" color="red" wire:click.prevent="removeDetalle({{$key}})" />
-                                    @endif
-                                </td>
-                            </tr>
+        {{-- AGREGAR PRODUCTOS --}}
+        <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+            <div class="flex items-center gap-2 mb-4">
+
+                <i class="fa-solid fa-box text-orange-500"></i>
+
+                <h3 class="font-semibold text-gray-700">
+                    Agregar Productos
+                </h3>
+
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+                <div class="lg:col-span-6">
+
+                    <x-frk.components.select
+                        label="Producto"
+                        error="producto_id"
+                        :disabled="$disabled"
+                        wire:model.live="producto_id">
+
+                        @foreach ($this->productos as $data)
+
+                            <option
+                                value="{{ $data->id }}"
+                                wire:key="producto-{{ $data->id }}">
+
+                                {{ $data->nombre }}
+
+                            </option>
+
                         @endforeach
-                    @else
-                        <tr class="text-gray-700">
-                            <td class="px-4 py-1 text-sm border">
-                                Sin productos
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
 
-          </div>
+                    </x-frk.components.select>
+
+                </div>
+
+                <div class="lg:col-span-2">
+
+                    <x-frk.components.label-input
+                        label="Existencia"
+                        error="cantidad_existencia"
+                        :disabled="$disabled_existencia"
+                        wire:model="cantidad_existencia" />
+
+                </div>
+
+                <div class="lg:col-span-2">
+
+                    <x-frk.components.label-input
+                        label="Trasladar"
+                        error="cantidad_transferir"
+                        :disabled="$disabled"
+                        wire:model.live="cantidad_transferir" />
+
+                </div>
+
+                <div class="lg:col-span-2 flex items-end">
+
+                    <x-frk.components.button
+                        color="blue"
+                        label="Agregar"
+                        wire:click.prevent="addDetalle()" />
+
+                </div>
+
+            </div>
+
         </div>
-    </section>
 
+        {{-- DETALLE --}}
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+            <div class="px-5 py-3 bg-orange-400 text-white">
+
+                <h3 class="font-semibold">
+                    Productos a Trasladar
+                </h3>
+
+            </div>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-sm">
+
+                    <thead class="bg-orange-100">
+
+                        <tr>
+
+                            <th class="px-4 py-3 text-left">
+                                Producto
+                            </th>
+
+                            <th class="px-4 py-3 text-center">
+                                Cantidad
+                            </th>
+
+                            <th class="px-4 py-3 text-center">
+                                Acción
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="divide-y divide-gray-100">
+
+                        @if ($inputs != null)
+
+                            @foreach($inputs as $key => $value)
+
+                                <tr class="hover:bg-orange-50">
+
+                                    <td class="px-4 py-3">
+
+                                        {{ $nombresDetalle[$value] }}
+
+                                    </td>
+
+                                    <td class="px-4 py-3 text-center">
+
+                                        {{ $cantidadesDetalle[$value] }}
+
+                                    </td>
+
+                                    <td class="px-4 py-3 text-center">
+
+                                        <x-frk.components.button
+                                            label="-"
+                                            color="red"
+                                            wire:click.prevent="removeDetalle({{ $key }})" />
+
+                                    </td>
+
+                                </tr>
+
+                            @endforeach
+
+                        @else
+
+                            <tr>
+
+                                <td
+                                    colspan="3"
+                                    class="text-center py-10 text-gray-500">
+
+                                    Sin productos agregados
+
+                                </td>
+
+                            </tr>
+
+                        @endif
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     @endif
 
+    {{-- AUDITORIA --}}
+    @if ($isShow)
 
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
+            <div class="flex items-center gap-2 mb-4">
 
+                <i class="fa-solid fa-clock text-orange-500"></i>
 
+                <h3 class="font-semibold text-gray-700">
+                    Auditoría
+                </h3>
 
+            </div>
 
-    <div class="flex w-full flex-col my-2">
-        @if ($isShow)
-        <div class="flex w-full ">
-            <x-frk.components.label-input label="Fecha creacion" :disabled="$disabled" wire:model="created_at" />
-            <x-frk.components.label-input label="Fecha Modificación" :disabled="$disabled" wire:model="updated_at" />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <x-frk.components.label-input
+                    label="Fecha Creación"
+                    :disabled="$disabled"
+                    wire:model="created_at" />
+
+                <x-frk.components.label-input
+                    label="Fecha Modificación"
+                    :disabled="$disabled"
+                    wire:model="updated_at" />
+
+            </div>
+
         </div>
-        @endif
-    </div>
-    <!-- ///////////////////////////////////// -->
-    <!-- //////////vehiculos/////////////-->
-<!-- //////////vehiculos/////////////-->
-<!-- //////////vehiculos/////////////-->
-<!-- //////////vehiculos/////////////-->
+
+    @endif
+
 </div>
