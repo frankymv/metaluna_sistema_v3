@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+<style>
+    body {
+        font-family: DejaVu Sans, sans-serif;
+        font-size: 11px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #000;
+        padding: 4px;
+    }
+    .titulo-seccion {
+        background-color: #e86e3d;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
+    .gris {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+    .salmon {
+        background-color: #f7d7cc;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- ENCABEZADO -->
+<table>
+    <tr>
+        <td>Vendedor:</td>
+        <td>Pedro Gómez</td>
+        <td>Fecha Cotización:</td>
+        <td>2026-02-12</td>
+        <td>No. Cotización:</td>
+        <td>001</td>
+    </tr>
+
+    <tr>
+        <td>Tipo Pago:</td>
+        <td>EFECT</td>
+        <td>Envío:</td>
+        <td>SINENVIO</td>
+        <td>Página:</td>
+        <td>1 de 1</td>
+    </tr>
+
+    <tr>
+        <td>Código:</td>
+        <td>3</td>
+        <td>Teléfono:</td>
+        <td>25347452</td>
+        <td colspan="2">Usuario: mary@gmail.com</td>
+    </tr>
+
+    <tr>
+        <td>Empresa:</td>
+        <td colspan="5">FERRETERÍA LA MARY</td>
+    </tr>
+
+    <tr>
+        <td>Dirección:</td>
+        <td colspan="5">12 AV CD-35/ZONA 2 SOLOLÁ</td>
+    </tr>
+</table>
+
+<br>
+
+<!-- DETALLE COTIZACIÓN -->
+<table>
+    <tr>
+        <th colspan="5" class="titulo-seccion">DETALLE COTIZACIÓN</th>
+    </tr>
+
+    <tr class="gris">
+        <th>Código</th>
+        <th>Cant.</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+    </tr>
+
+    <tr>
+        <td>Can0</td>
+        <td>10</td>
+        <td>Canal Plástico Alutech Cuadrado Longitud: 3 Metro</td>
+        <td>Q. 25</td>
+        <td>Q. 250</td>
+    </tr>
+
+    <!-- FILA SALMÓN (como en tu imagen) -->
+    <tr class="salmon">
+        <td colspan="3">Nuevo saldo:</td>
+        <td>Saldo anterior:</td>
+        <td>Q. 0</td>
+    </tr>
+
+    <tr>
+        <td colspan="4" style="text-align:right; font-weight:bold;">SUBTOTAL:</td>
+        <td>Q. 250</td>
+    </tr>
+
+    <tr>
+        <td colspan="4" style="text-align:right; font-weight:bold;">ANTICIPO:</td>
+        <td>Q. 0</td>
+    </tr>
+
+    <tr>
+        <td colspan="4" style="text-align:right; font-weight:bold;">TOTAL:</td>
+        <td>Q. 250</td>
+    </tr>
+</table>
+
+<br>
+
+<!-- ENTREGA -->
+<table>
+    <tr>
+        <th colspan="6" style="background-color:#e86e3d; color:white;">ENTREGA:</th>
+    </tr>
+
+    <tr>
+        <td>Fecha entrega:</td>
+        <td></td>
+        <td>Nombre recibe:</td>
+        <td></td>
+        <td>Firma:</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Nota:</td>
+        <td colspan="5" style="height:40px;"></td>
+    </tr>
+</table>
+
+</body>
+</html>
