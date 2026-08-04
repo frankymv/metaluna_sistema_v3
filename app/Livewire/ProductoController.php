@@ -79,42 +79,7 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
 
 
- 
-    public function mount()
-    {
 
-        $this->filtroFechaInicio=Carbon::now()->format('Y')."-01-01";
-        $this->filtroFechaFin=Carbon::now()->toDateString();
-        $this->longitudes = UnidadMedida::$longitud;
-        $this->pesos = UnidadMedida::$peso;
-        $this->diametros = UnidadMedida::$diametro;
-
-        $this->tipos=Tipo::all();
-        $this->marcas=Marca::all();
-        $this->disenios=Disenio::all();
-        $this->materiales=Material::all();
-
-        $data_temp=Producto::with('marca')->with('material')->with('tipo')->with('disenio')->with('sucursales')
-        ->where('codigo','LIKE',"%{$this->filtroCodigoProducto}%")
-        ->where('nombre','LIKE',"%{$this->filtroNombreProducto}%")
-        ->whereRelation('marca','id','LIKE',"%{$this->filtroMarca}%")
-        ->whereRelation('tipo','id','LIKE',"%{$this->filtroTipo}%")
-        ->whereRelation('disenio','id','LIKE',"%{$this->filtroDisenio}%")
-        ->whereRelation('material','id','LIKE',"%{$this->filtroMaterial}%")
-        ->paginate($this->per_page);
-        return view('livewire.pages.producto.index',['productos'=>$data_temp]);
-
-    }
-
-    public function updatedFiltroFecha($id){
-        if(Str ::length($id)==10){
-            $this->filtroFechaInicio=$id;
-            $this->filtroFechaFin=$id;
-        }else{
-            $this->filtroFechaInicio=Str::substr($id, 0, 10);
-            $this->filtroFechaFin=Str::substr($id, 13, 25);
-        }
-    }
 
     public function updatedTipoLongitud($id){
         $this->longitud=0;
@@ -130,20 +95,8 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
     public function render()
     {
-        $this->tipos=Tipo::all();
-        $this->marcas=Marca::all();
-        $this->disenios=Disenio::all();
-        $this->materiales=Material::all();
-
-        $data_temp=Producto::with('marca')->with('material')->with('tipo')->with('disenio')->with('sucursales')
-        ->where('codigo','LIKE',"%{$this->filtroCodigoProducto}%")
-        ->where('nombre','LIKE',"%{$this->filtroNombreProducto}%")
-        ->whereRelation('marca','id','LIKE',"%{$this->filtroMarca}%")
-        ->whereRelation('tipo','id','LIKE',"%{$this->filtroTipo}%")
-        ->whereRelation('disenio','id','LIKE',"%{$this->filtroDisenio}%")
-        ->whereRelation('material','id','LIKE',"%{$this->filtroMaterial}%")
-        ->paginate($this->per_page);
-        return view('livewire.pages.producto.index',['productos'=>$data_temp]);
+       
+        return view('livewire.pages.producto.index');
     }
 
 

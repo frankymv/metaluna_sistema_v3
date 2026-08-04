@@ -30,7 +30,7 @@ class VentaRapidaController extends Component
     ////venta
     public $no_venta=null,$fecha_venta=null, $sub_total=0.0,$total_venta=0.0,$observaciones_venta=null,$forma_pago=null,$saldo_venta=0;
     //cliente
-    public $cliente_id=null,$codigo_interno=null,$codigo_mayorista=null, $nombre_empresa=null,$nombres_cliente=null, $apellidos_cliente=null, $tipo_cliente=null, $nit=null,$descuento=0,$direccion_fisica=null,$direccion_departamento=null,$direccion_municipio=null;
+    public $cliente_id=0,$codigo_interno=null,$codigo_mayorista=null, $nombre_empresa=null,$nombres_cliente=null, $apellidos_cliente=null, $tipo_cliente=null, $nit=null,$descuento=0,$direccion_fisica=null,$direccion_departamento=null,$direccion_municipio=null;
     //efectivo
     public $efectivo=false;
     //credito
@@ -397,8 +397,16 @@ public $email_edit=null, $codigo_edit=null;
             'dias_ultimo_credito'=>'required|numeric|min:0']
         );
 
-        $cliente=Cliente::find($this->cliente_id);
+
+   
+        if($this->cliente_id===0){
+        $this->cliente_id=1;
+        }
+       
+         $cliente=Cliente::find($this->cliente_id);
         $total_abono_anticipado=Abono::where('cliente_id','=',$cliente->id)->where('abono_anticipado','=',1)->where('abono_anticipado_asignado','=',0)->sum('total_abono');
+
+      
         $totales = Venta::where('cliente_id', $this->cliente_id)->where('credi', 1)
             ->selectRaw('
                 COALESCE(SUM(total_credito),0) as total_credito,

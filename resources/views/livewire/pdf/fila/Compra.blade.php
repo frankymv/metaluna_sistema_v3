@@ -168,8 +168,7 @@
             <td class="gris" style="text-align:left;">
                 Productos
             </td>
-<td style="text-align:left;">
-                     
+        <td style="text-align:left;">             
                         @foreach ($data->productos as $data_a)
                         <p>{{$data_a->nombre}}: {{$data_a->pivot->cantidad}}</p>
                         @endforeach
