@@ -67,7 +67,7 @@ final class ServicioTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Vehiculo id', 'vehiculo_id'),
+            Column::make('Vehiculo', 'vehiculo_id'),
             Column::make('Descripcion', 'descripcion')
                 ->sortable()
                 ->searchable(),

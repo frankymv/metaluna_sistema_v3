@@ -64,7 +64,7 @@ final class EnvioTable extends PowerGridComponent
             Column::make('Envio fecha', 'envio_fecha_formatted', 'envio_fecha')
                 ->sortable(),
 
-            Column::make('Ruta id', 'ruta_id'),
+            Column::make('Ruta', 'ruta_id'),
             Column::make('Estado envio', 'estado_envio')
                 ->sortable()
                 ->searchable(),

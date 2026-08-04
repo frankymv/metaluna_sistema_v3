@@ -86,11 +86,8 @@ final class CreditoTable extends PowerGridComponent
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
                 ->sortable(),
 
-            Column::make('Credi', 'credi')
-                ->sortable()
-                ->searchable(),
 
-      Column::make('total crdito', 'total_credito') // Muestra el campo formateado y permite ordenar por el original 'precio'
+      Column::make('Total Credito', 'total_credito') // Muestra el campo formateado y permite ordenar por el original 'precio'
             ->sortable(),
 
             Column::make('Fecha limite credito', 'fecha_limite_credito_formatted', 'fecha_limite_credito')

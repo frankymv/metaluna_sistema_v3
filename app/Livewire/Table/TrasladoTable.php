@@ -45,8 +45,8 @@ final class TrasladoTable extends PowerGridComponent
             ->add('id')
             ->add('traslado_no')
             ->add('traslado_fecha_formatted', fn (Traslado $model) => Carbon::parse($model->traslado_fecha)->format('d/m/Y'))
-            ->add('sucursal_origen_id')
-            ->add('sucursal_destino_id')
+            ->add('sucursal_origen_id', fn (Traslado $model) => $model->SucursalOrigen?->nombre ?? 'N/A')
+            ->add('sucursal_destino_id', fn (Traslado $model) => $model->SucursalDestino?->nombre ?? 'N/A')
             ->add('estado')
             ->add('created_at');
     }
@@ -62,8 +62,8 @@ final class TrasladoTable extends PowerGridComponent
             Column::make('Traslado fecha', 'traslado_fecha_formatted', 'traslado_fecha')
                 ->sortable(),
 
-            Column::make('Sucursal origen id', 'sucursal_origen_id'),
-            Column::make('Sucursal destino id', 'sucursal_destino_id'),
+            Column::make('Sucursal origen ', 'sucursal_origen_id'),
+            Column::make('Sucursal destino ', 'sucursal_destino_id'),
 
 
             Column::action('Action')

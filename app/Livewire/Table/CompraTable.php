@@ -46,8 +46,8 @@ final class CompraTable extends PowerGridComponent
             ->add('compra_no')
             ->add('no_recibo_compra')
             ->add('compra_fecha_formatted', fn (Compra $model) => Carbon::parse($model->compra_fecha)->format('d/m/Y'))
-            ->add('proveedor_id')
-            ->add('sucursal_id')
+            ->add('proveedor_id', fn (Compra $model) => $model->proveedor->nombre ?? 'N/A')
+            ->add('sucursal_id', fn (Compra $model) => $model->Sucursal->nombre ?? 'N/A')
             ->add('created_at');
     }
 

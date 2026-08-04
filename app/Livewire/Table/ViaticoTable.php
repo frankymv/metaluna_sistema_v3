@@ -58,7 +58,7 @@ final class ViaticoTable extends PowerGridComponent
             Column::make('No viatico', 'no_viatico')
                 ->sortable()
                 ->searchable(),
-            Column::make('User id', 'user_id','user.nombres'),
+            Column::make('Usuario', 'user_id','user.nombres'),
             Column::make('Fecha viatico', 'fecha_viatico_formatted', 'fecha_viatico'),
             Column::make('Total viatico', 'total_viatico')
                 ->sortable()
