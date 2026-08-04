@@ -68,45 +68,14 @@ class AjusteInventarioController extends Component
     public $paginas=['5','10','15','20','25','Todo'];
 
 
-    public function mount()
-    {
-        $this->filtroFechaInicio=Carbon::now()->format('Y')."-01-01";
-        $this->filtroFechaFin=Carbon::now()->toDateString();
-    }
-    public function updatedFiltroFecha($id){
-        if(Str::length($id)==10){
-            $this->filtroFechaInicio=$id;
-            $this->filtroFechaFin=$id;
-        }else{
-            $this->filtroFechaInicio=Str::substr($id, 0, 10);
-            $this->filtroFechaFin=Str::substr($id, 13, 25);
-        }
-    }
 
-    public function borrarFiltros()
-    {
-        $this->reset();
-        $this->mount();
-    }
 
 
     public function render()
     {
-        $this->tipos_ajustes=DataSistema::$tipo_ajuste_invetario;
+       
 
-
-        $data_temp=AjusteInventario::where('ajuste_inventario_no','LIkE',"%{$this->filtroNoAjuste}%")
-            ->where('tipo_ajuste','LIkE',"%{$this->filtroTipoAjuste}%")->latest();
-
-            if(!empty($this->filtroFecha)){
-                $data_temp->whereBetween('fecha_ajuste_inventario',[$this->filtroFechaInicio,$this->filtroFechaFin]);
-            }
-
-        $data_temp=$data_temp->paginate($this->per_page);
-
-        return view('livewire.pages.ajuste_inventario.index', [
-            'ajustes' => $data_temp,
-        ]);
+        return view('livewire.pages.ajuste_inventario.index');
 
     }
 
@@ -118,18 +87,7 @@ class AjusteInventarioController extends Component
         $this->disabledForm[0]=true;
         $this->fecha_ajuste_inventario= Carbon::now()->toDateString();
         $this->tipos_ajustes=DataSistema::$tipo_ajuste_invetario;
-        $data=AjusteInventario::latest()->first();
-
-        if ( $data) {
-            $this->id=$data->id+1;
-            $this->ajuste_inventario_no=$this->id;
-
-        }else{
-            $this->id=1;
-            $this->ajuste_inventario_no=$this->id;
-        }
-
-
+        $this->ajuste_inventario_no=AjusteInventario::siguienteNoRegistro();
 
         $this->productos=Sucursal::find(Auth::user()->sucursal_id);
         $this->isCreate=true;
@@ -140,11 +98,9 @@ class AjusteInventarioController extends Component
 
         $this->validate([
             'ajuste_inventario_no'=>'required',
-            'fecha_ajuste_inventario' => 'required',
             'producto_id' => 'required',
             'tipo_ajuste' => 'required',
             'cantidad_traslado' => 'numeric|required|min:1|max:99999',
-            'descripcion' => 'required'
         ]);
 
 
