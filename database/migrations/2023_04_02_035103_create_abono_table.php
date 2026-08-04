@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('no_abono');
             $table->date('fecha_abono');
-            $table->float('total_abono')->comment('abono aplicado al saldo de credito');
+            $table->decimal('total_abono',10,2)->comment('abono aplicado al saldo de credito');
             $table->string('observaciones')->nullable(true);
             $table->boolean('abono_anticipado')->default(false)->nullable(true);
             $table->boolean('abono_anticipado_asignado')->default(false)->nullable(true);

@@ -22,4 +22,15 @@ class Disenio extends Model
             set: fn (string $value) => $value=='Activo'? true:false,
         );
     }
+
+
+    public static function numeroRegistro(): int {
+        $ultimo = self::max('id');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($ultimo === null || $ultimo === 0) ? 1 : (int) $ultimo + 1;
+    }
+
+
+
+
     }

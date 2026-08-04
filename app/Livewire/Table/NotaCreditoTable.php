@@ -45,14 +45,13 @@ final class NotaCreditoTable extends PowerGridComponent
             ->add('id')
             ->add('no_nota_credito')
             ->add('venta_id')
-            ->add('cliente_id')
+            ->add('cliente_id', fn (NotaCredito $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('fecha_nota_credito_formatted', fn (NotaCredito $model) => Carbon::parse($model->fecha_nota_credito)->format('d/m/Y'))
-            ->add('total_nota_credito')
-            ->add('anulacion_venta')
+            ->add('total_nota_credito', fn (NotaCredito $model) => 'Q. ' . number_format($model->venta?->total_nota_credito ?? 0,2))
             ->add('observaciones')
             ->add('correlativo')
-            ->add('anulacion_venta')
-            ->add('created_at');
+            ->add('anulacion_venta', fn (NotaCredito $model) => $model->anulacion_venta ? 'Sí' : 'No')
+            ->add('saldo_venta', fn (NotaCredito $model) =>($model->venta?->total_venta ?? 0) - $model->total_nota_credito);
     }
 
     public function columns(): array
@@ -63,20 +62,15 @@ final class NotaCreditoTable extends PowerGridComponent
                 ->searchable(),
             Column::make('Fecha nota credito', 'fecha_nota_credito_formatted', 'fecha_nota_credito')
                 ->sortable(),
-            Column::make('Venta id', 'venta_id'),
-            Column::make('Cliente id', 'cliente_id'),
-
-
+            Column::make('No Venta', 'venta_id','venta.id')
+                ->sortable(),
+            Column::make('Cliente', 'cliente_id','cliente.nombre'),
             Column::make('Total nota credito', 'total_nota_credito')
-                ->sortable()
-                ->searchable(),
-
-
+                ->sortable(),
+            Column::make('Anulacion', 'anulacion_venta'),
             Column::make('Observaciones', 'observaciones')
                 ->sortable()
                 ->searchable(),
-
-
             Column::action('Action')
         ];
     }

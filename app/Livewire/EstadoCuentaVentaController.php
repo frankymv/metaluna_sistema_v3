@@ -2,19 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\Abono;
-use App\Models\Cliente;
-use App\Models\EstadoCuenta;
-use App\Models\NotaCredito;
 use App\Models\Venta;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithPagination;
-use Exception;
-
 
 class EstadoCuentaVentaController extends Component
 {
@@ -31,7 +24,7 @@ class EstadoCuentaVentaController extends Component
 
 
     public $ventas_credito=null;
-    protected $listeners=['edit', 'delete','showDetalle','pdfExportar'];
+    protected $listeners=['edit', 'delete','showDetalle','exportarFila'];
 
     protected $rules = [
         'venta_id' => 'required',
@@ -58,46 +51,8 @@ class EstadoCuentaVentaController extends Component
 
     public function render()
     {
-
-/*        $this->ventas = DB::table('ventas')
-            ->rightJoin('clientes','ventas.cliente_id','=','clientes.id')
-            ->leftJoin('rutas','clientes.ruta_id','=','rutas.id')
-            ->where('no_venta','LIKE',"%{$this->filtroNoVenta}%")
-            ->where('nombres_cliente','LIKE',"%{$this->filtroNombreCliente}%")
-            ->where('codigo_mayorista','LIKE',"%{$this->filtroCodigoCliente}%")
-            ->where('fecha_venta','LIKE',"%{$this->filtroFechaVenta}%")
-            ->where('forma_pago','LIKE',"%{$this->filtroFormaPago}%")
-
-            ->get();
-            */
-
-
-
-            $this->ventas=Venta::with('productos')
-            //->with('credito')
-            ->with('abonos')
-            ->with('notacreditos')
-            ->with('cliente')
-            ->where('no_venta','LIkE',"%{$this->filtroNoVenta}%")
-            ->where('fecha_venta','LIkE',"%{$this->filtroFecha}%")
-            ->whereRelation('cliente','nombres_cliente','LIkE',"%{$this->filtroNombreCliente}%")
-            ->whereRelation('cliente','codigo_interno','LIkE',"%{$this->filtroCodigoCliente}%")
-            ->orderBy('id', 'DESC')
-            ->get();
-
-
-
-
-
-
-
-
-
-
         return view('livewire.pages.estado_cuenta_venta.index');
     }
-
-
 
     public function exportarGeneral()
     {
@@ -110,72 +65,22 @@ class EstadoCuentaVentaController extends Component
 
 
 
-    public function exportarFila($id)
+        public function exportarFila($rowId)
     {
-
-        $correl=0;
-        $saldo_actual=0;
-        $saldo_anterior=0;
-
-        //$venta=Venta::with('productos')->find($id)->toArray();
-
-        //$venta=Venta::with('productos')
-        //->with('credito')
-        //->with('abonos')
-        //->with('notacreditos')
-        //->with('cliente')
-        //->where('no_venta',$id)
-        //->first();
-
-
-        $venta=Venta::find($id);
-        $correl=$venta->correlativo;
-
-
-
-
-      /*
-        $correl=$venta['correlativo'];
-
-
-        $abono=Abono::where('venta_id','=',$id)->get()->toArray();
-
-        $nota_credito=NotaCredito::where('venta_id','=',$id)->get()->toArray();
-
-
-        $no_venta=$venta['no_venta'];
-
-
-        $cliente=Cliente::find($venta['cliente_id'])->toArray();
-
-        //$user=User::find(1)->toArray();
-        $saldo_anterior=$venta['saldo_credito_cliente'];
-
-        if ($venta['forma_pago']==='CREDI') {
-            $data=EstadoCuenta::where('cliente_id','=',$venta['cliente_id'])->get();
-
-            $saldo_actual=$saldo_anterior+$venta['total_venta'];
-        }else{
-            $saldo_anterior=0;
-            $saldo_actual=$venta['total_venta'];
-        }
-*/
-
-
-        $fecha_reporte=Carbon::now()->toDateTimeString();
-        $pdf = Pdf::loadView('/livewire/pdf/fila/EstadoCuentaVenta',['venta' => $venta,'correl'=>$correl]);
-
-        //$pdf = Pdf::loadView('/livewire/pdf/pdfEstadoCuentaVenta',['venta' => $venta,'cliente'=>$cliente,'saldo_anterior'=>$saldo_anterior,'saldo_actual'=>$saldo_actual,'venta' => $venta,'cliente'=>$cliente,'abono'=>$abono,'nota_credito'=>$nota_credito,'correl'=>$correl]);
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->setPaper('leter')->stream();
-            }, "$this->title-$fecha_reporte.pdf");
-        return $pdf->download("estado_cuenta_venta_$no_venta.pdf");
+        $data_temp=Venta::find($rowId);
+        $data=exportarFilaPDF('EstadoCuentaVenta', [
+            'data' => $data_temp,
+        ]);
+        return $data;
     }
 
 
 
+
+
     public function cancel(){
-        $this->dispatch('pg:eventRefresh-');        $this->resetInputFields();
+        $this->dispatch('pg:eventRefresh-');        
+        $this->resetInputFields();
         $this->resetValidation();
     }
 

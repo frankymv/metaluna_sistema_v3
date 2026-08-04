@@ -119,7 +119,7 @@
     </div>
 
     <!------------------- TABLA ------------------->
-    <table style="width:100%; border-collapse:collapse;">
+<table style="width:100%; border-collapse:collapse;">
 
     <thead>
         <tr class="titulo-seccion">

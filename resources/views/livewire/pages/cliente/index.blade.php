@@ -10,8 +10,6 @@
 
     <livewire:table.cliente-table/>
 
-    {{ $clientes->withQueryString()->links()}}
-
     </x-slot:body>
     <x-slot:footer>
         @if($isCreate)

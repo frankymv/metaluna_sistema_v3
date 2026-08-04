@@ -1,89 +1,263 @@
-<x-frk.components.template-crud maxWidth="3xl">
+<x-frk.components.template-crud maxWidth="5xl">
+
     <x-slot:title>
-        <x-frk.components.title label="Buscar Cliente" />
-    </x-slot>
 
-        <x-slot:body>
-            <div class="flex flex-wrap w-full">
-                    <div class="    flex-wrap w-full">
-                        <div class="flex-wrap w-full">
-                            <div class="flex w-full ">
-                                <x-frk.components.label-input label="No Venta"  wire:model.live="search_no_venta" />
-                                <x-frk.components.label-input label="nombres_cliente"  wire:model.live="search_nombres_cliente" />
-                                <x-frk.components.label-input label="codigo_cliente"  wire:model.live="search_codigo_cliente" />
-                                <x-frk.components.button label="cancelar" wire:click="cancelarBuscarVenta()" />
-                            </div>
+        <div class="flex items-center gap-3">
 
-                        </div>
+            <div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
 
-                        @if ($ventas)
+                <i class="fa-solid fa-file-invoice-dollar text-orange-500"></i>
 
-                        <div class="w-full   shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-2 py-1">
-                                            No Venta
-                                        </th>
-                                        <th scope="col" class="px-2 py-1">
-                                            Fecha venta
-                                        </th>
-                                        <th scope="col" class="px-2 py-1">
-                                            Datos Cliente
-                                        </th>
+            </div>
 
-                                        <th scope="col" class="px-2 py-1">
-                                            Detalle
-                                        </th>
-                                        <th scope="col" class="px-2 py-1">
-                                            Saldo Actual
-                                        </th>
-                                        <th scope="col" class="px-2 py-1">
-                                            Accion
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+            <div>
 
-                                    @foreach($ventas as $key => $value)
-                                    <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                       <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-prewrap dark:text-white">
-                                            {{$value->no_venta}}
-                                        </th>
-                                        <td class="px-2 py-1">
-                                            {{$value->fecha_venta}}
-                                        </th>
-                                        <td class="px-2 py-1">
-                                            Codigo: {{$value->cliente->codigo_mayorista}}</br>
-                                            {{$value->cliente->nombres_cliente}} {{$value->cliente->apellidos_cliente}}
-                                        </th>
-                                        <td class="px-2 py-1">
-                                            Total Venta: Q. {{$value->total_venta}}</br>
-                                            Nota Credito: Q. {{$value->total_nota_credito}}</br>
-                                            Abonos: {{ $value->total_abono }}</br>
-                                        </th>
-                                        <td class="px-2 py-1">
-                                            Q. {{($value->total_venta - $value->total_nota_credito) - $value->total_abono}}
-                                        </th>
+                <h2 class="font-bold text-xl text-gray-800">
+                    Buscar Venta
+                </h2>
 
-                                        <td class="px-2 py-1">
-                                            <x-frk.buttons.plus-button label="agregar" wire:click="agregarVenta({{$value->id}})" />
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                <p class="text-sm text-gray-500">
+                    Seleccione una venta para continuar
+                </p>
 
-                        @endif
+            </div>
+
+        </div>
+
+    </x-slot:title>
+
+    <x-slot:body>
+
+        <div class="flex flex-col space-y-5">
+
+            {{-- FILTROS --}}
+            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+
+                    <div class="md:col-span-2">
+
+                        <x-frk.components.label-input
+                            label="No. Venta"
+                            wire:model.live="search_no_venta" />
 
                     </div>
+
+                    <div class="md:col-span-4">
+
+                        <x-frk.components.label-input
+                            label="Nombre Cliente"
+                            wire:model.live="search_nombres_cliente" />
+
+                    </div>
+
+                    <div class="md:col-span-4">
+
+                        <x-frk.components.label-input
+                            label="Código Cliente"
+                            wire:model.live="search_codigo_cliente" />
+
+                    </div>
+
+                    <div class="md:col-span-2 flex items-end">
+
+                        <x-frk.components.button
+                            label="Cancelar"
+                            wire:click="cancelarBuscarVenta()" />
+
+                    </div>
+
                 </div>
-        </x-slot>
+
+            </div>
+
+            {{-- RESULTADOS --}}
+            @if ($ventas)
+
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+                    <div class="px-5 py-3 bg-orange-400 text-white">
+
+                        <div class="flex justify-between items-center">
+
+                            <h3 class="font-semibold">
+                                Resultados de Búsqueda
+                            </h3>
+
+                            <span class="bg-white/20 px-3 py-1 rounded-lg text-sm">
+
+                                {{ count($ventas) }} ventas
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full text-sm">
+
+                            <thead class="bg-orange-100">
+
+                                <tr>
+
+                                    <th class="px-4 py-3 text-left">
+                                        Venta
+                                    </th>
+
+                                    <th class="px-4 py-3 text-left">
+                                        Cliente
+                                    </th>
+
+                                    <th class="px-4 py-3 text-left">
+                                        Detalle
+                                    </th>
+
+                                    <th class="px-4 py-3 text-right">
+                                        Saldo Actual
+                                    </th>
+
+                                    <th class="px-4 py-3 text-center">
+                                        Acción
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody class="divide-y divide-gray-100">
+
+                                @forelse($ventas as $value)
+
+                                    <tr class="hover:bg-orange-50 transition-colors">
+
+                                        <td class="px-4 py-3">
+
+                                            <div class="font-semibold text-gray-800">
+
+                                                #{{ $value->no_venta }}
+
+                                            </div>
+
+                                            <div class="text-xs text-gray-500">
+
+                                                {{ $value->fecha_venta }}
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="px-4 py-3">
+
+                                            <div class="font-medium text-gray-800">
+
+                                                {{ $value->cliente->nombres_cliente }}
+                                                {{ $value->cliente->apellidos_cliente }}
+
+                                            </div>
+
+                                            <div class="text-xs text-gray-500">
+
+                                                Código:
+                                                {{ $value->cliente->codigo_mayorista }}
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="px-4 py-3">
+
+                                            <div>
+                                                Venta:
+                                                <span class="font-medium">
+                                                    Q. {{ number_format($value->total_venta, 2) }}
+                                                </span>
+                                            </div>
+
+                                            <div>
+                                                Nota Crédito:
+                                                <span class="font-medium">
+                                                    Q. {{ number_format($value->total_nota_credito, 2) }}
+                                                </span>
+                                            </div>
+
+                                            <div>
+                                                Abonos:
+                                                <span class="font-medium">
+                                                    Q. {{ number_format($value->total_abono, 2) }}
+                                                </span>
+                                            </div>
+
+                                        </td>
+
+                                        <td class="px-4 py-3 text-right">
+
+                                            <span class="font-bold text-orange-600">
+
+                                                Q.
+                                                {{
+                                                    number_format(
+                                                        ($value->total_venta - $value->total_nota_credito)
+                                                        - $value->total_abono,
+                                                        2
+                                                    )
+                                                }}
+
+                                            </span>
+
+                                        </td>
+
+                                        <td class="px-4 py-3 text-center">
+
+                                            <x-frk.buttons.plus-button
+                                                color="blue"
+                                                label="Seleccionar"
+                                                wire:click="agregarVenta({{ $value->id }})" />
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td
+                                            colspan="5"
+                                            class="text-center py-10 text-gray-500">
+                                            <div class="flex flex-col items-center gap-2">
+                                                <i class="fa-solid fa-file-circle-xmark text-4xl text-gray-300"></i>
+                                                <span>
+                                                    No se encontraron ventas
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            @else
+
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm">
+
+                    <div class="py-12 text-center text-gray-500">
+
+                        <i class="fa-solid fa-magnifying-glass text-4xl text-gray-300 mb-3"></i>
+
+                        <p>
+                            Utilice los filtros para buscar ventas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+        </div>
+
+    </x-slot:body>
 
     <x-slot:footer>
-    </x-slot>
+    </x-slot:footer>
 
-
-</x-frk.modal>
-
+</x-frk.components.template-crud>

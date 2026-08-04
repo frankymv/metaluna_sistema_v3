@@ -48,9 +48,9 @@
             </div>
 
             {{-- DETALLE DE VENTA --}}
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-file-invoice-dollar text-orange-500"></i>
 
@@ -101,7 +101,7 @@
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
 
                     <x-frk.components.label-input
                         label="Nombre Cliente"
@@ -118,9 +118,9 @@
             </div>
 
             {{-- RESUMEN FINANCIERO --}}
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-calculator text-orange-500"></i>
 
@@ -159,7 +159,7 @@
             {{-- PAGO --}}
             <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-wallet text-orange-500"></i>
 
@@ -203,7 +203,7 @@
             </div>
 
             {{-- OBSERVACIONES --}}
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
 
                 <div class="grid grid-cols-1 gap-4">
 

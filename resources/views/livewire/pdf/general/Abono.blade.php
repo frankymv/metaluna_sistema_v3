@@ -117,34 +117,28 @@
 
                 <th>No Abono</th>
                 <th>Fecha Abono</th>
+                <th>No. Venta</th>
+                 <th>Cliente</th>
                 <th>Total Abono</th>
                 <th>Observacion</th>
                 <th>Tipo Pago</th>
-                <th>Detalle Pago</th>
-                <th>Venta Asignada</th>
-                <th>Nombre Cliente</th>
+                <th>Abono Anticipado</th>
             </tr>
         </thead>
-
-
         <!-- ===================== Contenido Tabla ===================== -->
         <tbody>
             @foreach ($data as $data)
             <tr>
                 <td>{{$data->no_abono}}</td>
                 <td>{{$data->fecha_abono}}</td>
-                <td>Q. {{$data->total_abono}}</td>
-                <td>{{$data->observaciones}}</td>
-                <td>{{$data->tipo_pago}}</td>
-                <td>{{$data->detalle_pago}}</td>
-                <td>
-                @if ($data->venta==null)
-                Abono Anticipado
-                @else
-                Abono a: {{ $data->venta->no_venta}}
-                @endif
-                </td>
+                <td>{{$data->venta?->no_venta}}</td>
                 <td>{{$data->cliente->nombres_cliente}} {{$data->cliente->apellidos_cliente}}</td>
+                <td>Q. {{$data->total_abono}}</td>
+                <td>{{$data->observacion}}</td>
+                <td>{{$data->tipo_pago}}</td>
+                <td> {{ $data->abono_anticipado == 1 ? 'Sí' : 'No' }}
+                </td>
+     
 
 
             </tr>

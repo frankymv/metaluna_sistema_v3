@@ -76,4 +76,9 @@ class Cliente extends Model
         return $this->belongsTo(Credito::class);
     }
 
+     public function Movimientos(){
+        // $this->belongsTo('App\Models\Rol');
+         return $this->hasMany(Movimientos::class);
+     }
+
 }

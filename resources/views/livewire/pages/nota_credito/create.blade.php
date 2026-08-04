@@ -1,6 +1,6 @@
 <x-frk.components.template-crud maxWidth="3xl">
     <x-slot:title>
-
+        <x-frk.components.title label="Nuevo {{$title}}" />
     </x-slot>
     <x-slot:body>
         @include('livewire.pages.nota_credito.form')

@@ -32,7 +32,7 @@
             wire:model.live="search_codigo_cliente" />
 
         <x-frk.components.label-input
-            label="Nombre"
+            label="Nombre Cliente"
             :disabled="$disabled"
             wire:model.live="search_nombres_cliente" />
 

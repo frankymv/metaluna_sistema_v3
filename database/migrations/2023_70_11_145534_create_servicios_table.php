@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('no_servicio');
             $table->date('fecha_servicio');
-            $table->float('total_servicio');
+            $table->decimal('total_servicio',10,2);
             $table->unsignedBigInteger('vehiculo_id');
             $table->foreign('vehiculo_id')->references('id')->on('vehiculos');
             $table->string('descripcion')->nullable(true);

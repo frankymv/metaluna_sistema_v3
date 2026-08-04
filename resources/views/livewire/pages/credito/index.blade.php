@@ -7,11 +7,7 @@
         </div>
     </x-slot:head>
     <x-slot:body>
-
-    <livewire:table.credito-table/>
-
-
-
+        <livewire:table.credito-table/>
     </x-slot:body>
     <x-slot:footer>
 

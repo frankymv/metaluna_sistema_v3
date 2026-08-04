@@ -3,7 +3,7 @@
     {{-- INFORMACION GENERAL --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-boxes-stacked text-orange-500"></i>
 
@@ -25,16 +25,16 @@
                 error="fecha_ajuste_inventario"
                 wire:model="fecha_ajuste_inventario"
                 :disabled="$disabled"
-                label="Fecha Ajuste Bodega" />
+                label="Fecha Ajuste Inventario" />
 
         </div>
 
     </div>
 
     {{-- PRODUCTO --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-box text-orange-500"></i>
 
@@ -73,7 +73,7 @@
     {{-- AJUSTE --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-arrow-right-arrow-left text-orange-500"></i>
 
@@ -115,9 +115,9 @@
     </div>
 
     {{-- OBSERVACIONES --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-comment text-orange-500"></i>
 

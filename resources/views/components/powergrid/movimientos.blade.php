@@ -1,58 +1,89 @@
+@php
+$movimientos = collect();
+
+// Crédito inicial
+if ($venta->credi) {
+    $movimientos->push([
+        'tipo' => 'credito',
+        'no' => $venta->no_venta,
+        'correlativo' => 1,
+        'fecha' => $venta->fecha_venta,
+        'total' => $venta->total_credito,
+    ]);
+}
+
+// Abonos
+foreach ($venta->abonos as $abono) {
+    $movimientos->push([
+        'tipo' => 'abono',
+        'no' => $abono->no_abono,
+        'correlativo' => $abono->correlativo,
+        'fecha' => $abono->fecha_abono,
+        'total' => $abono->total_abono,
+    ]);
+}
+
+// Notas de crédito
+foreach ($venta->notacreditos as $nota) {
+    $movimientos->push([
+        'tipo' => 'nota_credito',
+        'no' => $nota->no_nota_credito,
+        'correlativo' => $nota->correlativo,
+        'fecha' => $nota->fecha_nota_credito,
+        'total' => $nota->total_nota_credito,
+    ]);
+}
+
+// Ordenar por correlativo
+$movimientos = $movimientos->sortBy('correlativo');
+@endphp
+
+
 <div class="p-2">
+    @forelse($movimientos as $movimiento)
 
-    @foreach($venta->abonos as $abono)
+        <div class="mb border-bottom pb
+            {{ $movimiento['tipo'] == 'nota_credito' ? 'text-danger' : '' }}">
 
-        <div class="mb-3 border-bottom pb-2">
+            @if($movimiento['tipo'] == 'credito')
 
-            <strong>No. Abonoooooo:</strong>
-            {{ $abono->correlativo_abono }}
+                <strong>Crédito No:</strong>
+                {{ $movimiento['no'] }},
+                
+                <strong>Fecha:</strong>
+                {{ \Carbon\Carbon::parse($movimiento['fecha'])->format('d/m/Y') }},                
 
-            <br>
+                <strong>Total Crédito:</strong>
+                Q {{ number_format($movimiento['total'], 2) }}
 
-            <strong>Fecha:</strong>
-            {{ \Carbon\Carbon::parse($abono->fecha_abono)->format('d/m/Y') }}
+            @elseif($movimiento['tipo'] == 'abono')
 
-            <br>
+                <strong>Abono No:</strong>
+                {{ $movimiento['no'] }},
+                <strong>Fecha:</strong>
+                {{ \Carbon\Carbon::parse($movimiento['fecha'])->format('d/m/Y') }},
+                <strong>Total Abono:</strong>
+                Q {{ number_format($movimiento['total'], 2) }}
 
-            <strong>Total:</strong>
+            @elseif($movimiento['tipo'] == 'nota_credito')
 
-            Q {{ number_format($abono->total_abono,2) }}
+                <strong>Nota Crédito No:</strong>
+                {{ $movimiento['no'] }},
+                <strong>Fecha:</strong>
+                {{ \Carbon\Carbon::parse($movimiento['fecha'])->format('d/m/Y') }},
+                <strong>Total Nota Credito:</strong>
+                Q {{ number_format($movimiento['total'], 2) }}
 
-        </div>
-
-    @endforeach
-
-
-    {{-- NOTAS DE CRÉDITO --}}
-    @foreach($venta->notacreditos as $nota)
-
-        <div class="mb-3 border-bottom pb-2 text-danger">
-
-            <strong>No. Nota Crédito:</strong>
-            {{ $nota->correlativo_nota_credito }}
-
-            <br>
-
-            <strong>Fecha:</strong>
-            {{ \Carbon\Carbon::parse($nota->fecha_nota_credito)->format('d/m/Y') }}
-
-            <br>
-
-            <strong>Total:</strong>
-
-            Q {{ number_format($nota->total_nota_credito,2) }}
+            @endif
 
         </div>
 
-    @endforeach
-
-
-    @if($venta->abonos->isEmpty() && $venta->notacreditos->isEmpty())
+    @empty
 
         <span class="text-secondary">
             Sin movimientos
         </span>
 
-    @endif
+    @endforelse
 
 </div>

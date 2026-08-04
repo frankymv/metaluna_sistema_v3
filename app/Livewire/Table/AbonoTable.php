@@ -45,16 +45,18 @@ final class AbonoTable extends PowerGridComponent
             ->add('id')
             ->add('no_abono')
             ->add('fecha_abono_formatted', fn (Abono $model) => Carbon::parse($model->fecha_abono)->format('d/m/Y'))
-            ->add('total_abono', fn (Abono $model) => number_format($model->total_abono, 2, '.', ',')) //decimales
+            //->add('total_abono', fn (Abono $model) => 'Q. ' . number_format($model->total_abono ?? 0,2))
+            ->add('total_abono', fn (Abono $model) => ($model->total_abono ?? 0))
             ->add('observaciones')
-            ->add('abono_anticipado')
+            ->add('abono_anticipado', fn (Abono $model) => $model->abono_anticipado ? 'Sí' : 'No')
             ->add('abono_anticipado_asignado')
             ->add('fecha_abono_anticipado_asignado_formatted', fn (Abono $model) => Carbon::parse($model->fecha_abono_anticipado_asignado)->format('d/m/Y'))
             ->add('tipo_pago')
             ->add('detalle_pago')
             ->add('correlativo')
             ->add('venta_id')
-            ->add('cliente_id')
+            ->add('total_credito', fn (Abono $model) => $model->venta?->total_credito ?? 0)
+            ->add('cliente_id', fn (Abono $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('created_at');
     }
 
@@ -69,27 +71,22 @@ final class AbonoTable extends PowerGridComponent
             Column::make('Fecha abono', 'fecha_abono_formatted', 'fecha_abono')
                 ->sortable(),
 
-
+            Column::make('No Venta', 'venta_id'),
+            Column::make('Cliente', 'cliente_id','cliente.nombre'),
             Column::make('Total abono', 'total_abono')
                 ->sortable()
                 ->searchable(),
-
             Column::make('Observaciones', 'observaciones')
                 ->sortable()
                 ->searchable(),
-
-
-
             Column::make('Tipo pago', 'tipo_pago')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Detalle pago', 'detalle_pago')
+
+            Column::make('Abono Anticipado', 'abono_anticipado')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Venta id', 'venta_id'),
-            Column::make('Cliente id', 'cliente_id'),
 
             Column::action('Action')
         ];
@@ -114,9 +111,17 @@ final class AbonoTable extends PowerGridComponent
                 ->class('bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-2 rounded mr-auto')
                 ->dispatch('exportar', []),
             Button::add('agregar')
-                ->slot('Agregar')
-                ->class('bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mr-auto')
+                ->slot('Agregar Abono')
+                ->class('bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mr-auto mx-1')
                 ->dispatch('create', []),
+            Button::add('agregar')
+                ->slot('Agregar Abono Anticipado')
+                ->class('bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mr-auto mx-1')
+                ->dispatch('abonoAnticipado', []),
+            Button::add('agregar')
+                ->slot('Asignado Abono Anticipado')
+                ->class('bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mr-auto mx-1')
+                ->dispatch('abonoAnticipadoAsignar', []),
         ];
     }
 

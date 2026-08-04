@@ -50,19 +50,24 @@ return new class extends Migration
             $table->string('envio')->nullable(true)->default('SINENVIO')->comment('si requiere envio o traslado a la ubicacion del cliente enlazado a ruta/envio');
             $table->string('estado_envio')->nullable(true)->default('NO/APLICA')->comment('finalizo el proceso de envio ruta/envio');
 
+            $table->integer('correlativo')->nullable(true)->default('0')->comment('correlativo general');
+
+
             //registro de operaciones a una venta
             ////visible ante los registros y operaciones
             $table->boolean('visible')->default(true)->nullable(true);
-
+            $table->decimal('saldo_venta',10,2)->nullable(true)->comment('registra el saldo pendiente de la venta /abono/notacredito/')->default(0.0);
             //////CLIENTE////////
             $table->unsignedBigInteger('cliente_id')->nullable(true);
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->unsignedBigInteger('sucursal_id')->nullable(true);
             $table->foreign('sucursal_id')->references('id')->on('sucursals');
 
+
             $table->decimal('anticipo_v',10,2)->comment('registra el anticipo al momento de la venta')->default(0.0);
             $table->decimal('nuevo_saldo_v',10,2)->comment('registra el nuevo saldo de credito al momento de la venta')->default(0.0);
             $table->decimal('saldo_anterior_v',10,2)->comment('registra el nuevo saldo de credito al momento de la venta')->default(0.0);
+
 
             $table->timestamps();
         });

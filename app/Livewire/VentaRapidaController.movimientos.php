@@ -6,23 +6,30 @@ use Illuminate\Support\Facades\Http;
 use App\Constantes\DataSistema;
 use App\Models\Abono;
 use App\Models\Cliente;
+use App\Models\Credito;
+use App\Models\EstadoCuenta;
 use App\Models\Marca;
 use App\Models\Material;
 use App\Models\Producto;
 use App\Models\Tipo;
 use App\Models\User;
 use App\Models\Venta;
+use App\Models\Movimiento;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithPagination;
+use Exception;
 
 class VentaRapidaController extends Component
 {
     use LivewireAlert;
     use WithPagination;
+    use LivewireAlert;
     ///sistema
     public $title='Venta';
     public $data,   $id_data,$ultima_venta,$id=null;
@@ -128,13 +135,15 @@ public $email_edit=null, $codigo_edit=null;
     public $apellidos_cliente_detalle=null;
 
     public function mount()
-    {
-        $this->forma_pagos = DataSistema::$forma_pago;
-        $this->envios = DataSistema::$envio;
-        $this->fecha_venta = now()->toDateString();
-        $this->no_venta = Venta::siguienteNoRegistro();
-        $this->disabledInput=true;
-    }
+{
+    $this->forma_pagos = DataSistema::$forma_pago;
+    $this->envios = DataSistema::$envio;
+    $this->fecha_venta = now()->toDateString();
+    $ultimoNumero = Venta::max('no_venta');
+    $this->no_venta = $ultimoNumero ? $ultimoNumero + 1 : 1;
+    $this->disabledInput=true;
+
+}
 
     public function render(){
         return view('livewire.pages.venta_rapida.index');
@@ -149,12 +158,13 @@ public $email_edit=null, $codigo_edit=null;
         $this->clientes=Cliente::where('nombres_cliente','like',"%$value%")->get();
     }
 
+
+
     public function updatedSearchCodigoCliente($value){
         $this->reset(['search_nombres_cliente','search_nit_cliente']);
         $this->clientes=Cliente::where('codigo_mayorista','like',"%$value%")->get();
 
     }
-
     public function updatedSearchNitCliente($value){
         $this->reset(['search_nombres_cliente','search_codigo_cliente']);
         $this->clientes=Cliente::where('nit','like',"%$value%")->get();
@@ -388,17 +398,20 @@ public $email_edit=null, $codigo_edit=null;
         $this->contadorProductos-=1;
     }
 
+
     public function store(){
         $this->validate([
             'id_forma_pago'=>'required',
             'id_envio'=>'required',
             'contadorProductos'=>'required|numeric|min:1',
             'nombres_cliente'=>'required',
-            'dias_ultimo_credito'=>'required|numeric|min:0']
-        );
+            'dias_ultimo_credito'=>'required|numeric|min:0']);
 
         $cliente=Cliente::find($this->cliente_id);
-        $total_abono_anticipado=Abono::where('cliente_id','=',$cliente->id)->where('abono_anticipado','=',1)->where('abono_anticipado_asignado','=',0)->sum('total_abono');
+        $total_abono_anticipado=Movimiento::where('cliente_id','=',$cliente->id)->where('tipo_movimiento','=','abono_anticipado')->sum('total_movimiento');
+
+        //$total_abono_anticipado=Abono::where('cliente_id','=',$cliente->id)->where('abono_anticipado','=',1)->where('abono_anticipado_asignado','=',0)->sum('total_abono');
+
         $totales = Venta::where('cliente_id', $this->cliente_id)->where('credi', 1)
             ->selectRaw('
                 COALESCE(SUM(total_credito),0) as total_credito,
@@ -413,15 +426,16 @@ public $email_edit=null, $codigo_edit=null;
         $saldoAnterior = ($total_cre - $total_nota_cred)- $total_abo;
         $nuevoSaldo = $saldoAnterior + $this->sub_total;
 
- 
 
-        $no_venta=Venta::siguienteNoRegistro();
+        $ultimoNumero=Venta::max('no_venta');
+        $this->no_venta = $ultimoNumero ? $ultimoNumero + 1 : 1;
 
         $data= new Venta();
         $data->fill([
-            'no_venta' => $no_venta,
+            'no_venta' => $this->no_venta,
             'fecha_venta' => $this->fecha_venta,
             'total_venta' => $this->sub_total,
+            'salvo_venta' => 0,
             'observaciones_venta' => $this->observaciones_venta,
             'forma_pago_venta' => $this->id_forma_pago,
             'envio' => $this->id_envio,
@@ -431,6 +445,7 @@ public $email_edit=null, $codigo_edit=null;
         ]);
 
        if($this->id_forma_pago==="CREDI" ) {
+
             if ($nuevoSaldo >= $cliente->limite_credito &&
                 !$this->autorizacion_limite_credito) {
                 $this->alertaNotificacion("credito_alto");
@@ -438,22 +453,45 @@ public $email_edit=null, $codigo_edit=null;
             }
 
             $data->fill([
-                'correlativo'=>'1',
                 'credi'=>true,
                 'total_credito'=>$this->sub_total,
                 'saldo_venta' => $this->sub_total,
                 'fecha_limite_credito' => Carbon::parse($this->fecha_venta)
                     ->addDays($cliente->dias_limite_credito)
                     ->format('Y-m-d'),
-                'observaciones_credito'=>$this->observaciones_credito,
                 'anticipo_v'=>$total_abono_anticipado,
                 'saldo_anterior_v' => $saldoAnterior,
                 'nuevo_saldo_v' => $nuevoSaldo,
-                //'total_v'=>($this->sub_total+$total_cre)-$total_abo
             ]);
+
+            $data->save();
+
+                 $mov=Movimiento::latest()->first();
+                if ( $mov) {
+                    $this->id=$mov->id+1;
+                    $this->codigo=$this->id;
+                }else{
+                    $this->id=1;
+                    $this->codigo=$this->id;
+                }
+
+
+              $movimiento = new Movimiento();
+                $movimiento->fill([
+                    'no_movimiento' => $this->id,
+                    'fecha_movimiento' => $this->fecha_venta,
+                    'total_movimiento' => $this->sub_total,
+                    'observaciones' => $this->observaciones_venta,
+                    'tipo_movimiento' => 'credito',
+                    'tipo_pago' => '',
+                    'venta_id' => $this->no_venta,
+                    'cliente_id' => $cliente->id,
+                ]);
+            $movimiento->save();
+        }else{
+              $data->save();
         }
 
-        $data->save();
 
         foreach ($this->productosDetalle as $key => $value) {
             $data->productos()->attach($value['id'],['cantidad' => $value['cantidad_producto'],'precio_venta' => $value['precio_final_venta'],'sub_total' => $value['subtotal_producto']]);
@@ -505,7 +543,7 @@ public $email_edit=null, $codigo_edit=null;
             return $pdf->stream('venta.pdf',array("Attachment" => false));
         }
 
-/*
+
     public function exportarFila($id)
     {
         $fecha_reporte=Carbon::now()->toDateTimeString();
@@ -517,7 +555,6 @@ public $email_edit=null, $codigo_edit=null;
             echo $pdf->setPaper('leter')->stream();
             }, "$this->title-$fecha_reporte.pdf");
     }
-            */
 
 
 

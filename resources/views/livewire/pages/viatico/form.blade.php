@@ -3,7 +3,7 @@
     {{-- INFORMACION GENERAL --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-wallet text-orange-500"></i>
 
@@ -38,9 +38,9 @@
     </div>
 
     {{-- USUARIO --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-user text-orange-500"></i>
 
@@ -75,9 +75,9 @@
     </div>
 
     {{-- OBSERVACIONES --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-comment text-orange-500"></i>
 
@@ -94,7 +94,7 @@
     </div>
 
     {{-- RESUMEN --}}
-    <div class="bg-orange-400 rounded-2xl shadow-lg p-5 text-white">
+    <div class="bg-orange-400 rounded-2xl shadow-lg p-2 text-white">
 
         <div class="flex justify-between items-center">
 
@@ -113,9 +113,9 @@
     {{-- AUDITORIA --}}
     @if ($isShow)
 
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-            <div class="flex items-center gap-2 mb-4">
+            <div class="flex items-center gap-2 mb-1">
 
                 <i class="fa-solid fa-clock text-orange-500"></i>
 

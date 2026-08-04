@@ -207,13 +207,16 @@
         <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Nuevo Credito:</td>
         <td style="font-size: 9px;">Q. {{$venta['total_venta']}}</td>
     </tr>
+
     <tr>
+
         <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px; ">Saldo Anterior Credito:</td>
         <td style="font-size: 9px; border-bottom: 3px solid black; text-align:">+ Q. {{$venta['saldo_anterior_v']}}</td>
     </tr>
+
     <tr>
         <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Saldo Nuevo Credito:</td>
-        <td style="font-size: 9px;">Q. {{$venta['total_venta']+$venta['saldo_anterior_v']}}</td>
+        <td style="font-size: 9px;">Q. {{$venta['nuevo_saldo_v']}}</td>
     </tr>
         <tr>
         <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Abono Anticipo:</td>
@@ -222,7 +225,7 @@
 
     <tr>
         <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Total :</td>
-        <td style="font-size: 9px; text-align:">{{($venta['total_venta']+$venta['saldo_anterior_v'])-$venta['anticipo_v']}}</td>
+        <td style="font-size: 9px; text-align:">Q. {{$venta['nuevo_saldo_v']-$venta['anticipo_v']}}</td>
     </tr>
 </table>
 <br>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable(true);
             $table->foreign('user_id')->references('id')->on('users');
             $table->date('fecha_combustible');
-            $table->float('total_combustible')->default(0)->nullable(true);
+            $table->decimal('total_combustible',10,2)->default(0)->nullable(true);
             $table->string('observaciones')->nullable(true);
             $table->timestamps();
         });

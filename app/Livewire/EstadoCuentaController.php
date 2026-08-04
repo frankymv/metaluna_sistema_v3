@@ -37,38 +37,24 @@ class EstadoCuentaController extends Component
     public $filtroClientes=null;
     public $filtroTipoCliente=null;
     public $filtroRutaCliente=null;
+    public $clienteId;
 
-    
+
 
     public $forma_pagos,$envios,$tipo_clientes,$rutas,$total_ventas=0;
     public $clientes=[];
 
     public $fecha_actual;
 
+    protected $listeners=['showDetalle','exportarFila'];
+
     public function mount()
     {
-        //$this->filtroFechaInicio=Carbon::now()->format('Y')."-01-01";
-
-
-
-        // dd(Cliente::find(2)->ventas->sum('total_abono'));
     }
-
-/*
-    public function updatedFiltroFecha($id){
-        if(Str ::length($id)==10){
-            $this->filtroFechaInicio=$id;
-            $this->filtroFechaFin=$id;
-        }else{
-            $this->filtroFechaInicio=Str::substr($id, 0, 10);
-            $this->filtroFechaFin=Str::substr($id, 13, 25);
-        }
-
-    }
-        */
 
     public function render()
     {
+        $this->clientes=Cliente::all();
         $this->fecha_actual=Carbon::now()->toDateString();
 
         $prob = Cliente::where('nombres_cliente','LIkE',"%{$this->filtroNombresCliente}%")
@@ -82,9 +68,6 @@ class EstadoCuentaController extends Component
 
 
 
-
-
-        //dd($prob);
         return view('livewire.pages.estado_cuenta.index', [
             'estado_cuentas' => $prob,
         ]);
@@ -96,7 +79,7 @@ class EstadoCuentaController extends Component
     }
 
 
-
+/*
     public function exportarGeneral()
     {
         $prob = Cliente::with(['ventas' => function ($query) {
@@ -111,8 +94,39 @@ class EstadoCuentaController extends Component
         }, "$this->title-$fecha_reporte.pdf");
 
     }
+*/
+/*
+    public function exportarFila($rowId)
+    {
+        $fecha_reporte=Carbon::now()->toDateTimeString();
+        $venta=Venta::with('cliente')->where('id',$rowId)->get()->first()->toArray();
+        $cliente=Cliente::find($venta['cliente_id'])->toArray();
 
-    public function exportarFila( $id )
+        $pdf = Pdf::loadView('/livewire/pdf/fila/EstadoCuentaCliente',['venta' => $venta,'cliente'=>$cliente]);
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->setPaper('leter')->stream();
+            }, "$this->title-$fecha_reporte.pdf");
+    }
+*/
+        public function exportarFila($rowId)
+    {
+        $data_temp=Venta::find($rowId);
+        $data=exportarFilaPDF('EstadoCuentaCliente', [
+            'data' => $data_temp,
+        ]);
+        return $data;
+    }
+
+
+
+
+
+
+
+
+
+
+    public function exportarGeneral( $id )
     {
         $temp_al_dia=collect([]);
         $temp_30=collect([]);

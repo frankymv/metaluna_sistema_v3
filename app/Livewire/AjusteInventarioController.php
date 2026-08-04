@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use App\Constantes\DataSistema;
 use App\Models\AjusteInventario;
 use App\Models\Producto;
+use App\Models\Movimiento;
 use App\Models\Sucursal;
 use App\Models\Traslado;
 use Illuminate\Support\Facades\Auth;

@@ -3,7 +3,7 @@
     {{-- CLASIFICACION --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-layer-group text-orange-500"></i>
 
@@ -111,7 +111,7 @@
  {{-- CARACTERISTICAS --}}
 <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
 
-    <div class="flex items-center gap-2 mb-4">
+    <div class="flex items-center gap-2 mb-1">
 
         <i class="fa-solid fa-ruler-combined text-orange-500"></i>
 
@@ -270,7 +270,7 @@
     {{-- PRECIOS --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-money-bill-wave text-orange-500"></i>
 
@@ -303,7 +303,7 @@
     {{-- NOMBRES --}}
     <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-tags text-orange-500"></i>
 

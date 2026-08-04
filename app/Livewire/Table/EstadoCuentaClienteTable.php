@@ -11,16 +11,22 @@ use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use Livewire\Attributes\Reactive;
 
-final class CreditoTable extends PowerGridComponent
+final class EstadoCuentaClienteTable extends PowerGridComponent
 {
-    public string $tableName = 'creditoTable';
+    public string $tableName = 'estadoCuentaClienteTable';
+   #[Reactive]
+    public $clienteId;
 
-  public function setUp(): array
+
+    public function setUp(): array
     {
+
+        //$this->showCheckBox();
+
         return [
-            PowerGrid::header()
-                ->showSearchInput(),
+            PowerGrid::header(),
             PowerGrid::footer()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -29,7 +35,16 @@ final class CreditoTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Venta::query();
+        return Venta::query()->where('cliente_id', $this->clienteId)->where('anulado', false)
+        ->select('*')
+
+        ->selectRaw('(total_venta - total_abono - total_nota_credito) as saldo')
+                ->with([
+                    'abonos',
+                    'notacreditos',
+                    'cliente',
+                ]);
+
     }
 
     public function relationSearch(): array
@@ -48,12 +63,8 @@ final class CreditoTable extends PowerGridComponent
             ->add('forma_pago_venta')
             ->add('cancelado_total_venta')
             ->add('fecha_cancelado_total_venta_formatted', fn (Venta $model) => Carbon::parse($model->fecha_cancelado_total_venta)->format('d/m/Y'))
-            ->add('credi') 
-            //->add('total_credito',fn (Venta $model) => number_format($model->total_credito ?? 0, 2)
-
-//->add('total_credito', fn (Venta $model) => 'Q. ' . number_format($model->total_credito ?? 0, 2))
-
-            ->add('total_credito', function ($model) {return ($model->total_credito ?? 0);})
+            ->add('credi')
+            ->add('total_credito')
             ->add('fecha_limite_credito_formatted', fn (Venta $model) => Carbon::parse($model->fecha_limite_credito)->format('d/m/Y'))
             ->add('fecha_cancelado_credito_formatted', fn (Venta $model) => Carbon::parse($model->fecha_cancelado_credito)->format('d/m/Y'))
             ->add('observaciones_credito')
@@ -69,11 +80,35 @@ final class CreditoTable extends PowerGridComponent
             ->add('estado_envio')
             ->add('visible')
             ->add('cliente_id', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
+            ->add('saldo_venta')
             ->add('sucursal_id')
             ->add('anticipo_v')
             ->add('nuevo_saldo_v')
             ->add('saldo_anterior_v')
-            ->add('created_at');
+->add('estado_vencimiento', function (Venta $model) {
+
+    $fechaLimite = Carbon::parse($model->fecha_limite_credito)->startOfDay();
+    $hoy = Carbon::today();
+
+    $dias = $fechaLimite->diffInDays($hoy, false);
+
+    if ($dias > 0) {
+        return "<span class='text-red-600 font-bold'>
+                    Vencida hace {$dias} días
+                </span>";
+    }
+
+    if ($dias < 0) {
+        return "<span class='text-green-600 font-bold'>
+                    Restan ".abs($dias)." días
+                </span>";
+    }
+
+    return "<span class='text-yellow-600 font-bold'>
+                Vence hoy
+            </span>";
+});
+
     }
 
     public function columns(): array
@@ -83,28 +118,42 @@ final class CreditoTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
+            Column::make('Cliente', 'cliente_id','cliente.nombres_cliente'),
+
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
                 ->sortable(),
-
-            Column::make('Credi', 'credi')
-                ->sortable()
-                ->searchable(),
-
-      Column::make('total crdito', 'total_credito') // Muestra el campo formateado y permite ordenar por el original 'precio'
-            ->sortable(),
-
-            Column::make('Fecha limite credito', 'fecha_limite_credito_formatted', 'fecha_limite_credito')
+            Column::make('Fecha limite', 'fecha_limite_credito_formatted', 'fecha_limite')
                 ->sortable(),
-
-            Column::make('Cliente', 'cliente_id','cliente.nombres_cliente')
+            Column::make('Vencimiento', 'estado_vencimiento')
+            ->searchable(false),
+            Column::make('Forma pago', 'forma_pago_venta')
                 ->sortable()
                 ->searchable(),
 
-
-            Column::make('Observaciones credito', 'observaciones_credito')
+            Column::make('Total venta', 'total_venta')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->withSum('Total Venta', header: false, footer: true),
 
+            Column::make('Total credito', 'total_credito')
+                ->sortable()
+                ->searchable()
+                ->withSum('Total Credito', header: false, footer: true),
+
+            Column::make('Total abono', 'total_abono')
+                ->sortable()
+                ->searchable()
+                ->withSum('Total Abono', header: false, footer: true),
+
+            Column::make('Total nota credito', 'total_nota_credito')
+                ->sortable()
+                ->searchable()
+                ->withSum('Total Nota Credito', header: false, footer: true),
+
+            Column::make('Saldo Actual', 'saldo_venta')
+                ->sortable()
+                ->searchable()
+                ->withSum('Total Actual.', header: false, footer: true),
 
 
 
@@ -124,7 +173,23 @@ final class CreditoTable extends PowerGridComponent
         ];
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+
+
+    public function actions(Venta $row): array
+    {
+        return [
+
+            Button::add('show')
+                ->icon('default-show')
+                ->class('bg-orange-500 text-white rounded-md  px-1 py-1')
+                ->dispatch('showDetalle', ['rowId' => $row->id]),
+
+            Button::add('export')
+                ->icon('default-export')
+                ->class('bg-yellow-500 text-white rounded-md  px-1 py-1')
+                ->dispatch('exportarFila', ['rowId' => $row->id]),
+        ];
+    }
 
     public function header(): array
     {
@@ -132,14 +197,10 @@ final class CreditoTable extends PowerGridComponent
             Button::add('exportar')
                 ->slot('Exportar')
                 ->class('bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-2 rounded mr-auto')
-                ->dispatch('exportar', []),
+                ->dispatch('exportar', [])
         ];
     }
-
-
-
-
-	public function exportar()
+    public function exportar()
     {
         //dd("caaa");
         $query = $this->datasource();
@@ -166,25 +227,9 @@ final class CreditoTable extends PowerGridComponent
             $query->orderBy($this->sortField, $this->sortDirection ?? 'asc');
         }
         $datas = $query->get();
-        return exportarGeneralPDF('Credito', [
+        return exportarGeneralPDF('EstadoCuentaCliente', [
             'data' => $datas,
         ]);
-    }
-
-
-
-    public function actions(Venta $row): array
-    {
-        return [
-            Button::add('show')
-                ->icon('default-show')
-                ->class('bg-orange-500 text-white rounded-md  px-1 py-1')
-                ->dispatch('show', ['rowId' => $row->id]),
-            Button::add('export')
-                ->icon('default-export')
-                ->class('bg-yellow-500 text-white rounded-md  px-1 py-1')
-                ->dispatch('exportarFila', ['rowId' => $row->id]),
-        ];
     }
 
     protected function getListeners(): array

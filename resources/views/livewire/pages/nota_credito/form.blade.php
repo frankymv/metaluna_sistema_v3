@@ -3,7 +3,7 @@
     {{-- INFORMACION GENERAL --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-file-invoice-dollar text-orange-500"></i>
 
@@ -31,9 +31,9 @@
     </div>
 
     {{-- DETALLE VENTA --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-receipt text-orange-500"></i>
 
@@ -103,7 +103,7 @@
     {{-- RESUMEN FINANCIERO --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-calculator text-orange-500"></i>
 
@@ -140,14 +140,14 @@
     </div>
 
     {{-- APLICACION DE NOTA --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-money-check-dollar text-orange-500"></i>
 
             <h3 class="font-semibold text-gray-700">
-                Aplicación de Nota de Crédito
+                Aplicación de Nota de Crédito  {{$anulado}}
             </h3>
 
         </div>
@@ -156,12 +156,12 @@
 
             <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
 
-                <x-frk.components.toggle
-                    :disabled="$disabled"
-                    wire:click="anulacionVenta()"
-                    label="Anulación Venta"
-                    left="No"
-                    right="Sí" />
+    
+                    
+                    <x-frk.components.toggle-anulado
+                        :disabled="$disabledAnulado"
+                        label="Anulacion"
+                         />
 
             </div>
 
@@ -181,9 +181,9 @@
     </div>
 
     {{-- OBSERVACIONES --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-comment text-orange-500"></i>
 
@@ -200,7 +200,7 @@
     </div>
 
     {{-- TOTAL --}}
-    <div class="bg-orange-400 rounded-2xl p-5 text-white shadow-lg">
+    <div class="bg-orange-400 rounded-2xl p-2 text-white shadow-lg">
 
         <div class="flex justify-between items-center">
 
@@ -219,9 +219,9 @@
     {{-- AUDITORIA --}}
     @if ($isShow)
 
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-            <div class="flex items-center gap-2 mb-4">
+            <div class="flex items-center gap-2 mb-1">
 
                 <i class="fa-solid fa-clock text-orange-500"></i>
 

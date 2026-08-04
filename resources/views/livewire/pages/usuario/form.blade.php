@@ -3,7 +3,7 @@
     {{-- INFORMACION PERSONAL --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-id-card text-orange-500"></i>
 
@@ -48,9 +48,9 @@
     </div>
 
     {{-- DATOS GENERALES --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-user text-orange-500"></i>
 
@@ -94,7 +94,7 @@
     {{-- CONTACTO Y TRABAJO --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-briefcase text-orange-500"></i>
 
@@ -130,9 +130,9 @@
     </div>
 
     {{-- DIRECCION --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-location-dot text-orange-500"></i>
 
@@ -193,7 +193,7 @@
     {{-- ACCESO AL SISTEMA --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-user-shield text-orange-500"></i>
 
@@ -236,9 +236,9 @@
     </div>
 
     {{-- SUCURSAL --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-building text-orange-500"></i>
 
@@ -267,9 +267,9 @@
     </div>
 
     {{-- ESTADO --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-toggle-on text-orange-500"></i>
 
@@ -296,9 +296,9 @@
     {{-- AUDITORIA --}}
     @if ($isShow)
 
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-            <div class="flex items-center gap-2 mb-4">
+            <div class="flex items-center gap-2 mb-1">
 
                 <i class="fa-solid fa-clock text-orange-500"></i>
 

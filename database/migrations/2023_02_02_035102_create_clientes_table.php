@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('apellidos_cliente',150)->nullable();
             $table->string('cui',150)->nullable(true);
             $table->string('numero_patente',150)->nullable(true);
-            $table->string('nit',9)->nullable(true);
+            $table->string('nit')->nullable(true);
             $table->string('telefono_principal',12)->nullable(true);
             $table->string('telefono_secundario',12)->nullable(true);
             $table->string('direccion_fisica',200)->nullable(true);

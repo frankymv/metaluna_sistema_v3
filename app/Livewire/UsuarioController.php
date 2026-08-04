@@ -25,18 +25,11 @@ class UsuarioController extends Component
     public $isCreate = false,$isEdit = false, $isShow = false, $isDelete = false;
     public $estadoShow,$estadoFalse="Inactivo",$estadoTrue="Habilitado";
     public $created_at,$updated_at,$disabled=false;
-
     public $departamentos,$municipios=[];
     public $departamento,$municipio;
-
     public $nombre_completo, $codigo, $nombres, $roles, $sucursales,$apellidos, $fecha_nacimiento, $cui, $telefono_principal, $telefono_secundario, $tipo_sangre, $no_licencia, $inicio_labores, $fin_labores, $usuario, $email, $password, $direccion_fisica, $direccion_departamento, $direccion_municipio,$sucursal_id, $visible=true,$estado=true,$role_id,$municipio_id=null;
-
     public $inputs=[],$nombresDetalle=[],$idSucursal=[],$i=0;
-
     public $filtroUsuario=null, $filtroNombres=null, $filtroApellidos=null;
-
-
-
 
    protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
@@ -46,7 +39,14 @@ class UsuarioController extends Component
         ->where('nombres','LIKE',"%{$this->filtroNombres}%")
         ->where('apellidos','LIKE',"%{$this->filtroApellidos}%")
         ->paginate($this->per_page);
-
+        $ultima_venta=User::latest()->first();
+        if ( $ultima_venta) {
+            $this->id=$ultima_venta->id+1;
+            $this->codigo=$this->id;
+        }else{
+            $this->id=1;
+            $this->codigo=$this->id;
+        }
         return view('livewire.pages.usuario.index',[ 'users' => $data_temp]);
     }
 
@@ -69,18 +69,12 @@ class UsuarioController extends Component
 
 
     public function create(){
-
-
-
       $this->departamentos=Departamento::all();
         $this->sucursales=Sucursal::all();
         $this->roles=Role::all();
         //dd($this->roles);
         $this->isCreate=true;
-
-
     }
-
 
         public function exportarGeneral()
     {

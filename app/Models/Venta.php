@@ -26,6 +26,7 @@ class Venta extends Model
         'fecha_limite_credito',
         'fecha_cancelado_credito',
         'observaciones_credito',
+        'saldo_venta',
         /////anulado///////////
         'anulado',
         'fecha_anulado',
@@ -40,12 +41,10 @@ class Venta extends Model
         /////si requiere envio o traslado a la ubicacion del cliente
         'envio',
         'estado_envio',
-
         //registro de operaciones a una venta
         'correlativo',
         ////visible ante los registros y operaciones
         'visible',
-
         //////CLIENTE////////
         'cliente_id',
         'sucursal_id',
@@ -61,6 +60,7 @@ class Venta extends Model
         'total_credito'  => 'decimal:2',
         'total_nota_credito'  => 'decimal:2',
         'total_abono'  => 'decimal:2',
+        'saldo_venta'  => 'decimal:2',
         'anticipo_v'  => 'decimal:2',
         'nuevo_saldo_v'  => 'decimal:2',
         'saldo_anterior_v'  => 'decimal:2',
@@ -112,6 +112,26 @@ class Venta extends Model
     public function Departamentos(){
         return $this->belongsToMany(Departamento::class)
         ->withPivot('observaciones');
+    }
+
+    public static function siguienteNoRegistro(): int {
+        $numero = self::max('id');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($numero === null || $numero === 0) ? 1 : (int) $numero + 1;
+    }
+
+    /*public static function siguienteCorrelativo(): int {
+        $correlativo = self::max('correlativo');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($correlativo === null || $correlativo === 0) ? 1 : (int) $correlativo + 1;
+    }*/
+
+    public static function siguienteCorrelativoWhere(string $columna, int $valor): int
+    {
+        // Filtra por el registro específico (por ejemplo, cliente_id = 5)
+        $ultimo = self::where($columna, $valor)->max('correlativo');
+        
+        return ($ultimo === null || $ultimo === 0) ? 1 : (int) $ultimo + 1;
     }
 
 /*

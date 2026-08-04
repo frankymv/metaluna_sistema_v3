@@ -54,9 +54,9 @@
             </div>
 
             {{-- INFORMACION VENTA --}}
-            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-file-invoice-dollar text-orange-500"></i>
 
@@ -119,7 +119,7 @@
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
 
                     <x-frk.components.label-input
                         label="Nombre Cliente"
@@ -147,7 +147,7 @@
             {{-- ABONO ANTICIPADO --}}
             <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-wallet text-orange-500"></i>
 
@@ -170,8 +170,8 @@
                                 value="{{ $data->id }}"
                                 wire:key="abono-{{ $data->id }}">
 
-                                No. Abono {{ $data->no_abono }}
-                                | Total: {{ $data->total_abono }}
+                                No. Abono {{ $data->no_movimiento }}
+                                | Total: {{ $data->total_movimiento }}
 
                             </option>
 
@@ -190,9 +190,9 @@
             </div>
 
             {{-- RESUMEN --}}
-            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-calculator text-orange-500"></i>
 
@@ -219,7 +219,7 @@
             </div>
 
             {{-- TOTAL FINAL --}}
-            <div class="bg-orange-400 rounded-2xl p-5 text-white shadow-lg">
+            <div class="bg-orange-400 rounded-2xl p-2 text-white shadow-lg">
 
                 <div class="flex justify-between items-center">
 

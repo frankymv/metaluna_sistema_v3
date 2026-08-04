@@ -29,7 +29,7 @@
     {{-- INFORMACION PRODUCTO --}}
     <div class="flex flex-col w-full bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-box text-orange-500"></i>
 
@@ -120,7 +120,7 @@
     {{-- DETALLE DE VENTA
     <div class="flex flex-col w-full bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-calculator text-orange-500"></i>
 
@@ -155,7 +155,7 @@
     </div> --}}
 
     {{-- RESUMEN --}}
-    <div class="flex flex-col w-full bg-orange-400 rounded-2xl shadow-lg p-5 text-white">
+    <div class="flex flex-col w-full bg-orange-400 rounded-2xl shadow-lg p-2 text-white">
 
         <div class="flex justify-between items-center">
 

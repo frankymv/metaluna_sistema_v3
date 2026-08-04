@@ -3,7 +3,7 @@
     {{-- INFORMACION FISCAL --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-user-tie text-orange-500"></i>
 
@@ -64,9 +64,9 @@
     </div>
 
     {{-- DATOS PERSONALES --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-user text-orange-500"></i>
 
@@ -135,7 +135,7 @@
     {{-- CONTACTO --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-envelope text-orange-500"></i>
 
@@ -170,9 +170,9 @@
     </div>
 
     {{-- DIRECCION --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-location-dot text-orange-500"></i>
 
@@ -247,7 +247,7 @@
 
         <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-            <div class="flex items-center gap-2 mb-4">
+            <div class="flex items-center gap-2 mb-1">
 
                 <i class="fa-solid fa-credit-card text-orange-500"></i>
 
@@ -287,9 +287,9 @@
     @endif
 
     {{-- ESTADO --}}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center gap-2 mb-1">
 
             <i class="fa-solid fa-circle-check text-orange-500"></i>
 
@@ -316,9 +316,9 @@
     {{-- AUDITORIA --}}
     @if ($isShow)
 
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
 
-            <div class="flex items-center gap-2 mb-4">
+            <div class="flex items-center gap-2 mb-1">
 
                 <i class="fa-solid fa-clock text-orange-500"></i>
 

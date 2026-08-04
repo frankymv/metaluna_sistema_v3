@@ -54,9 +54,9 @@
             </div>
 
             {{-- CLIENTE --}}
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
 
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-2">
 
                     <div class="flex items-center gap-2">
 
@@ -93,7 +93,7 @@
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
 
                     <x-frk.components.label-input
                         label="Nombre Cliente"
@@ -112,7 +112,7 @@
             {{-- INFORMACION DEL PAGO --}}
             <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-money-bill-wave text-orange-500"></i>
 
@@ -127,7 +127,7 @@
                     <x-frk.components.select
                         label="Tipo Pago"
                         error="tipo_pago_id"
-                        :disabled="$disabled"
+
                         wire:model.live="tipo_pago_id">
 
                         @foreach ($this->tipo_pago as $data)
@@ -143,7 +143,7 @@
                     <x-frk.components.label-input-moneyy
                         label="Total Abono"
                         error="total_abono"
-                        :disabled="$disabled"
+
                         wire:model.live="cantidad_abono"
                         @blur="
                             let v = parseFloat($event.target.value || 0);
@@ -156,9 +156,9 @@
             </div>
 
             {{-- OBSERVACIONES --}}
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
 
-                <div class="flex items-center gap-2 mb-4">
+                <div class="flex items-center gap-2 mb-1">
 
                     <i class="fa-solid fa-comment text-orange-500"></i>
 
@@ -183,7 +183,7 @@
             </div>
 
             {{-- RESUMEN --}}
-            <div class="bg-orange-400 rounded-2xl shadow-lg p-5 text-white">
+            <div class="bg-orange-400 rounded-2xl shadow-lg p-2 text-white">
 
                 <div class="flex justify-between items-center">
 
@@ -202,9 +202,9 @@
             {{-- FECHAS --}}
             @if ($isShow)
 
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
 
-                    <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-2 mb-1">
 
                         <i class="fa-solid fa-clock text-orange-500"></i>
 

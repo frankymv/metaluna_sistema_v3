@@ -4,7 +4,7 @@
 
 
 
-                   <x-frk.components.title label="Nuevo {{$title}}" />
+        <x-frk.components.title label="Nuevo {{$title}}" />
 
 
         </x-slot>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('no_nota_credito');
             $table->date('fecha_nota_credito');
-            $table->float('total_nota_credito');
+            $table->decimal('total_nota_credito',10,2);
             $table->integer('correlativo')->default('0')->comment('correlativo para el seguimiento de las operaciones de abono y notas de credito');
             $table->boolean('anulacion_venta')->default(false)->nullable(true);
 

@@ -119,6 +119,7 @@
                 <th>No Venta</th>
                 <th>Cliente</th>
                 <th>Total Nota Credito</th>
+                <th>Anulacion Venta</th>
                 <th>Observaciones</th>
             </tr>
         </thead>
@@ -133,6 +134,7 @@
                 <td>{{$data->venta_id}}</td>
                 <td>{{$data->cliente->nombres_cliente}} {{$data->cliente->apellidos_cliente}}</td>
                 <td>Q. {{$data->total_nota_credito}}</td>
+                <td> {{ $data->anulacion_venta ? 'Sí' : 'No' }}</td>
                 <td>{{$data->observaciones}}</td>
             </tr>
 

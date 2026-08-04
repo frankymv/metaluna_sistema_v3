@@ -181,15 +181,7 @@ class VentaController extends Component
 
     }
 
-    /*
-    public function exportarFila($rowId)
-    {
-        $data_temp=Venta::find($rowId);
-         $data=exportarFilaPDF('Venta', [
-            'data' => $data_temp,
-        ]);
-        return $data;
-    }*/
+
 
 
     public function Envio($rowId){

@@ -18,8 +18,6 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
 
     public function setUp(): array
     {
-
-
         return [
             PowerGrid::header()
                 ->showSearchInput(),
@@ -56,46 +54,28 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
             ->add('id')
             ->add('no_venta')
             ->add('fecha_venta_formatted', fn (Venta $model) => Carbon::parse($model->fecha_venta)->format('d/m/Y'))
-            ->add('total_venta')
+            ->add('codigo_mayorista_cliente', fn (Venta $model) => $model->Cliente?->codigo_mayorista ?? 'N/A')
+            ->add('nombre_cliente', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('observaciones_venta')
             ->add('forma_pago_venta')
             ->add('cancelado_total_venta')
             ->add('fecha_cancelado_total_venta_formatted', fn (Venta $model) => Carbon::parse($model->fecha_cancelado_total_venta)->format('d/m/Y'))
-            ->add('credi')
-            ->add('total_credito')
             ->add('fecha_limite_credito_formatted', fn (Venta $model) => Carbon::parse($model->fecha_limite_credito)->format('d/m/Y'))
             ->add('fecha_cancelado_credito_formatted', fn (Venta $model) => Carbon::parse($model->fecha_cancelado_credito)->format('d/m/Y'))
             ->add('observaciones_credito')
-            ->add('anulado')
-            ->add('fecha_anulado_formatted', fn (Venta $model) => Carbon::parse($model->fecha_anulado)->format('d/m/Y'))
-            ->add('nota_credito')
-            ->add('total_nota_credito')
-            ->add('correlativo_nota_credito')
-            ->add('abono')
-            ->add('total_abono')
-            ->add('correlativo_abono')
-            ->add('envio')
-            ->add('estado_envio')
-            ->add('visible')
+            ->add('anulado', fn (Venta $model) => $model->anulado ? 'Sí' : 'No')
 
-            ->add('sucursal_id')
-            ->add('anticipo_v')
-            ->add('nuevo_saldo_v')
-            ->add('saldo_anterior_v')
-            ->add('created_at')
+        ->add('cancelado', function ($venta) {
+            return $venta->cancelado_total_venta == 0
+                ? '<span class="text-gray-600">No</span>'
+                : '<span class="text-green-600 font-semibold">Sí</span>';
+        })
+        ->add('anulado', function ($venta) {
+            return $venta->anulado == 0
+                ? '<span class="text-gray-600">No</span>'
+                : '<span class="text-red-600 font-semibold">Sí</span>';
+        })
 
-            ->add('estado', function (Venta $venta) {
-                return Blade::render(
-                    '<x-powergrid.estado :venta="$venta"/>',
-                    [
-                        'venta' => $venta
-                    ]
-                );
-            })
-
-            ->add('fecha_venta_formatted', fn(Venta $venta) =>
-                Carbon::parse($venta->fecha_venta)->format('d/m/Y')
-            )
             ->add('cliente', function (Venta $venta) {
             return Blade::render(
                 '<x-powergrid.cliente :row="$venta"/>',
@@ -128,10 +108,6 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('CLIENTE','cliente'),
-            Column::make('MOVIMIENTOS', 'movimientos'),
-            Column::make('SALDOS', 'saldos'),
-
             Column::make('No venta', 'no_venta')
                 ->sortable()
                 ->searchable(),
@@ -139,10 +115,19 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
                 ->sortable(),
 
-            Column::make('Total venta', 'total_venta')
+            Column::make('Codigo May', 'codigo_mayorista_cliente')
                 ->sortable()
                 ->searchable(),
-            Column::make('ESTADO', 'estado'),
+
+            Column::make('Cliente', 'nombre_cliente')
+                ->sortable()
+                ->searchable(),
+            Column::make('Movimientos', 'movimientos'),
+            Column::make('Saldos', 'saldos'),
+            Column::make('Anulado', 'anulado'),
+            Column::make('Cancelado', 'cancelado')
+                ->sortable()
+                ->searchable(),
             Column::action('Action')
 
         ];
@@ -187,5 +172,44 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
 
 
 
+public function exportar()
+    {
+        //dd("caaa");
+        $query = $this->datasource();
+
+        // Búsqueda global
+        if (!empty($this->search)) {
+            $query->where(function (Builder $q) {
+                $q->where('nombre', 'like', '%' . $this->search . '%')
+                ->orWhere('descripcion', 'like', '%' . $this->search . '%')
+                ->orWhere('estado', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        // Filtros por columna (PowerGrid los guarda en $this->filters['input_text'])
+        if (!empty($this->filters['input_text'])) {
+            foreach ($this->filters['input_text'] as $field => $value) {
+                if (!empty($value)) {
+                    $query->where($field, 'like', '%' . $value . '%');
+                }
+            }
+        }
+    // Ordenamiento
+        if (!empty($this->sortField)) {
+            $query->orderBy($this->sortField, $this->sortDirection ?? 'asc');
+        }
+        $datas = $query->get();
+        return exportarGeneralPDF('EstadoCuentaVenta', [
+            'data' => $datas,
+        ]);
+    }
+
+    protected function getListeners(): array
+    {
+        return [
+            'exportar' => 'exportar',
+            ...parent::getListeners(),
+        ];
+    }
 
 }

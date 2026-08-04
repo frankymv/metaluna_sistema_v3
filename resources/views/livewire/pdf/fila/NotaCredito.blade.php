@@ -149,22 +149,21 @@
 
         <tr>
             <td class="gris" style="text-align:left;">
-                Cliente
+                No. Venta
             </td>
             <td style="text-align:left;">
-                {{ $data->cliente->nombre }}
+                {{ $data->venta->no_venta }}
             </td>
         </tr>
 
         <tr>
             <td class="gris" style="text-align:left;">
-                No. Venta
+                Cliente
             </td>
             <td style="text-align:left;">
-                {{ $data->venta->venta_no }}
+                {{ $data->cliente->nombres_cliente }}
             </td>
         </tr>
-
         <tr>
             <td class="gris" style="text-align:left;">
                 Total Nota de Crédito
@@ -176,16 +175,7 @@
 
         <tr>
             <td class="gris" style="text-align:left;">
-                Correlativo
-            </td>
-            <td style="text-align:left;">
-                {{ $data->correlativo ?: 'N/A' }}
-            </td>
-        </tr>
-
-        <tr>
-            <td class="gris" style="text-align:left;">
-                Anulación de Venta
+                Anulación
             </td>
             <td style="text-align:left;">
                 {{ $data->anulacion_venta ? 'Sí' : 'No' }}
