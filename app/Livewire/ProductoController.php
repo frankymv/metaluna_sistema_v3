@@ -56,13 +56,6 @@ class ProductoController extends Component
 
     public $precio_total_venta_producto=0;
 
-    protected $rules = [
-        'codigo'=>'required',
-        'precio_unitario'=>'required',
-        'precio_final'=>'required',
-        'nombre'=>'required',
-        'tipo_id'=>'required'
-    ];
 
 protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
@@ -86,7 +79,7 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
 
 
-
+ 
     public function mount()
     {
 
@@ -290,10 +283,16 @@ public function updated($propertyName)
 
 public function store()
 {
-    $rules = [
+
+
+
+  
+    $this->validate(
+[
         'tipo_id' => 'required',
-        'precio_venta_producto' => 'required|numeric|min:0',
-    ];
+        'precio_unitario' => 'required|numeric|min:0',
+]
+    );
 
     if ($this->usa_calibre) {
         $rules['calibre'] = 'required';
@@ -314,7 +313,7 @@ public function store()
         $rules['tipo_diametro'] = 'required';
     }
 
-    //$this->validate($rules);
+    //
 
     // asegurar que siempre esté generado
     $this->regenerarCodigoYNombre();
