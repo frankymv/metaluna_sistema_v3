@@ -466,7 +466,7 @@ public $email_edit=null, $codigo_edit=null;
     }
 
     public function liberarCredito(){
-        if(User::where('email',$this->email_edit)->where('codigo_credito', $this->codigo_edit)->first()){
+        if(User::where('email',$this->email_edit)->where('codigo', $this->codigo_edit)->first()){
             $this->autorizacion_limite_credito=true;
             $this->alert('success', "Limite autorizado", [
                 'position' => 'center',
