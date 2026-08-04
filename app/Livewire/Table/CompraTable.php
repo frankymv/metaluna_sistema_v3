@@ -48,6 +48,19 @@ final class CompraTable extends PowerGridComponent
             ->add('compra_fecha_formatted', fn (Compra $model) => Carbon::parse($model->compra_fecha)->format('d/m/Y'))
             ->add('proveedor_id', fn (Compra $model) => $model->proveedor->nombre ?? 'N/A')
             ->add('sucursal_id', fn (Compra $model) => $model->Sucursal->nombre ?? 'N/A')
+            
+->add('productos', function (Compra $model) {
+
+
+return $model->productos
+
+->map(fn ($producto) =>
+$producto->nombre . ': ' . $producto->pivot->cantidad
+)
+
+->implode('<br>');
+
+})
             ->add('created_at');
     }
 
@@ -68,6 +81,7 @@ final class CompraTable extends PowerGridComponent
 
             Column::make('Proveedor id', 'proveedor_id'),
             Column::make('Sucursal id', 'sucursal_id'),
+            Column::make('Productos', 'productos'),
 
 
             Column::action('Action')

@@ -1,109 +1,196 @@
-<x-frk.components.template-crud>
+<x-frk.components.template-crud maxWidth="3xl">
+
     <x-slot:title>
-        <x-frk.components.title label="Detalle {{$title}}" />
-    </x-slot>
+
+        <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
+
+                <i class="fa-solid fa-cart-shopping text-orange-500"></i>
+
+            </div>
+
+            <div>
+
+                <h2 class="font-bold text-xl text-gray-800">
+                    Detalle {{ $title }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </x-slot:title>
+
     <x-slot:body>
-   <div class="flex flex-wrap">
 
-    <div class="flex w-full ">
-        <div class="flex w-full md:w-2/6">
-            <x-frk.components.label-input label="compra no" error="compra_no" :disabled="$disabled" wire:model="compra_no" />
-        </div>
+        <div class="space-y-5">
 
-        <div class="flex w-full md:w-2/6">
-            <x-frk.components.label-input label="no recibo compra" error="no_recibo_compra" :disabled="$disabled" wire:model="no_recibo_compra" />
-        </div>
-        <div class="flex w-full md:w-2/6">
-            <x-frk.components.date-picker wire:model="compra_fecha" error="compra_fecha" label="Fecha de Compra"/>
-        </div>
-    </div>
-    <div class="flex w-full ">
-        <div class="flex w-full md:w-3/6">
-              <x-frk.components.label-input label="Proveedor" error="compra_no" :disabled="$disabled" wire:model="proveedor_id" />
+            {{-- INFORMACION COMPRA --}}
+            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
 
-    </div>
-        <div class="flex w-full md:w-3/6">
-            <x-frk.components.label-input label="Sucursal" error="compra_no" :disabled="$disabled" wire:model="sucursal_id" />
-        </div>
-    </div>
+                <h3 class="font-semibold text-gray-700 mb-4">
+                    Información de la Compra
+                </h3>
 
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-    @if (!$isShow)
-    <div class="flex w-full ">
-        <div class="flex w-full md:w-4/6">
-            <x-frk.components.select label="producto" error="producto_id" :disabled="$disabled" wire:model="producto_id" >
-                @foreach ($this->productos as $data)
-                <option value="{{ $data->id }}" wire:key="data-{{ $data->id }}">{{ $data->nombre }}</option>
-                @endforeach
-            </x-forms.select>
-        </div>
+                    <x-frk.components.label-input
+                        label="Compra No."
+                        error="compra_no"
+                        :disabled="$disabled"
+                        wire:model="compra_no" />
 
-        <div class="flex w-full md:w-1/6">
-            <x-frk.components.label-input label="cantidad" :disabled="$disabled" wire:model="cantidad" />
-        </div>
+                    <x-frk.components.label-input
+                        label="No. Recibo Compra"
+                        error="no_recibo_compra"
+                        :disabled="$disabled"
+                        wire:model="no_recibo_compra" />
 
+                    <x-frk.components.date-picker
+                        wire:model="compra_fecha"
+                        error="compra_fecha"
+                        label="Fecha de Compra"/>
 
+                </div>
 
-    </div>
-    @endif
+            </div>
 
+            {{-- PROVEEDOR Y SUCURSAL --}}
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
-    <div class="flex w-full ">
-            <x-frk.components.subtitle label="Detalle compra" />
+                <h3 class="font-semibold text-gray-700 mb-4">
+                    Información General
+                </h3>
 
-    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
+                    <x-frk.components.label-input
+                        label="Proveedor"
+                        :disabled="$disabled"
+                        wire:model="proveedor_id" />
 
+                    <x-frk.components.label-input
+                        label="Sucursal"
+                        :disabled="$disabled"
+                        wire:model="sucursal_id" />
 
+                </div>
 
-     <section class="container mx-auto ">
-        <div class="w-full  rounded-lg shadow-lg">
-          <div class="w-full overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-200 uppercase border-gray-900">
-                        <th class="px-4 py-2">Productos</th>
-                        <th class="px-4 py-2">Cantidad</th>
+            </div>
 
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
+            {{-- DETALLE --}}
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
-                        @foreach($inputs as $key => $value)
-                            <tr class="text-gray-700">
-                                <td class="px-4 py-1 text-sm border">
-                                    {{$nombresDetalle[$value]}}
-                                </td>
-                                <td class="px-4 py-1 text-sm border">
-                                     {{$cantidadesDetalle[$value]}}
-                                </td>
+                <div class="bg-orange-400 text-white px-5 py-3">
+
+                    <h3 class="font-semibold">
+                        Detalle Compra
+                    </h3>
+
+                </div>
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-sm">
+
+                        <thead class="bg-orange-100">
+
+                            <tr>
+
+                                <th class="px-4 py-3 text-left">
+                                    Producto
+                                </th>
+
+                                <th class="px-4 py-3 text-center">
+                                    Cantidad
+                                </th>
+
                             </tr>
-                        @endforeach
 
-                </tbody>
-            </table>
+                        </thead>
 
-          </div>
+                        <tbody class="divide-y divide-gray-100">
+
+                            @forelse($inputs as $value)
+
+                                <tr class="hover:bg-orange-50">
+
+                                    <td class="px-4 py-3">
+
+                                        {{ $nombresDetalle[$value] }}
+
+                                    </td>
+
+                                    <td class="px-4 py-3 text-center">
+
+                                        {{ $cantidadesDetalle[$value] }}
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+
+                                    <td
+                                        colspan="2"
+                                        class="text-center py-10 text-gray-500">
+
+                                        Sin productos registrados
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            {{-- AUDITORIA --}}
+            @if ($isShow)
+
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+
+                    <h3 class="font-semibold text-gray-700 mb-4">
+                        Auditoría
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <x-frk.components.label-input
+                            label="Fecha Creación"
+                            :disabled="$disabled"
+                            wire:model="created_at" />
+
+                        <x-frk.components.label-input
+                            label="Fecha Modificación"
+                            :disabled="$disabled"
+                            wire:model="updated_at" />
+
+                    </div>
+
+                </div>
+
+            @endif
+
         </div>
-    </section>
 
+    </x-slot:body>
 
-
-
-    <div class="flex w-full flex-col my-2">
-        @if ($isShow)
-        <div class="flex w-full ">
-            <x-frk.components.label-input label="Fecha creacion" :disabled="$disabled" wire:model="created_at" />
-            <x-frk.components.label-input label="Fecha Modificación" :disabled="$disabled" wire:model="updated_at" />
-        </div>
-        @endif
-    </div>
-
-</div>
-    </x-slot>
     <x-slot:footer>
 
-        <x-frk.components.button label="cancelar" wire:click.prevent="cancel()" />
-    </x-slot>
-</x-frk.modal>
+        <x-frk.components.button
+            label="Cerrar"
+            wire:click.prevent="cancel()" />
 
+    </x-slot:footer>
+
+</x-frk.components.template-crud>

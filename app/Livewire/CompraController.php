@@ -55,49 +55,12 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
     public $filtroFecha=null;
     public $filtroFechaInicio=null;
     public $filtroFechaFin=null;
-    public $paginas=['5','10','15','20','25','Todo'];
 
-
-    public function mount()
-    {
-        $this->filtroFechaInicio=Carbon::now()->format('Y')."-01-01";
-        $this->filtroFechaFin=Carbon::now()->toDateString();
-    }
-    public function updatedFiltroFecha($id){
-        if(Str ::length($id)==10){
-            $this->filtroFechaInicio=$id;
-            $this->filtroFechaFin=$id;
-        }else{
-            $this->filtroFechaInicio=Str::substr($id, 0, 10);
-            $this->filtroFechaFin=Str::substr($id, 13, 25);
-        }
-    }
-    public function borrarFiltros()
-    {
-        $this->reset();
-        $this->mount();
-    }
 
 
     public function render()
     {
-        $this->proveedores=Proveedor::all();
-        $this->sucursales=Sucursal::all();
-        $data_temp=Compra::with('productos')->with('sucursal')->with('proveedor')
-        ->where('compra_no','LIKE',"%{$this->filtroNoCompra}%")
-        ->where('no_recibo_compra','LIKE',"%{$this->filtroReciboCompra}%")
-        ->where('proveedor_id','LIKE',"%{$this->filtroProveedor}%")
-        ->where('sucursal_id','LIKE',"%{$this->filtroSucursal}%")->latest();
-
-        if(!empty($this->filtroFecha)){
-            $data_temp->whereBetween('compra_fecha',[$this->filtroFechaInicio,$this->filtroFechaFin]);
-        }
-        $data_temp=$data_temp->paginate($this->per_page);
-
-
-        return view('livewire.pages.compra.index', [
-            'compras' => $data_temp,
-        ]);
+        return view('livewire.pages.compra.index');
     }
 
 
@@ -122,9 +85,6 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
         ]);
         return $data;
     }
-
-
-
 
 
 
@@ -255,11 +215,11 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
     }
 
 
-    public function edit($id){
+    public function edit($rowId){
         $this->proveedores=Proveedor::all();
         $this->productos=Producto::all();
         $this->sucursals=Sucursal::where('bodega','1')->get();
-        $data = Compra::find($id);
+        $data = Compra::find($rowId);
 
         $this->compra_no=$data->compra_no;
         $this->compra_fecha=$data->compra_fecha;
@@ -277,9 +237,9 @@ protected $listeners=['create','edit', 'delete','show','exportarFila'];
         $this->isEdit=true;
     }
 
-    public function show($id){
+    public function show($rowId){
 $this->disabled=true;
-        $data = Compra::find($id);
+        $data = Compra::find($rowId);
 
         $this->sucursal_id=$data->sucursal->nombre;
         $this->proveedor_id=$data->proveedor->nombre;
@@ -309,8 +269,8 @@ $this->disabled=true;
         ////////////////////
             }
 
-    public function delete($id){
-            $data = Compra::find($id);
+    public function delete($rowId){
+            $data = Compra::find($rowId);
             $this->compra_no=$data->compra_no;
             $this->id_data=$data->id;
             $this->compra_no = $data->compra_no;
