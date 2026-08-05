@@ -66,7 +66,7 @@ final class MaterialTable extends PowerGridComponent
                 ->searchable(),
 
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

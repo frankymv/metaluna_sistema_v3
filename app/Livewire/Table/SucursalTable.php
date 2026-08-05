@@ -122,7 +122,7 @@ final class SucursalTable extends PowerGridComponent
             Column::make('Correo electronico', 'correo_electronico'),
 
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

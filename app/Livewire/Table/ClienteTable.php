@@ -150,7 +150,7 @@ final class ClienteTable extends PowerGridComponent
 
  */
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 ////////////////////////////////////////////////////////////////////////////////////

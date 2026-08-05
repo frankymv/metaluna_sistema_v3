@@ -118,13 +118,6 @@ class AsignacionRutaController extends Component
 
 
     public function store(){
-
-
-
-    ////////////////////
-
-
-
     $data=Asignacion::create(
         [
         'no_orden'=>$this->no_orden,
@@ -133,19 +126,17 @@ class AsignacionRutaController extends Component
         'ruta_id'=>$this->ruta_id,
         ]
         );
-
             $data->ventas()->attach($this->idDetalle);
             $data->users()->attach($this->idDetalleUsuario);
             $data->vehiculos()->attach($this->idDetalleVehiculo);
-    ////////////////////
-
         $this->cancel();
     }
 
 
 
     public function cancel(){
-        $this->dispatch('pg:eventRefresh-');        $this->resetInputFields();
+        $this->dispatch('pg:eventRefresh-');        
+        $this->resetInputFields();
         $this->resetValidation();
     }
 
@@ -155,6 +146,4 @@ class AsignacionRutaController extends Component
         $this->reset(['no_orden','fecha','estado','idDetalle','ventaDetalle','inputs','i','j']);
         ////////////////////
     }
-
-
 }

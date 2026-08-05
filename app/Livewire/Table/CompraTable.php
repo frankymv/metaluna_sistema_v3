@@ -84,7 +84,7 @@ $producto->nombre . ': ' . $producto->pivot->cantidad
             Column::make('Productos', 'productos'),
 
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

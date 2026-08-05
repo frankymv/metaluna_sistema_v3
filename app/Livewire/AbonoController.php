@@ -52,12 +52,6 @@ class AbonoController extends Component
 
     public $abono_anticipado_asignado;
     public $fecha_abono_anticipado_asignado;
-    /////////filtros
-    public $filtroNoAbono=null;
-    public $filtroNoVenta=null;
-    public $filtroNombreCliente=null;
-    public $filtroCodigoCliente=null;
-    Public $filtroFechaAbono=null;
 
     public $titulo_abono;
     public $creditos=[];

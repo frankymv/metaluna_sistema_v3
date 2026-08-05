@@ -76,7 +76,7 @@ final class ServicioTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

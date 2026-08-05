@@ -85,7 +85,7 @@ final class UsuarioTable extends PowerGridComponent
             Column::make('Usuario', 'usuario'),
             Column::make('Sucursal id', 'sucursal_id','Sucursal.nombre'),
             Column::make('Email', 'email'),
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

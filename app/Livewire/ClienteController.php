@@ -65,115 +65,45 @@ class ClienteController extends Component
     public $departamento,$municipio;
 
 
+    //////DELETE///
+    public $delete_no=null;
+    public $delete_nombre=null;
 
-
-    public $filtroCodigoInterno=null;
-    public $filtroCodigMayorista=null;
-    public $filtroTipoCliente=null;
-    public $filtroNombresCliente=null;
-    public $filtroApellidosCliente=null;
-    public $filtroRuta=null;
-
-      //////DELETE///
-      public $delete_no=null;
-      public $delete_nombre=null;
-
-      public $filtroFecha=null;
-      public $filtroFechaInicio=null;
-      public $filtroFechaFin=null;
-
-    protected $rules = [
-
-        'tipo_cliente_id' => 'required',
-        'nombres_cliente' => 'required',
-        'apellidos_cliente' => 'required',
-        'direccion_fisica' => 'required',
-        'direccion_departamento' => 'required',
-        'direccion_municipio' => 'required',
-
-    ];
+    public $filtroFecha=null;
+    public $filtroFechaInicio=null;
+    public $filtroFechaFin=null;
 
 
     protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
-    public function mount()
-    {
-        $this->filtroFechaInicio=Carbon::now()->format('Y')."-01-01";
-        $this->filtroFechaFin=Carbon::now()->toDateString();
-    }
 
-
-    public function updatedFiltroFecha($id){
-        if(Str ::length($id)==10){
-            $this->filtroFechaInicio=$id;
-            $this->filtroFechaFin=$id;
-        }else{
-            $this->filtroFechaInicio=Str::substr($id, 0, 10);
-            $this->filtroFechaFin=Str::substr($id, 13, 25);
-        }
-
-    }
-
-
-    public function borrarFiltros()
-    {
-        $this->reset();
-        $this->mount();
-    }
     public function render()
     {
-
-        $this->tipo_clientes=DataSistema::$tipo_cliente;
-
-        $data_temp=Cliente::where('codigo_interno','LIkE',"%{$this->filtroCodigoInterno}%")
-        ->where('codigo_mayorista','LIkE',"%{$this->filtroCodigMayorista}%")
-        ->where('tipo_cliente','LIkE',"%{$this->filtroTipoCliente}%")
-        ->where('nombres_cliente','LIkE',"%{$this->filtroNombresCliente}%")
-        ->where('apellidos_cliente','LIkE',"%{$this->filtroApellidosCliente}%")
-        ->paginate($this->per_page);
-
-
-        return view('livewire.pages.cliente.index', [
-            'clientes' => $data_temp,
-        ]);
-
+        return view('livewire.pages.cliente.index');
     }
 
     public function create(){
-
-        if ($data=Cliente::latest()->first()) {
-            $this->id=$data->id+1;
-            $this->codigo_interno=$this->id;
-
-        }else{
-            $this->id=1;
-            $this->codigo_interno=$this->id;
-        }
-
-        $this->isCreate=true;
+        $this->codigo_interno=Cliente::siguienteCodigoInterno();
+        $this->codigo_mayorista=Cliente::siguienteCodigoMayorista();
         $this->tipo_clientes=DataSistema::$tipo_cliente;
         $this->departamentos=Departamento::all();
         $this->disabled_codigo_interno=true;
+        $this->isCreate=true;
+        $this->tipo_cliente_id='MIN';
     }
 
-
-    public function updatedTipoClienteId ($value){
-        if($value!='MAYO')
+    public function updatedTipoClienteId (String $value){
+        if($value==='MINO')
         {
             $this->isDisabledMinorista=true;
             $this->reset(['numero_patente','cui','ubicacion_latitud' ,'ubicacion_longitud','limite_credito','dias_limite_credito']);
-
-        }else{
+        }elseif ($value==='MAYO'){
             $this->isDisabledMinorista=false;
-            $data=Cliente::where('tipo_cliente','MAYO')->latest()->first();
-            $this->codigo_mayorista=$data->codigo_mayorista+1;
+            $this->codigo_mayorista=Cliente::siguienteCodigoMayorista();
         }
     }
 
-        public function exportarGeneral()
-    {
-
-
+    public function exportarGeneral(){
         $data_temp=Cliente::where('codigo_interno','LIkE',"%{$this->filtroCodigoInterno}%")
         ->where('codigo_mayorista','LIkE',"%{$this->filtroCodigMayorista}%")
         ->where('tipo_cliente','LIkE',"%{$this->filtroTipoCliente}%")
@@ -190,59 +120,36 @@ class ClienteController extends Component
 
 
     public function store(){
-        //$this->validate();
+        $data=[];
+        $codigoInterno=Cliente::siguienteCodigoInterno();
+        $codigoMayorista=null;
 
         if($this->tipo_cliente_id==="MAYO"){
-
             $this->validate([
                 'limite_credito'=>'required|min:1|numeric',
                 'tipo_cliente_id' => 'required',
-                        'nombres_cliente' => 'required',
-                        'apellidos_cliente' => 'required',
-                        'direccion_fisica' => 'required',
-                        'direccion_departamento' => 'required',
-                        'direccion_municipio' => 'required',
+                'nombres_cliente' => 'required',
+                'apellidos_cliente' => 'required',
+                'direccion_fisica' => 'required',
+                'direccion_departamento' => 'required',
+                'direccion_municipio' => 'required',
             ]);
+            $codigoMayorista=Cliente::siguienteCodigoMayorista();
         }else{
-
-    $this->validate([
-
-  'tipo_cliente_id' => 'required',
-        'nombres_cliente' => 'required',
-        'apellidos_cliente' => 'required',
-        'direccion_fisica' => 'required',
-        'direccion_departamento' => 'required',
-        'direccion_municipio' => 'required',
+            $this->validate([
+                'tipo_cliente_id' => 'required',
+                'nombres_cliente' => 'required',
+                'apellidos_cliente' => 'required',
+                'direccion_fisica' => 'required',
+                'direccion_departamento' => 'required',
+                'direccion_municipio' => 'required',
             ]);
+            $this->isDisabledMinorista=false;
         }
 
-
-            if ($data=Cliente::latest()->first()) {
-                $this->id=$data->id+1;
-                $this->codigo_interno=$this->id;
-
-            }else{
-                $this->id=1;
-                $this->codigo_interno=$this->id;
-            }
-
-
-            if($this->tipo_cliente_id==='MAYO')
-            {
-                $data=Cliente::where('tipo_cliente','MAYO')->latest()->first();
-                $this->codigo_mayorista=$data->codigo_mayorista+1;
-
-            }else{
-                $this->isDisabledMinorista=false;
-
-            }
-
-
-
-        Cliente::create(
-            [
-            'codigo_interno'=> $this->codigo_interno,
-            'codigo_mayorista'=> $this->codigo_mayorista,
+        Cliente::create([
+            'codigo_interno'=> $codigoInterno,
+            'codigo_mayorista'=> $codigoMayorista,
             'nombre_empresa'=> $this->nombre_empresa,
             'nombres_cliente'=>$this->nombres_cliente,
             'apellidos_cliente'=>$this->apellidos_cliente,
@@ -261,14 +168,10 @@ class ClienteController extends Component
             'dias_limite_credito'=>$this->dias_limite_credito,
             'tipo_cliente'=>$this->tipo_cliente_id,
             'estado'=>$this->estado
-            ]
-        );
+        ]);
         $this->alertaNotificacion("store");
         $this->cancel();
     }
-
-
-
 
     public function edit($rowId){
         $data = Cliente::find($rowId);
@@ -296,9 +199,7 @@ class ClienteController extends Component
         $this->estado = $data->estado;
         $this->limite_credito=$data->limite_credito;
         $this->dias_limite_credito=$data->dias_limite_credito;
-
         $this->tipo_cliente_id=$data->tipo_cliente;
-
 
         if($data->tipo_cliente!='MAYO')
         {
@@ -307,20 +208,17 @@ class ClienteController extends Component
             $this->isDisabledMinorista=false;
 
         }
-
-
         $this->isEdit = true;
     }
 
 
     public function show($rowId){
 
-            $this->disabled=true;
+        $this->disabled=true;
         $data = Cliente::find($rowId);
         $this->tipo_clientes=DataSistema::$tipo_cliente;
         $this->departamentos=Departamento::all();
         $this->municipios = Municipio::where('departamento_id',$data->direccion_departamento)->get();
-
         $this->id_data=$data->id;
         $this->codigo_interno = $data->codigo_interno;
         $this->codigo_mayorista = $data->codigo_mayorista;
@@ -341,13 +239,9 @@ class ClienteController extends Component
         $this->estado = $data->estado;
         $this->limite_credito=$data->limite_credito;
         $this->dias_limite_credito=$data->dias_limite_credito;
-
         $this->tipo_cliente_id=$data->tipo_cliente;
-
         $this->isShow=true;
-
         }
-
 
     public function update($rowId){
         $this->validate();

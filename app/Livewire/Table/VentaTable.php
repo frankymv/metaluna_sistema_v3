@@ -3,6 +3,7 @@
 namespace App\Livewire\Table;
 
 use App\Models\Venta;
+use App\Models\Cliente;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -18,8 +19,6 @@ final class VentaTable extends PowerGridComponent
 
     public function setUp(): array
     {
-
-
         return [
             PowerGrid::header()
                 ->showSearchInput(),
@@ -31,23 +30,27 @@ final class VentaTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Venta::query();
+        return Venta::query()->with('cliente');
     }
 
     public function relationSearch(): array
     {
-        return [];
+            return [
+                'cliente' => ['codigo_interno','codigo_mayorista','nombres_cliente'], // 'relación' => ['columna']
+                ];
     }
 
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('id')
             ->add('no_venta')
             ->add('fecha_venta_formatted', fn (Venta $model) => Carbon::parse($model->fecha_venta)->format('d/m/Y'))
             ->add('total_venta')
             ->add('observaciones_venta')
+            ->add('cliente_codigo_interno', fn (Venta $model) => $model->Cliente?->codigo_interno ?? 'N/A')
+            ->add('cliente_codigo_mayorista', fn (Venta $model) => $model->Cliente?->codigo_mayorista ?? 'N/A')
+            ->add('cliente_nombres_cliente', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('forma_pago_venta')
             ->add('cancelado_total_venta')
             ->add('fecha_cancelado_total_venta_formatted', fn (Venta $model) => Carbon::parse($model->fecha_cancelado_total_venta)->format('d/m/Y'))
@@ -67,7 +70,6 @@ final class VentaTable extends PowerGridComponent
             ->add('envio')
             ->add('estado_envio')
             ->add('visible')
-            ->add('cliente_id')
             ->add('sucursal_id')
             ->add('anticipo_v')
             ->add('nuevo_saldo_v')
@@ -81,41 +83,26 @@ final class VentaTable extends PowerGridComponent
             Column::make('No venta', 'no_venta')
                 ->sortable()
                 ->searchable(),
-
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
                 ->sortable(),
-
-            Column::make('Total venta', 'total_venta')
+            Column::make('Codigo Interno', 'cliente_codigo_interno')
                 ->sortable()
                 ->searchable(),
-
-
-
+            Column::make('Codigo Mayorista', 'cliente_codigo_mayorista')
+                ->sortable()
+                ->searchable(),
+            Column::make('Cliente', 'cliente_nombres_cliente')
+                ->sortable()
+                ->searchable(),
             Column::make('Forma pago venta', 'forma_pago_venta')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Total abono', 'total_abono')
-                ->sortable()
-                ->searchable(),
-
-
-
+                ->sortable(),
             Column::make('Envio', 'envio')
-                ->sortable()
-                ->searchable(),
-
+                ->sortable(),
             Column::make('Estado envio', 'estado_envio')
-                ->sortable()
-                ->searchable(),
-
-
-
-            Column::make('Cliente id', 'cliente_id'),
-
-
-
-            Column::action('Action')
+                ->sortable(),
+            Column::make('Total venta', 'total_venta')
+                ->sortable(),
+            Column::action('Acciones')
         ];
     }
 

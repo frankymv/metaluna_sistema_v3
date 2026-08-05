@@ -90,7 +90,7 @@ final class VehiculoTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

@@ -11,8 +11,6 @@ class AlertasController extends Component
 {
     use LivewireAlert;
     use WithPagination;
-    use LivewireAlert;
-
 
     public function alertaNotificacion($tipo){
         $alerta="";
@@ -48,9 +46,4 @@ class AlertasController extends Component
             'text' => "$texto"
         ]);
     }
-
-
-
-
-
 }

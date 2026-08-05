@@ -2,19 +2,14 @@
 
     {{-- INFORMACION FISCAL --}}
     <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
-
         <div class="flex items-center gap-2 mb-1">
-
             <i class="fa-solid fa-user-tie text-orange-500"></i>
-
             <h3 class="font-semibold text-gray-700">
                 Información Fiscal
             </h3>
-
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-
             <x-frk.components.select
                 label="Tipo Cliente"
                 :disabled="$disabled"

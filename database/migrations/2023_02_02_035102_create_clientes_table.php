@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('codigo_interno')->unique()->nullable(false);
-            $table->string('codigo_mayorista')->default('N/A')->nullable(false);
+            $table->integer('codigo_interno')->unique();
+            $table->integer('codigo_mayorista')->nullable(true);
             $table->string('nombre_empresa',150)->nullable(true);
             $table->string('nombres_cliente',150);
             $table->string('apellidos_cliente',150)->nullable();

@@ -84,7 +84,7 @@ final class AjusteInventarioTable extends PowerGridComponent
 
 
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

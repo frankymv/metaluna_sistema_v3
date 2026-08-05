@@ -15,8 +15,6 @@
  .s5 { color: black; font-family:"Times New Roman", serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 11pt; }
  .s6 { color: black; font-family:"Times New Roman", serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 10pt; }
  table, tbody {vertical-align: top; overflow: visible; }
-
-
 </style>
 <style>
     body {
@@ -52,7 +50,6 @@
 @php
   $bg_base64   = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado.png')));
 @endphp
-
 
 <div style="margin: 9px;">
     <!-- ============ BLOQUE 1: ENCABEZADO ============ -->
@@ -164,6 +161,10 @@
     <tr>
         <td  style=" background-color: #f7d7cc; font-size: 9px;">Empresa:</td>
         <td style="font-size: 9px;" colspan="5">{{$cliente['nombre_empresa']}}</td>
+    </tr>
+    <tr>
+        <td  style=" background-color: #f7d7cc; font-size: 9px;">Cliente:</td>
+        <td style="font-size: 9px;" colspan="5">{{$cliente['nombres_cliente']}} {{$cliente['apellidos_cliente']}}</td>
     </tr>
 
     <tr>

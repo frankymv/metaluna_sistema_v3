@@ -227,7 +227,7 @@ final class ProductoTable extends PowerGridComponent
             Column::make('Estado', 'estado')
                 ->sortable(),
 
-            Column::action('Action')
+            Column::action('Acciones')
             */
 
             Column::make('Código', 'codigo')
@@ -248,7 +248,7 @@ final class ProductoTable extends PowerGridComponent
 
             Column::make('Diseño', 'disenio_nombre', 'disenio.nombre'),
 
-                 Column::action('Action')
+                 Column::action('Acciones')
 
         ];
     }

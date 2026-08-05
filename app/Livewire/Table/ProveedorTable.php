@@ -80,7 +80,7 @@ final class ProveedorTable extends PowerGridComponent
             Column::make('Telefono principal', 'telefono_principal')
                 ->sortable()
                 ->searchable(),
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

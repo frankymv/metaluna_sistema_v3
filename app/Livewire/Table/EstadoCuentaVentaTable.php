@@ -128,7 +128,7 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
             Column::make('Cancelado', 'cancelado')
                 ->sortable()
                 ->searchable(),
-            Column::action('Action')
+            Column::action('Acciones')
 
         ];
     }

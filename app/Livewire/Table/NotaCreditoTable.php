@@ -71,7 +71,7 @@ final class NotaCreditoTable extends PowerGridComponent
             Column::make('Observaciones', 'observaciones')
                 ->sortable()
                 ->searchable(),
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

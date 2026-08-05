@@ -55,7 +55,6 @@ class Cliente extends Model
          return $this->hasMany(Abono::class);
     }
 
-
      public function Ventas(){
         // $this->belongsTo('App\Models\Rol');
          return $this->hasMany(Venta::class);
@@ -76,9 +75,16 @@ class Cliente extends Model
         return $this->belongsTo(Credito::class);
     }
 
-     public function Movimientos(){
-        // $this->belongsTo('App\Models\Rol');
-         return $this->hasMany(Movimientos::class);
-     }
+    public static function siguienteCodigoMayorista(): int {
+        $numero = self::max('codigo_mayorista');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($numero === null || $numero === 0) ? 1 : (int) $numero + 1;
+    }
+
+    public static function siguienteCodigoInterno(): int {
+        $numero = self::max('codigo_interno');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($numero === null || $numero === 0) ? 1 : (int) $numero + 1;
+    }
 
 }

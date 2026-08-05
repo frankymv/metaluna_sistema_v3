@@ -145,7 +145,7 @@ final class InventarioTable extends PowerGridComponent
 
 
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 ////////////////////////////////////////////////////////////////////////////////////

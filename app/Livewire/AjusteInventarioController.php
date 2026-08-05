@@ -24,7 +24,6 @@ class AjusteInventarioController extends Component
     use LivewireAlert;
     use WithPagination;
 
-    use WithPagination;
     public $title='Ajuste Inventario';
     public $data, $per_page=10,  $id_data;
     public $isCreate = false,$isEdit = false, $isShow = false, $isDelete = false;
@@ -61,27 +60,10 @@ class AjusteInventarioController extends Component
 
     protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
-
-    public $filtroFecha=null;
-    public $filtroFechaInicio=null;
-    public $filtroFechaFin=null;
-    public $paginas=['5','10','15','20','25','Todo'];
-
-
-
-
-
     public function render()
     {
-       
-
         return view('livewire.pages.ajuste_inventario.index');
-
     }
-
-
-
-
 
     public function create(){
         $this->disabledForm[0]=true;

@@ -65,7 +65,7 @@ final class TipoTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::action('Action'),
+            Column::action('Acciones'),
         ];
     }
 

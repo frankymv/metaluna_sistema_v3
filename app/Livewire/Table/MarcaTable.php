@@ -65,7 +65,7 @@ final class MarcaTable extends PowerGridComponent
             Column::make('Estado', 'estado')
                 ->sortable()
                 ->searchable(),
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 ////////////////////////////////////////////////////////////////////////////////////

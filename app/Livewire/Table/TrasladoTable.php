@@ -66,7 +66,7 @@ final class TrasladoTable extends PowerGridComponent
             Column::make('Sucursal destino ', 'sucursal_destino_id'),
 
 
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

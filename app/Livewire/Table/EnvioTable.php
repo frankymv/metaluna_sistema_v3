@@ -72,7 +72,7 @@ final class EnvioTable extends PowerGridComponent
             Column::make('Observaciones inicio envio', 'observaciones_inicio_envio')
                 ->sortable()
                 ->searchable(),
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 

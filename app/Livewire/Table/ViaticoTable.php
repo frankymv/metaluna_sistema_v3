@@ -64,7 +64,7 @@ final class ViaticoTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
             Column::make('Observaciones', 'observaciones'),
-            Column::action('Action')
+            Column::action('Acciones')
         ];
     }
 
