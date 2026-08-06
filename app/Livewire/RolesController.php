@@ -37,12 +37,11 @@ class RolesController extends Component
     ];
     ////////////////////
 
-    protected $listeners=['edit', 'delete','show'];
+ protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
     public function render()
     {
         $this->roles=Role::all();
-
         return view('livewire.pages.roles.index');
     }
 
@@ -54,27 +53,22 @@ class RolesController extends Component
     public function borrarFiltros()
     {
         $this->reset();
-
     }
 
     public function store(){
         $this->validate();
         $data=Role::create(
-            ['name'=>$this->nombre]
-        );
-
+            ['name'=>$this->nombre]);
         $data->permissions()->sync($this->role_selected);
         $this->cancel();
+
+
+     
     }
 
     public function edit($rowId){
-
         $this->permisson=Permission::all();
-
         $data = Role::findOrFail($rowId);
-
-
-
         $this->id_data=$data->id;
         $this->nombre = $data->name;
         $this->estado = $data->estado;
@@ -158,11 +152,11 @@ public function show($rowId)
             }, "$this->title-$fecha_reporte.pdf");
     }
 
-    public function exportarFilla($id)
+    public function exportarFilla($rowId)
     {
 
 
-        $data=Role::find($id);
+        $data=Role::find($rowId);
         $fecha_reporte=Carbon::now()->toDateTimeString();
         $pdf = Pdf::loadView('/livewire/pdf/pdfMarca',['data'=>$data]);
         return response()->streamDownload(function () use ($pdf) {
@@ -170,15 +164,10 @@ public function show($rowId)
             }, "$this->title-$fecha_reporte.pdf");
     }
 
-        public function exportarFila($id)
+        public function exportarFila($rowId)
     {
-        $rol=Role::findOrFail($id);
-        /* $datass = $rol->permissions
-            ->pluck('id')
-            ->toArray();
-
-            dd($datass);
-            */
+        $rol=Role::find($rowId);//->with('permissions');
+//dd($rol);
 
          $data=exportarFilaPDF('Rols', [
             'data' => $rol,
@@ -188,7 +177,8 @@ public function show($rowId)
 
 
     public function cancel(){
-        $this->dispatch('pg:eventRefresh-');        $this->resetInputFields();
+        
+        $this->dispatch('pg:eventRefresh-rolesTable');        $this->resetInputFields();
         $this->resetValidation();
     }
 

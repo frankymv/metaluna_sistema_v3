@@ -64,23 +64,14 @@ class SucursalController extends Component
 
     public function render()
     {
-        $this->sucursales=Sucursal::all();
-        $data_temp=Sucursal::latest();
-
-
-
-
-
-        return view('livewire.pages.sucursal.index', [
-            'sucursals' => $data_temp
-        ]);
+    
+        return view('livewire.pages.sucursal.index');
     }
 
     public function create(){
 
         $this->departamentos=Departamento::all();
         $this->isCreate=true;
-
     }
 
     public function updatedDireccionDepartamento($value){
@@ -148,8 +139,6 @@ class SucursalController extends Component
     }
 
     public function show($rowId){
-
-
         $data = Sucursal::find($rowId);
         $this->id_data=$data->id;
         $this->codigo=$data->codigo;
@@ -225,6 +214,8 @@ class SucursalController extends Component
 
     public function cancel(){
          $this->dispatch('pg:eventRefresh-sucursal-table-prrumz-table');
+         $this->reset();
+
         $this->resetValidation();
     }
 

@@ -110,7 +110,10 @@
             <a href="mailto:metaluna@gmail.com" style="color:#1a1a1a; text-decoration:none;">metaluna@gmail.com</a>
         </p>
 
-
+        <p style="margin: 2px 0 0 0; font-size: 11px; color:#555;">
+            Usuario: {{$usuario ?? 'Franky Mejia'}} &nbsp;&nbsp;|&nbsp;&nbsp;
+            Fecha Impresión: {{$fecha_impresion ?? '01/01/2024 12:00 am'}}
+        </p>
         </div>
     </div>
 </div>
@@ -214,38 +217,15 @@
         <td colspan="4"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">TOTAL:</td>
         <td style="font-size: 9px;">Q. {{$venta['total_venta']}}</td>
     </tr>
-
-
 </table>
-
 <br>
-
-
 <table>
     <tr>
         <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Nuevo Credito:</td>
         <td style="font-size: 9px;">Q. {{$venta['total_venta']}}</td>
     </tr>
 
-    <tr>
 
-        <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px; ">Saldo Anterior Credito:</td>
-        <td style="font-size: 9px; border-bottom: 3px solid black; text-align:">+ Q. {{$venta['saldo_anterior_v']}}</td>
-    </tr>
-
-    <tr>
-        <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Saldo Nuevo Credito:</td>
-        <td style="font-size: 9px;">Q. {{$venta['nuevo_saldo_v']}}</td>
-    </tr>
-        <tr>
-        <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Abono Anticipo:</td>
-        <td style="font-size: 9px; border-bottom: 3px solid black; text-align:">- Q. {{$venta['anticipo_v']}}</td>
-    </tr>
-
-    <tr>
-        <td colspan="6"   style="background-color:#f7d7cc ; text-align:right; font-weight:bold; font-size: 9px;">Total :</td>
-        <td style="font-size: 9px; text-align:">Q. {{$venta['nuevo_saldo_v']-$venta['anticipo_v']}}</td>
-    </tr>
 </table>
 
 <br>

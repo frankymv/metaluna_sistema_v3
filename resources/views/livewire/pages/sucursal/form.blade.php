@@ -157,46 +157,7 @@
                     label="Estado"
                     left="SI"
                     right="NO" />
-
             </div>
-
         </div>
-
     </div>
-
-    {{-- AUDITORIA --}}
-    @if ($isShow)
-
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-2">
-
-            <div class="flex items-center gap-2 mb-1">
-
-                <i class="fa-solid fa-clock text-orange-500"></i>
-
-                <h3 class="font-semibold text-gray-700">
-                    Auditoría
-                </h3>
-
-            </div>
-
-            <!--
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <x-frk.components.label-input
-                    label="Fecha Creación"
-                    :disabled="$disabled"
-                    wire:model="created_at" />
-
-                <x-frk.components.label-input
-                    label="Fecha Modificación"
-                    :disabled="$disabled"
-                    wire:model="updated_at" />
-
-            </div>
-        -->
-
-        </div>
-
-    @endif
-
 </div>

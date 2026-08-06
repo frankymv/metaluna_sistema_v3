@@ -71,15 +71,7 @@ class RutaController extends Component
             $this->codigo=1;
         }
 
-        $data_temp=Ruta::with('municipios')->with('departamentos')
-        ->where('codigo','LIkE',"%{$this->filtroCodigo}%")
-        ->where('nombre','LIkE',"%{$this->filtroNombre}%")
-        ->paginate($this->per_page);
-
-
-        return view('livewire.pages.ruta.index', [
-            'rutas' => $data_temp,
-        ]);
+        return view('livewire.pages.ruta.index');
     }
 
     public function create(){

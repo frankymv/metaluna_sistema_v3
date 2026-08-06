@@ -120,12 +120,6 @@ class Venta extends Model
         return ($numero === null || $numero === 0) ? 1 : (int) $numero + 1;
     }
 
-    /*public static function siguienteCorrelativo(): int {
-        $correlativo = self::max('correlativo');
-        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
-        return ($correlativo === null || $correlativo === 0) ? 1 : (int) $correlativo + 1;
-    }*/
-
     public static function siguienteCorrelativoWhere(string $columna, int $valor): int
     {
         // Filtra por el registro específico (por ejemplo, cliente_id = 5)
@@ -133,18 +127,4 @@ class Venta extends Model
         
         return ($ultimo === null || $ultimo === 0) ? 1 : (int) $ultimo + 1;
     }
-
-/*
-  protected function anulado(): Attribute
-  {
-      return Attribute::make(
-
-          get: fn (string $value) => $value==false ? $value="no anulado" : $value="anulado"
-
-
-      );
-  }
-*/
-
-
 }

@@ -28,7 +28,7 @@ class CotizacionController extends Component
 {
     use LivewireAlert;
     use WithPagination;
-    use LivewireAlert;
+
     ///sistema
     public $title='Cotizacion';
     public $data, $per_page=10,  $id_data,$ultima_venta,$id=null;
@@ -134,16 +134,8 @@ public $email_edit=null, $codigo_edit=null;
     public function render(){
         $this->forma_pagos=DataSistema::$forma_pago;
         $this->envios=DataSistema::$envio;
-        $ultima_venta=Cotizacion::latest()->first();
+        $this->no_venta=Cotizacion::siguienteNoRegistro();
 
-        if ( $ultima_venta) {
-            $this->id=$ultima_venta->id+1;
-            $this->no_venta=$this->id;
-
-        }else{
-            $this->id=1;
-            $this->no_venta=$this->id;
-        }
 
         $this->fecha_venta = Carbon::now()->toDateString();
         $this->disabledInput=true;
@@ -192,17 +184,14 @@ public $email_edit=null, $codigo_edit=null;
         $this->apellidos_cliente= $cliente->apellidos_Cliente;
         $this->dias_limite_credito=$cliente->dias_limite_credito;
         $this->nit= $cliente->nit;
+        $this->tipo_cliente= $cliente->tipo_cliente;
         $this->descuento= $cliente->descuento;
         $this->direccion_fisica= $cliente->direccion_fisica;
         $this->direccion_departamento= $cliente->direccion_departamento;
         $this->direccion_municipio= $cliente->direccion_municipio;
         $this->limite_credito=$cliente->limite_credito;
         $this->dias_ultimo_credito=$cliente->dias_limite_credito;
-        if ($cliente->tipo_cliente!=1) {
-            $this->tipo_cliente='MAY';
-        }else{
-            $this->tipo_cliente='MIN';
-        }
+
 
         $this->alert('success', 'Cliente encontrado', [
             'position' => 'center',
@@ -385,26 +374,38 @@ public function updatedBuscarProducto($value){
 //////////////////////
     public function store(){
 
-        $this->resetValidation();
+        $this->validate([
+            'id_forma_pago'=>'required',
+            'id_envio'=>'required',
+            'contadorProductos'=>'required|numeric|min:1',
+            'nombres_cliente'=>'required',
+            'dias_ultimo_credito'=>'required|numeric|min:0']
+        );
 
-        $data=null;
-        $this->validate(['id_forma_pago'=>'required','id_envio'=>'required','contadorProductos'=>'required|numeric|min:1','nombres_cliente'=>'required','dias_ultimo_credito'=>'required|numeric|min:0']);
-
-        $ultima_venta=Cotizacion::latest()->first();
-
-        if ( $ultima_venta) {
-            $this->id=$ultima_venta->id+1;
-            $this->no_venta=$this->id;
-
-        }else{
-            $this->id=1;
-            $this->no_venta=$this->id;
+        if($this->cliente_id===0){
+        $this->cliente_id=1;
         }
+       
+
+        $totales = Venta::where('cliente_id', $this->cliente_id)->where('credi', 1)
+            ->selectRaw('
+                COALESCE(SUM(total_credito),0) as total_credito,
+                COALESCE(SUM(total_abono),0) as total_abono,
+                COALESCE(SUM(total_nota_credito),0) as total_nota_credito
+            ')->first();
+
+        $total_cre = $totales->total_credito;
+        $total_abo = $totales->total_abono;
+        $total_nota_cred = $totales->total_nota_credito;
+
+        $saldoAnterior = ($total_cre - $total_nota_cred)- $total_abo;
+        $nuevoSaldo = $saldoAnterior + $this->sub_total;
 
 
+            $no_venta=Cotizacion::siguienteNoRegistro();
             $data=Cotizacion::create(
                 [
-                    'no_venta'=>$this->no_venta,
+                    'no_venta'=>$no_venta,
                     'fecha_venta'=>$this->fecha_venta,
                     'total_venta'=>$this->total_venta,
                     'observaciones_venta'=>$this->observaciones_venta,
@@ -433,11 +434,10 @@ public function updatedBuscarProducto($value){
 
 
 ////////////////////////////PDF//////////////////////////
-    public function cancel(){
-        $this->dispatch('pg:eventRefresh-');        $this->reset();
+   public function cancel(){
+        $this->reset();
         $this->cancelarBuscarProducto();
         $this->cancelProductQuantity();
-
     }
 
 

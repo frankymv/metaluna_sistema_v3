@@ -403,7 +403,7 @@ public $email_edit=null, $codigo_edit=null;
         $this->cliente_id=1;
         }
        
-         $cliente=Cliente::find($this->cliente_id);
+        $cliente=Cliente::find($this->cliente_id);
         $total_abono_anticipado=Abono::where('cliente_id','=',$cliente->id)->where('abono_anticipado','=',1)->where('abono_anticipado_asignado','=',0)->sum('total_abono');
 
       
@@ -499,7 +499,7 @@ public $email_edit=null, $codigo_edit=null;
 
     ////////////////////////////PDF//////////////////////////
     public function cancel(){
-        $this->dispatch('pg:eventRefresh-');        $this->reset();
+        $this->reset();
         $this->cancelarBuscarProducto();
         $this->cancelProductQuantity();
     }

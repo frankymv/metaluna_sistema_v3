@@ -151,85 +151,6 @@ final class ProductoTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-        /*
-
-            Column::make('Codigo', 'codigo')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Nombre Completo', 'nombre_completo','nombre')
-            // Reemplaza ->searchable() por esto:
-            ->searchableRaw('CONCAT(nombre, " ", nombre_venta) LIKE ?')
-            ->sortable(),
-
-            Column::make('Descripcion', 'descripcion')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Calibre', 'calibre')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Longitud', 'longitud')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Tipo longitud', 'tipo_longitud')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Diametro', 'diametro')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Tipo diametro', 'tipo_diametro')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Peso', 'peso')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Tipo peso', 'tipo_peso')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Divisible', 'divisible')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Existencia', 'existencia')
-                ->sortable()
-                ->searchable(),
-
-
-
-
-            Column::make('Marca', 'marca_id','nombre')
-                ->sortable(),
-            Column::make('Tipo', 'tipo.nombre')
-                ->sortable(),
-            Column::make('Material id', 'material.nombre')
-                ->sortable(),
-
-
-            Column::make('Disenio', 'disenio.nombre')
-                ->sortable(),
-
-
-
-
-        Column::make('Marca', 'marca_nombre')->sortable(),
-        Column::make('Tipo', 'tipo_nombre')->sortable(),
-        Column::make('Material', 'material_nombre')->sortable(),
-
-
-            Column::make('Estado', 'estado')
-                ->sortable(),
-
-            Column::action('Acciones')
-            */
-
             Column::make('Código', 'codigo')
                 ->sortable()
                 ->searchable(),
@@ -249,7 +170,6 @@ final class ProductoTable extends PowerGridComponent
             Column::make('Diseño', 'disenio_nombre', 'disenio.nombre'),
 
                  Column::action('Acciones')
-
         ];
     }
 
