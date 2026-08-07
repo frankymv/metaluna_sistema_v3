@@ -235,21 +235,21 @@
                 $hoy = \Carbon\Carbon::today();
 
                 if ($data->saldo_venta <= 0) {
-                    $estadoCredito = 'CANCELADO';
+                    $estadoCredito = 'Cancelado';
                     $colorEstado = '#6b7280'; // Gris
                 } elseif ($fechaLimite && $fechaLimite->lt($hoy)) {
                     $dias = (int) $fechaLimite->diffInDays($hoy);
-                    $estadoCredito = "VENCIDA ({$dias} días)";
+                    $estadoCredito = "Vencida ({$dias} días)";
                     $colorEstado = '#dc2626'; // Rojo
                 } elseif ($fechaLimite && $fechaLimite->gt($hoy)) {
                     $dias = (int) $hoy->diffInDays($fechaLimite);
-                    $estadoCredito = "RESTAN {$dias} días";
+                    $estadoCredito = "Restan {$dias} días";
                     $colorEstado = '#16a34a'; // Verde
                 } elseif ($fechaLimite && $fechaLimite->isSameDay($hoy)) {
-                    $estadoCredito = 'VENCE HOY';
+                    $estadoCredito = 'Vence hoy';
                     $colorEstado = '#eab308'; // Amarillo
                 } else {
-                    $estadoCredito = 'SIN FECHA';
+                    $estadoCredito = 'Sin fecha';
                     $colorEstado = '#6b7280'; // Gris
                 }
             @endphp

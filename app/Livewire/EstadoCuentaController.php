@@ -9,8 +9,6 @@ use App\Models\EstadoCuenta;
 use App\Models\Ruta;
 use App\Models\Venta;
 use Livewire\Component;
-//use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -26,20 +24,12 @@ class EstadoCuentaController extends Component
     public $data, $per_page=10,  $id_data,$id_last;
     public $isCreate = false,$isEdit = false, $isShow = false, $isDelete = false,$isAddProduct=false,$disabled_nombre_producto=false,$disabled_existencia_producto=false,$disabled_codigo_producto=false,$disabled_subtotal_producto=false;
 
+    public $idTodos=0;
 
 
     public $ventas=[];
 
     public $data_temp;
-
-    public $filtroCodigoCliente=null;
-    public $filtroNombresCliente=null;
-    public $filtroClientes=null;
-    public $filtroTipoCliente=null;
-    public $filtroRutaCliente=null;
-    public $clienteId;
-
-
 
     public $forma_pagos,$envios,$tipo_clientes,$rutas,$total_ventas=0;
     public $clientes=[];
@@ -48,34 +38,15 @@ class EstadoCuentaController extends Component
 
     protected $listeners=['showDetalle','exportarFila'];
 
-    public function mount()
-    {
-    }
 
     public function render()
     {
         $this->clientes=Cliente::all();
         $this->fecha_actual=Carbon::now()->toDateString();
 
-        $prob = Cliente::where('nombres_cliente','LIkE',"%{$this->filtroNombresCliente}%")
-                    ->where('nombres_cliente','LIkE',"%{$this->filtroNombresCliente}%")
-        ->with(['ventas' => function ($query) {
-            $query->where('cancelado_total_venta', 0);
+       
 
-        }])->with(['abonos' => function ($query) {
-            $query->where('abono_anticipado', 1);
-        }])->get();
-
-
-
-        return view('livewire.pages.estado_cuenta.index', [
-            'estado_cuentas' => $prob,
-        ]);
-    }
-
-    public function borrarFiltros()
-    {
-        $this->reset();
+        return view('livewire.pages.estado_cuenta.index');
     }
 
 

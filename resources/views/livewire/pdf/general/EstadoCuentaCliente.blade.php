@@ -6,6 +6,8 @@
     <title>Reporte</title>
     <style type="text/css">
 
+
+
         @page{
             size: letter landscape;
             margin: 12mm;
@@ -27,7 +29,15 @@
                 width:100%;
                 border-collapse:collapse;
             }
-            th,td{
+            th{
+                font-size: 11px;
+                border:1px solid #000;
+                padding:5px;
+                text-align:center;
+                vertical-align:middle;
+            }
+            td{
+                font-size: 8px;
                 border:1px solid #000;
                 padding:5px;
                 text-align:center;
@@ -125,50 +135,8 @@
             <th colspan="2">ESTADO DE CUENTA CLIENTE</th>
         </tr>
     </thead>
-
-    <tbody>
-
-        <tr>
-            <td class="gris" style="width:28%; text-align:left;">
-                Codigo Cliente:
-            </td>
-            <td style="text-align:left;">
-                {{ $clienteCodigo }}
-            </td>
-        </tr>
-
-        <tr>
-            <td class="gris" style="text-align:left;">
-                Nombre:
-            </td>
-            <td style="text-align:left;">
-                {{ $clienteNombre }}
-            </td>
-        </tr>
-
-        <tr>
-            <td class="gris" style="text-align:left;">
-                Fecha Inicial
-            </td>
-            <td style="text-align:left;">
-                {{ $primeraFecha }}
-            </td>
-        </tr>
-                <tr>
-            <td class="gris" style="text-align:left;">
-                Fecha Final
-            </td>
-            <td style="text-align:left;">
-                {{ $ultimaFecha }}
-            </td>
-        </tr>
-
-
-
-
-    </tbody>
-
 </table>
+   
 
 
 
@@ -181,136 +149,143 @@
     <table>
     <thead>
         <tr class="titulo-seccion">
+            <td>Cod. Int</td>
+            <td>Cod. May</td>
+            <td>Nombre Cliente</td>
+            <td>Tipo de Cliente</td>
             <td>No Venta</td>
-            <td>Cliente</td>
             <td>Fecha Venta</td>
             <td>Fecha Límite</td>
-            <td>Estado Crédito</td>
+            <td>Vencimiento</td>
             <td>Forma de Pago</td>
             <td>Total Venta</td>
             <td>Total Crédito</td>
             <td>Total Abono</td>
             <td>Total Nota Crédito</td>
             <td>Saldo Actual</td>
-
         </tr>
     </thead>
 
     <tbody>
 
-        @foreach ($data as $row)
+    @foreach ($data as $row)
 
-        @php
-            $totalVenta += $row->total_venta;
-            $totalCredito += $row->total_credito;
-            $totalAbono += $row->total_abono;
-            $totalNotaCredito += $row->total_nota_credito;
-            $totalSaldoVenta += $row->saldo_venta;
+    @php
+        $totalVenta += $row->total_venta;
+        $totalCredito += $row->total_credito;
+        $totalAbono += $row->total_abono;
+        $totalNotaCredito += $row->total_nota_credito;
+        $totalSaldoVenta += $row->saldo_venta;
 
-            $fechaLimite = $row->fecha_limite_credito
-                ? \Carbon\Carbon::parse($row->fecha_limite_credito)
-                : null;
+        $fechaLimite = $row->fecha_limite_credito
+            ? \Carbon\Carbon::parse($row->fecha_limite_credito)
+            : null;
 
-            $hoy = \Carbon\Carbon::today();
-            if ($row->saldo_venta <= 0) {
-                $estadoCredito = 'CANCELADO';
-                $colorEstado = '#6b7280';
-            } elseif ($fechaLimite && $fechaLimite->lt($hoy)) {
-                $dias = (int) $fechaLimite->diffInDays($hoy);
-                $estadoCredito = "VENCIDA ({$dias} días)";
-                $colorEstado = '#dc2626';
-            } elseif ($fechaLimite) {
-                $dias = (int) $hoy->diffInDays($fechaLimite);
-                $estadoCredito = "RESTAN {$dias} días";
-                $colorEstado = '#16a34a';
-            } else {
-                $estadoCredito = 'SIN FECHA';
-                $colorEstado = '#6b7280';
-            }
-        @endphp
+        $hoy = \Carbon\Carbon::today();
 
-        <tr>
-            <td>{{ $row->no_venta }}</td>
-            <td>
-                {{ $row->cliente->nombres_cliente ?? '' }}
-            </td>
+        if ($row->saldo_venta <= 0) {
+                    $estadoCredito = 'Cancelado';
+                    $colorEstado = '#6b7280'; // Gris
+                } elseif ($fechaLimite && $fechaLimite->lt($hoy)) {
+                    $dias = (int) $fechaLimite->diffInDays($hoy);
+                    $estadoCredito = "Vencida ({$dias} días)";
+                    $colorEstado = '#dc2626'; // Rojo
+                } elseif ($fechaLimite && $fechaLimite->gt($hoy)) {
+                    $dias = (int) $hoy->diffInDays($fechaLimite);
+                    $estadoCredito = "Restan {$dias} días";
+                    $colorEstado = '#16a34a'; // Verde
+                } elseif ($fechaLimite && $fechaLimite->isSameDay($hoy)) {
+                    $estadoCredito = 'Vence hoy';
+                    $colorEstado = '#eab308'; // Amarillo
+                } else {
+                    $estadoCredito = 'Sin fecha';
+                    $colorEstado = '#6b7280'; // Gris
+                }
 
-            <td>
-                {{ \Carbon\Carbon::parse($row->fecha_venta)->format('d/m/Y') }}
-            </td>
-
-            <td>
-                {{ $row->fecha_limite_credito
-                    ? \Carbon\Carbon::parse($row->fecha_limite_credito)->format('d/m/Y')
-                    : ''
-                }}
-            </td>
-            <td
-                style="
-                    color: {{ $colorEstado }};
-                    font-weight:bold;
-                "
-            >
-                {{ $estadoCredito }}
-            </td>
-
-            <td>
-                {{ $row->forma_pago_venta }}
-            </td>
-
-            <td>
-                Q. {{ number_format($row->total_venta, 0) }}
-            </td>
-
-            <td>
-                Q. {{ number_format($row->total_credito, 0) }}
-            </td>
-
-            <td>
-                Q. {{ number_format($row->total_abono, 0) }}
-            </td>
-
-            <td>
-                Q. {{ number_format($row->total_nota_credito, 0) }}
-            </td>
-
-            <td>
-                Q. {{ number_format($row->saldo_venta, 0) }}
-            </td>
+                
 
 
-        </tr>
 
-        @endforeach
 
-        <tr style="font-weight:bold; background:#f2f2f2">
-            <td colspan="6">
-                TOTALES
-            </td>
+        
+    @endphp
 
-            <td>
-                Q. {{ number_format($totalVenta, 0) }}
-            </td>
+    <tr>
+        <td>
+            {{ $row->cliente->codigo_interno ?? '' }}
+        </td>
+        <td>
+            {{ $row->cliente->codigo_mayorista ?? '' }}
+        </td>
+        <td>
+            {{ $row->cliente->nombres_cliente ?? '' }}
+        </td>
+        <td>
+            {{ $row->cliente->tipo_cliente ?? '' }}
+        </td>
+        <td>
+            {{ $row->no_venta }}
+        </td>
+        <td>
+            {{ \Carbon\Carbon::parse($row->fecha_venta)->format('d/m/Y') }}
+        </td>
+        <td>
+            <div class="text-xs">
 
-            <td>
-                Q. {{ number_format($totalCredito, 0) }}
-            </td>
+{{ $row->fecha_limite_credito
+                ? \Carbon\Carbon::parse($row->fecha_limite_credito)->format('d/m/Y')
+                : ''
+            }}
+            </div>
+            
+        </td>
+        <td style="color: {{ $colorEstado }}; font-weight:bold;">
+            {{ $estadoCredito }}
+        </td>
+        <td>
+            {{ $row->forma_pago_venta }}
+        </td>
+        <td>
+            Q. {{ number_format($row->total_venta, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($row->total_credito, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($row->total_abono, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($row->total_nota_credito, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($row->saldo_venta, 0) }}
+        </td>
 
-            <td>
-                Q. {{ number_format($totalAbono, 0) }}
-            </td>
+    </tr>
 
-            <td>
-                Q. {{ number_format($totalNotaCredito, 0) }}
-            </td>
+    @endforeach
 
-            <td>
-                Q. {{ number_format($totalSaldoVenta, 0) }}
-            </td>
-
-        </tr>
-
-    </tbody>
+    <tr style="font-weight:bold; background:#f2f2f2">
+        <td colspan="9">
+            TOTALES
+        </td>
+        <td>
+            Q. {{ number_format($totalVenta, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($totalCredito, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($totalAbono, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($totalNotaCredito, 0) }}
+        </td>
+        <td>
+            Q. {{ number_format($totalSaldoVenta, 0) }}
+        </td>
+    </tr>
+</tbody>
 </table>
   <!-- ===================== Fin Tabla ===================== -->
 </div>
