@@ -53,11 +53,11 @@ final class {{ componentName }} extends PowerGridComponent
         return [
             Column::make('ID', 'id')
                 ->searchable()
-                ->sortable(),
+                ,
 
             Column::make('Name', 'name')
                 ->searchable()
-                ->sortable(),
+                ,
 
             Column::make('Created at', 'created_at')
                 ->hidden(),

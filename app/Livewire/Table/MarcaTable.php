@@ -56,14 +56,11 @@ final class MarcaTable extends PowerGridComponent
         return [
             //Column::make('Id', 'id'),
             Column::make('Nombre', 'nombre')
-                ->sortable()
                 ->searchable(),
             Column::make('Descripcion', 'descripcion')
-                ->sortable()
                 ->searchable(),
                 //Column::make('Marca', 'marca_nombre', 'marca.nombre'),
             Column::make('Estado', 'estado')
-                ->sortable()
                 ->searchable(),
             Column::action('Acciones')
         ];

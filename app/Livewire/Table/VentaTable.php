@@ -81,27 +81,23 @@ final class VentaTable extends PowerGridComponent
     {
         return [
             Column::make('No venta', 'no_venta')
-                ->sortable()
                 ->searchable(),
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ->sortable(),
+                ,
             Column::make('Codigo Interno', 'cliente_codigo_interno')
-                ->sortable()
                 ->searchable(),
             Column::make('Codigo Mayorista', 'cliente_codigo_mayorista')
-                ->sortable()
                 ->searchable(),
             Column::make('Cliente', 'cliente_nombres_cliente')
-                ->sortable()
                 ->searchable(),
             Column::make('Forma pago venta', 'forma_pago_venta')
-                ->sortable(),
+                ,
             Column::make('Envio', 'envio')
-                ->sortable(),
+                ,
             Column::make('Estado envio', 'estado_envio')
-                ->sortable(),
+                ,
             Column::make('Total venta', 'total_venta')
-                ->sortable(),
+                ,
             Column::action('Acciones')
         ];
     }

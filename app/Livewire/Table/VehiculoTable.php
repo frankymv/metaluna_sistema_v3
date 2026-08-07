@@ -59,35 +59,27 @@ final class VehiculoTable extends PowerGridComponent
     {
         return [
             Column::make('Codigo', 'codigo')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Tipo vehiculo', 'tipo_vehiculo')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Tipo placa', 'tipo_placa')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Numero placa', 'numero_placa')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Marca', 'marca')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Modelo', 'modelo')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Linea', 'linea')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Alias', 'alias')
-                ->sortable()
                 ->searchable(),
 
             Column::action('Acciones')

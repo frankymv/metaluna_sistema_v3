@@ -63,10 +63,9 @@ final class CombustibleTable extends PowerGridComponent
             Column::make('Vehiculo', 'vehiculo_id','vehiculo.codigo'),
             Column::make('Usuario', 'user_id'),
             Column::make('Fecha combustible', 'fecha_combustible_formatted', 'fecha_combustible')
-                ->sortable(),
+                ,
 
             Column::make('Total combustible', 'total_combustible')
-                ->sortable()
                 ->searchable(),
 
             Column::action('Acciones')

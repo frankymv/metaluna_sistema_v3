@@ -109,24 +109,20 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
     {
         return [
             Column::make('No venta', 'no_venta')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ->sortable(),
+                ,
 
             Column::make('Codigo May', 'codigo_mayorista_cliente')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Cliente', 'nombre_cliente')
-                ->sortable()
                 ->searchable(),
             Column::make('Movimientos', 'movimientos'),
             Column::make('Saldos', 'saldos'),
             Column::make('Anulado', 'anulado'),
             Column::make('Cancelado', 'cancelado')
-                ->sortable()
                 ->searchable(),
             Column::action('Acciones')
 

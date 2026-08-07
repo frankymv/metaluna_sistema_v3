@@ -57,23 +57,19 @@ final class ServicioTable extends PowerGridComponent
     {
         return [
             Column::make('No servicio', 'no_servicio')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Fecha servicio', 'fecha_servicio_formatted', 'fecha_servicio')
-                ->sortable(),
+                ,
 
             Column::make('Total servicio', 'total_servicio')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Vehiculo', 'vehiculo_id'),
             Column::make('Descripcion', 'descripcion')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Observaciones', 'observaciones')
-                ->sortable()
                 ->searchable(),
 
             Column::action('Acciones')

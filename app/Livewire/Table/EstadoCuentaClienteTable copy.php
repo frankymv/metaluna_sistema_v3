@@ -128,19 +128,17 @@ final class EstadoCuentaClienteTable extends PowerGridComponent
     {
         return [
             Column::make('No venta', 'no_venta')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Cliente', 'cliente_id','cliente.nombres_cliente'),
 
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ->sortable(),
+                ,
             Column::make('Fecha limite', 'fecha_limite_credito_formatted', 'fecha_limite')
-                ->sortable(),
+                ,
             Column::make('Vencimiento', 'estado_vencimiento')
             ->searchable(false),
             Column::make('Forma pago', 'forma_pago_venta')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Total venta', 'total_venta')
@@ -389,19 +387,17 @@ final class EstadoCuentaClienteTable extends PowerGridComponent
     {
         return [
             Column::make('No venta', 'no_venta')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Cliente', 'cliente_id','cliente.nombres_cliente'),
 
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ->sortable(),
+                ,
             Column::make('Fecha limite', 'fecha_limite_credito_formatted', 'fecha_limite')
-                ->sortable(),
+                ,
             Column::make('Vencimiento', 'estado_vencimiento')
             ->searchable(false),
             Column::make('Forma pago', 'forma_pago_venta')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Total venta', 'total_venta')

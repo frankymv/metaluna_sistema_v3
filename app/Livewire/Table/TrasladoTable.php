@@ -56,11 +56,10 @@ final class TrasladoTable extends PowerGridComponent
         return [
 
             Column::make('Traslado no', 'traslado_no')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Traslado fecha', 'traslado_fecha_formatted', 'traslado_fecha')
-                ->sortable(),
+                ,
 
             Column::make('Sucursal origen ', 'sucursal_origen_id'),
             Column::make('Sucursal destino ', 'sucursal_destino_id'),

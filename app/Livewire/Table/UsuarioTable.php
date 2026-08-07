@@ -70,17 +70,13 @@ final class UsuarioTable extends PowerGridComponent
     {
         return [
             Column::make('Codigo', 'codigo')
-                ->sortable()
                 ->searchable(),
             Column::make('Nombres', 'nombres')
-                ->sortable()
                 ->searchable(),
             Column::make('Apellidos', 'apellidos')
-                ->sortable()
                 ->searchable(),
             Column::make('Fecha nacimiento', 'fecha_nacimiento_formatted', 'fecha_nacimiento'),
             Column::make('Cui', 'cui')
-                ->sortable()
                 ->searchable(),
             Column::make('Usuario', 'usuario'),
             Column::make('Sucursal id', 'sucursal_id','Sucursal.nombre'),

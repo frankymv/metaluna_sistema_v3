@@ -54,15 +54,12 @@ final class TipoTable extends PowerGridComponent
     {
         return [
             Column::make('Nombre', 'nombre')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Descripcion', 'descripcion')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Estado', 'estado')
-                ->sortable()
                 ->searchable(),
 
             Column::action('Acciones'),

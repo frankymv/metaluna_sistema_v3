@@ -80,26 +80,23 @@ final class CreditoTable extends PowerGridComponent
     {
         return [
             Column::make('No venta', 'no_venta')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ->sortable(),
+                ,
 
 
       Column::make('Total Credito', 'total_credito') // Muestra el campo formateado y permite ordenar por el original 'precio'
-            ->sortable(),
+            ,
 
             Column::make('Fecha limite credito', 'fecha_limite_credito_formatted', 'fecha_limite_credito')
-                ->sortable(),
+                ,
 
             Column::make('Cliente', 'cliente_id','cliente.nombres_cliente')
-                ->sortable()
                 ->searchable(),
 
 
             Column::make('Observaciones credito', 'observaciones_credito')
-                ->sortable()
                 ->searchable(),
 
 

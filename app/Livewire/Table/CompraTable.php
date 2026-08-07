@@ -69,15 +69,13 @@ $producto->nombre . ': ' . $producto->pivot->cantidad
         return [
 
             Column::make('Compra no', 'compra_no')
-                ->sortable()
                 ->searchable(),
 
             Column::make('No recibo compra', 'no_recibo_compra')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Compra fecha', 'compra_fecha_formatted', 'compra_fecha')
-                ->sortable(),
+                ,
 
             Column::make('Proveedor id', 'proveedor_id'),
             Column::make('Sucursal id', 'sucursal_id'),

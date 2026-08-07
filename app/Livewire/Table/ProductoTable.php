@@ -92,13 +92,12 @@ final class ProductoTable extends PowerGridComponent
     {
         return [
             Column::make('Código', 'codigo')
-                ->sortable()
                 ->searchable(),
 
              Column::make('Nombre Completo', 'nombre_completo','nombre')
             // Reemplaza ->searchable() por esto:
             ->searchableRaw('CONCAT(nombre, " ", nombre_venta) LIKE ?')
-            ->sortable(),
+            ,
 
             // El tercer parámetro 'marca.nombre' resuelve el ordenamiento nativo en la BD
             Column::make('Marca', 'marca_nombre', 'marca.nombre'),

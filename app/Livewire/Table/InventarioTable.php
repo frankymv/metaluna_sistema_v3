@@ -85,52 +85,40 @@ final class InventarioTable extends PowerGridComponent
     {
         return [
             Column::make('Codigo', 'codigo')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nombre', 'nombre')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nombre venta', 'nombre_venta')
-                ->sortable()
                 ->searchable(),
 /*
 
             Column::make('Calibre', 'calibre')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Longitud', 'longitud')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Tipo longitud', 'tipo_longitud')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Diametro', 'diametro')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Tipo diametro', 'tipo_diametro')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Peso', 'peso')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Tipo peso', 'tipo_peso')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Divisible', 'divisible')
-                ->sortable()
                 ->searchable(),
 */
             Column::make('Existencia', 'existencia')
-                ->sortable()
                 ->searchable(),
 
 
@@ -141,7 +129,7 @@ final class InventarioTable extends PowerGridComponent
             Column::make('Material', 'material_nombre', 'material.nombre'),
 
             Column::make('Diseño', 'disenio_nombre', 'disenio.nombre')
-                ->sortable(),
+                ,
 
 
 

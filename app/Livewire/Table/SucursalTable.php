@@ -109,11 +109,9 @@ final class SucursalTable extends PowerGridComponent
         return [
 
             Column::make('Codigo', 'codigo')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nombre', 'nombre')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Telefono principal', 'telefono_principal')    ,

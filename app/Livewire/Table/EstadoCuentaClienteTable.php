@@ -136,7 +136,7 @@ final class EstadoCuentaClienteTable extends PowerGridComponent
             Column::make('Fecha limite', 'fecha_limite_credito_formatted', 'fecha_limite'),
             Column::make('Vencimiento', 'estado_vencimiento'),
             Column::make('Forma pago', 'forma_pago_venta')
-            ->sortable(),
+            ,
             Column::make('Total venta', 'total_venta')
             ->withSum('Total Venta', header: false, footer: true),
             Column::make('Total credito', 'total_credito')

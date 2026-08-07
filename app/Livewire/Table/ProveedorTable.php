@@ -62,23 +62,18 @@ final class ProveedorTable extends PowerGridComponent
         return [
 
             Column::make('Nombre', 'nombre')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Descripcion', 'descripcion')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nit', 'nit')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nombre representante', 'nombre_representante')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Telefono principal', 'telefono_principal')
-                ->sortable()
                 ->searchable(),
             Column::action('Acciones')
         ];

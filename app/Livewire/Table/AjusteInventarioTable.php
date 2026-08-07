@@ -63,23 +63,20 @@ final class AjusteInventarioTable extends PowerGridComponent
 
 
             Column::make('Ajuste inventario no', 'ajuste_inventario_no')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Fecha ajuste inventario', 'fecha_ajuste_inventario_formatted', 'fecha_ajuste_inventario')
-                ->sortable(),
+                ,
 
             Column::make('Sucursal', 'sucursal_nombre'),
             Column::make('Producto', 'producto_nombre','producto.nombre'),
 
 
             Column::make('Tipo ajuste', 'tipo_ajuste')
-                ->sortable()
                 ->searchable(),
 
 
             Column::make('Cantidad traslado', 'cantidad_traslado')
-                ->sortable()
                 ->searchable(),
 
 

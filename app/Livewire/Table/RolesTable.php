@@ -59,7 +59,6 @@ final class RolesTable extends PowerGridComponent
           
 
             Column::make('Roles', 'roles')
-                ->sortable()
                 ->searchable(),
 
                 Column::make('Permisos', 'permisos')

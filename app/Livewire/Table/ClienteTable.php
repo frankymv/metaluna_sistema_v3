@@ -72,80 +72,62 @@ final class ClienteTable extends PowerGridComponent
     {
         return [
             Column::make('Codigo interno', 'codigo_interno')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Codigo mayorista', 'codigo_mayorista')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Tipo cliente', 'tipo_cliente')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nombre empresa', 'nombre_empresa')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nombres cliente', 'nombres_cliente')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Apellidos cliente', 'apellidos_cliente')
-                ->sortable()
                 ->searchable(),
             Column::make('Telefono principal', 'telefono_principal'),
 /*
             Column::make('Cui', 'cui')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Numero patente', 'numero_patente')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Nit', 'nit')
-                ->sortable()
                 ->searchable(),
 
         Column::make('Telefono secundario', 'telefono_secundario')
-                ->sortable()
                 ->searchable(),
               Column::make('Direccion fisica', 'direccion_fisica')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Direccion departamento', 'direccion_departamento'),
             Column::make('Direccion municipio', 'direccion_municipio'),
             Column::make('Ubicacion latitud', 'ubicacion_latitud')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Ubicacion longitud', 'ubicacion_longitud')
-                ->sortable()
                 ->searchable(),
 
                             Column::make('Ruta id', 'ruta_id'),
             Column::make('Estado', 'estado')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
+                ,
 
             Column::make('Created at', 'created_at')
-                ->sortable()
                 ->searchable(),
                      Column::make('Correo electronico', 'correo_electronico')
-                ->sortable()
                 ->searchable(),
 
                             Column::make('Limite credito', 'limite_credito')
-                ->sortable()
                 ->searchable(),
 
             Column::make('Dias limite credito', 'dias_limite_credito')
-                ->sortable()
                 ->searchable(),
 
  */

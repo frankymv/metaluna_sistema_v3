@@ -58,18 +58,16 @@ final class NotaCreditoTable extends PowerGridComponent
     {
         return [
             Column::make('No nota credito', 'no_nota_credito')
-                ->sortable()
                 ->searchable(),
             Column::make('Fecha nota credito', 'fecha_nota_credito_formatted', 'fecha_nota_credito')
-                ->sortable(),
+                ,
             Column::make('No Venta', 'venta_id','venta.id')
-                ->sortable(),
+                ,
             Column::make('Cliente', 'cliente_id','cliente.nombre'),
             Column::make('Total nota credito', 'total_nota_credito')
-                ->sortable(),
+                ,
             Column::make('Anulacion', 'anulacion_venta'),
             Column::make('Observaciones', 'observaciones')
-                ->sortable()
                 ->searchable(),
             Column::action('Acciones')
         ];
