@@ -161,7 +161,7 @@
                 Municipio
             </td>
             <td style="text-align:left;">
-                {{ $data->direccion_municipio }}
+                {{ $data->municipio->nombre ?: 'N/A' }}
             </td>
         </tr>
 
@@ -170,7 +170,7 @@
                 Departamento
             </td>
             <td style="text-align:left;">
-                {{ $data->direccion_departamento }}
+                {{ $data->departamento->nombre ?: 'N/A' }}
             </td>
         </tr>
 

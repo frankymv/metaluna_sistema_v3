@@ -110,4 +110,11 @@ class User extends Authenticatable
             set: fn (string $value) => $value=='Activo'? true:false,
         );
     }
+
+    public static function siguienteNoRegistro(): int {
+        $numero = self::max('id');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($numero === null || $numero === 0) ? 1 : (int) $numero + 1;
+    }
+
 }

@@ -32,10 +32,14 @@ final class EstadoCuentaClienteTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Venta::query()
+       
+        return Venta::query()->with('cliente');
+    /*
+         return Venta::query()
             ->join('clientes', 'clientes.id', '=', 'ventas.cliente_id')
             ->select('ventas.*')
             ->with(['abonos', 'notacreditos', 'cliente']);
+*/
     }
 
     public function relationSearch(): array

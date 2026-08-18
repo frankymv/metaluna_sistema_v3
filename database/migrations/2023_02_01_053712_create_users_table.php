@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
            // $table->string('codigo_credito');
-            $table->string('codigo')->unique();
+            $table->integer('codigo')->unique();
             $table->string('nombres');
             $table->string('apellidos');
             $table->date('fecha_nacimiento')->nullable();

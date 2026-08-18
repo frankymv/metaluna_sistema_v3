@@ -3,6 +3,7 @@
 namespace App\Livewire\Table;
 use Illuminate\Support\Facades\Blade;
 use App\Models\Venta;
+use App\Models\Cliente;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -55,7 +56,7 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
             ->add('no_venta')
             ->add('fecha_venta_formatted', fn (Venta $model) => Carbon::parse($model->fecha_venta)->format('d/m/Y'))
             ->add('codigo_mayorista_cliente', fn (Venta $model) => $model->Cliente?->codigo_mayorista ?? 'N/A')
-            ->add('nombre_cliente', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
+             ->add('cliente_id', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('observaciones_venta')
             ->add('forma_pago_venta')
             ->add('cancelado_total_venta')
@@ -110,15 +111,11 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
         return [
             Column::make('No venta', 'no_venta')
                 ->searchable(),
-
-            Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ,
-
+            Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta'),
             Column::make('Codigo May', 'codigo_mayorista_cliente')
                 ->searchable(),
-
-            Column::make('Cliente', 'nombre_cliente')
-                ->searchable(),
+            Column::make('Cliente', 'cliente_id','cliente')
+             ->searchable(),
             Column::make('Movimientos', 'movimientos'),
             Column::make('Saldos', 'saldos'),
             Column::make('Anulado', 'anulado'),
@@ -132,11 +129,18 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
     public function filters(): array
     {
         return [
+            Filter::select('cliente_id', 'cliente_id')
+            ->datasource(
+                Cliente::orderBy('nombres_cliente')->get()
+                )
+                ->optionValue('id')
+                ->optionLabel('nombres_cliente'),
             Filter::datepicker('fecha_venta'),
             Filter::datepicker('fecha_cancelado_total_venta'),
             Filter::datepicker('fecha_limite_credito'),
             Filter::datepicker('fecha_cancelado_credito'),
             Filter::datepicker('fecha_anulado'),
+            
         ];
     }
 

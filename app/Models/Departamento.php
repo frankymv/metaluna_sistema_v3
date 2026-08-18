@@ -32,7 +32,10 @@ class Departamento extends Model
          return $this->belongsToMany(Ruta::class)
          ->withPivot('observaciones');
      }
-
+        public function Sucursals(){
+        // $this->belongsTo('App\Models\Rol');
+         return $this->hasMany(Sucursal::class);
+     }
 
 
 }

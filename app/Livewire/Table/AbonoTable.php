@@ -67,9 +67,7 @@ final class AbonoTable extends PowerGridComponent
             Column::make('No abono', 'no_abono')
                 ->searchable(),
 
-            Column::make('Fecha abono', 'fecha_abono_formatted', 'fecha_abono')
-                ,
-
+            Column::make('Fecha abono', 'fecha_abono_formatted', 'fecha_abono'),
             Column::make('No Venta', 'venta_id'),
             Column::make('Cliente', 'cliente_id','cliente.nombre'),
             Column::make('Total abono', 'total_abono')
@@ -78,8 +76,6 @@ final class AbonoTable extends PowerGridComponent
                 ->searchable(),
             Column::make('Tipo pago', 'tipo_pago')
                 ->searchable(),
-
-
             Column::make('Abono Anticipado', 'abono_anticipado')
                 ->searchable(),
 

@@ -69,7 +69,7 @@ class SucursalController extends Component
     }
 
     public function create(){
-
+         $this->codigo=Sucursal::siguienteNoRegistro();
         $this->departamentos=Departamento::all();
         $this->isCreate=true;
     }
@@ -139,7 +139,11 @@ class SucursalController extends Component
     }
 
     public function show($rowId){
+       
         $data = Sucursal::find($rowId);
+         $this->departamentos=Departamento::all();
+        $this->municipios = Municipio::where('departamento_id',$data->direccion_departamento)->get();
+
         $this->id_data=$data->id;
         $this->codigo=$data->codigo;
         $this->nombre=$data->nombre;
@@ -205,9 +209,11 @@ class SucursalController extends Component
 
     public function exportarFila($rowId)
     {
-        $marca=Sucursal::find($rowId);
+        $datas=Sucursal::find($rowId);
+       
+       
          $data=exportarFilaPDF('Sucursal', [
-            'data' => $marca,
+            'data' => $datas,
         ]);
         return $data;
     }

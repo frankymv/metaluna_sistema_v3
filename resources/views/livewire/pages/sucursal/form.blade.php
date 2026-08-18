@@ -36,13 +36,21 @@
             <div class="md:col-span-6">
 
                 <x-frk.components.label-input
-                    label="Dirección Física"
+                    label="Correo Electronico"
                     :disabled="$disabled"
-                    wire:model="direccion_fisica" />
+                    wire:model="correo_electronico" />
 
             </div>
 
         </div>
+        <div class="md:col-span-6">
+
+                <x-frk.components.label-input
+                    label="Dirección Fisica"
+                    :disabled="$disabled"
+                    wire:model="direccion_fisica" />
+
+            </div>
 
     </div>
 

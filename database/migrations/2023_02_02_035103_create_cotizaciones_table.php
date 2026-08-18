@@ -18,7 +18,7 @@ return new class extends Migration
 
 
             ////////////datos de la venta
-            $table->string('no_venta');
+            $table->integer('no_venta');
             $table->date('fecha_venta');
             $table->float('total_venta')->comment('registra el total de la venta inicial');
             $table->string('observaciones_venta')->nullable(true)->comment('observaciones sobre la venta');

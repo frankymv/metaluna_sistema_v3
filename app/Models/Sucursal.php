@@ -15,8 +15,8 @@ class Sucursal extends Model
         'codigo',
         'nombre',
         'direccion_fisica',
-        'direccion_departamento',
-        'direccion_municipio',
+        'departamento_id',
+        'municipio_id',
         'telefono_principal',
         'telefono_secundario',
         'correo_electronico',
@@ -45,6 +45,15 @@ class Sucursal extends Model
     public function Inventario(){
         return $this->belongsTo(Inventario::class);
     }
+      public function Departamento(){
+        // $this->belongsTo('App\Models\Rol');
+         return $this->belongsTo(Departamento::class);
+     }
+
+     public function Municipio(){
+        // $this->belongsTo('App\Models\Rol');
+         return $this->belongsTo(Municipio::class);
+     }
 
     protected function Estado(): Attribute {
         return new Attribute(
@@ -73,6 +82,12 @@ class Sucursal extends Model
 
     public function Traslados(){
         return $this->hasMany(Traslado::class);
+    }
+
+        public static function siguienteNoRegistro(): int {
+        $numero = self::max('id');
+        // Si no hay registros (null) o el último es 0, asigna 1. Si no, suma 1.
+        return ($numero === null || $numero === 0) ? 1 : (int) $numero + 1;
     }
 
 }

@@ -34,22 +34,8 @@ class UsuarioController extends Component
    protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
     public function render(){
-
-        $data_temp=User::where('usuario','LIKE',"%{$this->filtroUsuario}%")
-        ->where('nombres','LIKE',"%{$this->filtroNombres}%")
-        ->where('apellidos','LIKE',"%{$this->filtroApellidos}%")
-        ->paginate($this->per_page);
-        $ultima_venta=User::latest()->first();
-        if ( $ultima_venta) {
-            $this->id=$ultima_venta->id+1;
-            $this->codigo=$this->id;
-        }else{
-            $this->id=1;
-            $this->codigo=$this->id;
-        }
-        return view('livewire.pages.usuario.index',[ 'users' => $data_temp]);
+        return view('livewire.pages.usuario.index');
     }
-
 
     public function addSucursal(){
         foreach ($this->sucursales as $key => $value) {
@@ -61,7 +47,6 @@ class UsuarioController extends Component
                 $this->i +=1;
             }
         }
-
         $this->reset(['sucursal_id']);
     }
 
@@ -69,6 +54,7 @@ class UsuarioController extends Component
 
 
     public function create(){
+        $this->codigo=User::siguienteNoRegistro();
       $this->departamentos=Departamento::all();
         $this->sucursales=Sucursal::all();
         $this->roles=Role::all();

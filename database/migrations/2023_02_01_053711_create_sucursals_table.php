@@ -15,11 +15,17 @@ return new class extends Migration
     {
         Schema::create('sucursals', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('codigo')->unique();
+            $table->integer('codigo')->unique();
             $table->string('nombre',150);
             $table->string('direccion_fisica',200);
-            $table->integer('direccion_departamento');
-            $table->integer('direccion_municipio');
+            $table->unsignedBigInteger('departamento_id')->nullable(true);
+            $table->foreign('departamento_id')->references('id')->on('departamentos');
+
+
+
+            $table->unsignedBigInteger('municipio_id')->nullable(true);
+            $table->foreign('municipio_id')->references('id')->on('municipios');
+
             $table->string('telefono_principal',12)->nullable();
             $table->string('telefono_secundario',12)->nullable();
             $table->string('correo_electronico',200)->nullable();

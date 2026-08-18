@@ -16,11 +16,11 @@ class SucursalSeeder extends Seeder
     public function run()
 
     {
-        DB::table('sucursals')->insert(['id'=>1,'codigo'=>'0000','nombre'=>'Independiente','direccion_fisica'=>'Zona 3','direccion_departamento'=>'1','direccion_municipio'=>'1','estado'=>1,'bodega'=>1,'visible'=>1]);
-        DB::table('sucursals')->insert(['id'=>2,'codigo'=>'0001','nombre'=>'Bodega 1','direccion_fisica'=>'Zona 3','direccion_departamento'=>'1','direccion_municipio'=>'1','estado'=>1,'bodega'=>1,'visible'=>1]);
-        DB::table('sucursals')->insert(['id'=>3,'codigo'=>'0002','nombre'=>'Bodega 2','direccion_fisica'=>'Zona 2','direccion_departamento'=>'8','direccion_municipio'=>'2','estado'=>1,'bodega'=>1,'visible'=>1]);
-        DB::table('sucursals')->insert(['id'=>4,'codigo'=>'0003','nombre'=>'Bodega 4','direccion_fisica'=>'Zona 2','direccion_departamento'=>'8','direccion_municipio'=>'2','estado'=>1,'bodega'=>1,'visible'=>1]);
-        DB::table('sucursals')->insert(['id'=>5,'codigo'=>'0004','nombre'=>'Tienda Central','direccion_fisica'=>'Zona 2','direccion_departamento'=>'8','direccion_municipio'=>'2','estado'=>1,'bodega'=>1,'visible'=>1]);
+        DB::table('sucursals')->insert(['id'=>1,'codigo'=>'1','nombre'=>'Independiente','telefono_principal'=>'56567890','direccion_fisica'=>'Zona 3','departamento_id'=>'1','municipio_id'=>'1','estado'=>1,'bodega'=>1,'visible'=>1]);
+        DB::table('sucursals')->insert(['id'=>2,'codigo'=>'2','nombre'=>'Bodega 1','telefono_principal'=>'56567890','direccion_fisica'=>'Zona 3','departamento_id'=>'1','municipio_id'=>'1','estado'=>1,'bodega'=>1,'visible'=>1]);
+        DB::table('sucursals')->insert(['id'=>3,'codigo'=>'3','nombre'=>'Bodega 2','telefono_principal'=>'56567890','direccion_fisica'=>'Zona 2','departamento_id'=>'8','municipio_id'=>'2','estado'=>1,'bodega'=>1,'visible'=>1]);
+        DB::table('sucursals')->insert(['id'=>4,'codigo'=>'4','nombre'=>'Bodega 4','telefono_principal'=>'56567890','direccion_fisica'=>'Zona 2','departamento_id'=>'8','municipio_id'=>'2','estado'=>1,'bodega'=>1,'visible'=>1]);
+        DB::table('sucursals')->insert(['id'=>5,'codigo'=>'5','nombre'=>'Tienda Central','telefono_principal'=>'56567890','direccion_fisica'=>'Zona 2','departamento_id'=>'8','municipio_id'=>'2','estado'=>1,'bodega'=>1,'visible'=>1]);
 
     }
 }

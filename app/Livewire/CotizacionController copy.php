@@ -33,7 +33,6 @@ class CotizacionController extends Component
     use LivewireAlert;
     use WithPagination;
 
-    use LivewireAlert;
     ///sistema
     public $title='Cotizacion';
     public $data, $per_page=10,  $id_data,$ultima_cotizacion,$id=null;
@@ -451,6 +450,7 @@ public $email_edit=null, $codigo_edit=null;
         $this->validate(['subtotal_producto'=>'required',
     'cantidad_producto'=>"numeric|required|min:1"]);
 
+        $this->subtotal_producto = str_replace(',', '', $this->subtotal_producto);
         $this->productos=Producto::query()
         ->where('id','=',$id)
         ->get();
@@ -463,8 +463,19 @@ public $email_edit=null, $codigo_edit=null;
                 $datatempproducto+=['cantidad_producto'=>$this->cantidad_producto];
                 $datatempproducto+=['subtotal_producto'=>$this->subtotal_producto];
                 array_push($this->productosDetalle,$datatempproducto);
-                $this->total_cotizacion=$this->total_cotizacion+$this->subtotal_producto;
+                //$this->total_cotizacion=$this->total_cotizacion+$this->subtotal_producto;
                 $this->nuevo_saldo=$this->saldo_credito+$this->total_cotizacion;
+
+
+
+
+                $this->total_cotizacion+=$this->subtotal_producto;
+                $this->toFloat($this->total_cotizacion) ;
+                $this->toFloat($this->subtotal_producto);
+         
+                $this->contadorProductos+=1;
+
+
             }
         }
 
@@ -500,8 +511,6 @@ public $email_edit=null, $codigo_edit=null;
                 $saldo_venta=0;
 
                 if ($this->productosDetalle!=[]) {
-
-
                         $saldo_venta=0;
                         $data=Cotizacion::create(
                             [
@@ -510,7 +519,6 @@ public $email_edit=null, $codigo_edit=null;
                                 'fecha_cotizacion'=>$this->fecha_cotizacion,
                                 'total_cotizacion'=>$this->total_cotizacion,
                                 'observaciones_cotizacion'=>$this->observaciones_cotizacion,
-
                                 'sucursal_id'=>Auth::user()->sucursal_id,
                                 'forma_pago'=>$this->id_forma_pago,
                             ]);

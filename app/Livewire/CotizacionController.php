@@ -332,11 +332,16 @@ public function updatedBuscarProducto($value){
                 $datatempproducto+=['cantidad_producto'=>$this->cantidad_producto];
                 $datatempproducto+=['subtotal_producto'=>$this->subtotal_producto];
                 array_push($this->productosDetalle,$datatempproducto);
-                $this->sub_total =
-                $this->toFloat($this->sub_total) +
+                $this->sub_total+=$this->subtotal_producto;
+                $this->toFloat($this->sub_total) ;
                 $this->toFloat($this->subtotal_producto);
                 $this->nuevo_saldo=$this->saldo_credito+$this->sub_total;
                 $this->contadorProductos+=1;
+
+
+            
+
+
             }
         }
 
@@ -407,7 +412,7 @@ public function updatedBuscarProducto($value){
                 [
                     'no_venta'=>$no_venta,
                     'fecha_venta'=>$this->fecha_venta,
-                    'total_venta'=>$this->total_venta,
+                    'total_venta'=>$this->sub_total,
                     'observaciones_venta'=>$this->observaciones_venta,
                     'forma_pago_venta'=>$this->id_forma_pago,
                     'cancelado_total_venta'=>true,
@@ -420,7 +425,7 @@ public function updatedBuscarProducto($value){
 
 
                 $this->no_venta_detalle=$data->no_venta;
-                $this->total_venta_detalle=$data->total_venta;
+                $this->total_venta_detalle=$data->sub_total;
                 $this->nombres_cliente_detalle=$data->cliente->nombres_cliente;
                 $this->apellidos_cliente_detalle=$data->cliente->apellidos_cliente;
                 foreach ($this->productosDetalle as $key => $value) {

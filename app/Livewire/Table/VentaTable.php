@@ -36,7 +36,8 @@ final class VentaTable extends PowerGridComponent
     public function relationSearch(): array
     {
             return [
-                'cliente' => ['codigo_interno','codigo_mayorista','nombres_cliente'], // 'relación' => ['columna']
+                'cliente' => 
+                ['codigo_interno','codigo_mayorista','nombres_cliente','tipo_cliente'], // 'relación' => ['columna']
                 ];
     }
 
@@ -49,7 +50,7 @@ final class VentaTable extends PowerGridComponent
             ->add('total_venta')
             ->add('observaciones_venta')
             ->add('cliente_codigo_interno', fn (Venta $model) => $model->Cliente?->codigo_interno ?? 'N/A')
-            ->add('cliente_codigo_mayorista', fn (Venta $model) => $model->Cliente?->codigo_mayorista ?? 'N/A')
+           ->add('codigo_mayorista_cliente', fn (Venta $model) => $model->Cliente?->codigo_mayorista ?? 'N/A')
             ->add('cliente_nombres_cliente', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('forma_pago_venta')
             ->add('cancelado_total_venta')
@@ -66,6 +67,9 @@ final class VentaTable extends PowerGridComponent
             ->add('correlativo_nota_credito')
             ->add('abono')
             ->add('total_abono')
+             ->add('tipo_cliente', fn (Venta $model) => $model->Cliente?->tipo_cliente ?? 'N/A')
+
+ ->add('cliente_id', fn (Venta $model) => $model->Cliente?->nombres_cliente ?? 'N/A')
             ->add('correlativo_abono')
             ->add('envio')
             ->add('estado_envio')
@@ -82,14 +86,14 @@ final class VentaTable extends PowerGridComponent
         return [
             Column::make('No venta', 'no_venta')
                 ->searchable(),
-            Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta')
-                ,
+            Column::make('Fecha venta', 'fecha_venta_formatted', 'fecha_venta'),
+                        Column::make('Tipo de Cliente', 'tipo_cliente','cliente'),
             Column::make('Codigo Interno', 'cliente_codigo_interno')
                 ->searchable(),
-            Column::make('Codigo Mayorista', 'cliente_codigo_mayorista')
+            Column::make('Codigo May', 'codigo_mayorista_cliente')
                 ->searchable(),
-            Column::make('Cliente', 'cliente_nombres_cliente')
-                ->searchable(),
+            Column::make('Cliente', 'cliente_id','cliente')
+             ->searchable(),
             Column::make('Forma pago venta', 'forma_pago_venta')
                 ,
             Column::make('Envio', 'envio')
@@ -110,6 +114,12 @@ final class VentaTable extends PowerGridComponent
             //Filter::datepicker('fecha_limite_credito'),
             Filter::datepicker('fecha_cancelado_credito'),
             Filter::datepicker('fecha_anulado'),
+            Filter::select('cliente_id', 'cliente_id')
+            ->datasource(
+                Cliente::orderBy('nombres_cliente')->get()
+                )
+                ->optionValue('id')
+                ->optionLabel('nombres_cliente'),
         ];
     }
   public function header(): array
