@@ -198,7 +198,7 @@ final class EstadoCuentaClienteTable extends PowerGridComponent
             Button::add('show')
                 ->icon('default-show')
                 ->class('bg-orange-500 text-white rounded-md  px-1 py-1')
-                ->dispatch('showDetalle', ['rowId' => $row->id]),
+                ->dispatch('show', ['rowId' => $row->id]),
 
             Button::add('export')
                 ->icon('default-export')

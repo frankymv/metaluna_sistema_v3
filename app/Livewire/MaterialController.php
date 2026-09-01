@@ -34,7 +34,7 @@ class MaterialController extends Component
         'nombre' => 'required',
     ];
 
-protected $listeners=['create','edit', 'delete','show','exportarFila'];
+    protected $listeners=['create','edit', 'delete','show','exportarFila'];
 
     protected $messages = [
         'nombre.unique' => 'Registro duplicado',

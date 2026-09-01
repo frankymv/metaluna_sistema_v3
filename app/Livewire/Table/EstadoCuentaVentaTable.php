@@ -77,7 +77,7 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
                 : '<span class="text-red-600 font-semibold">Sí</span>';
         })
 
-            ->add('cliente', function (Venta $venta) {
+        ->add('cliente', function (Venta $venta) {
             return Blade::render(
                 '<x-powergrid.cliente :row="$venta"/>',
                 [
@@ -86,7 +86,7 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
             );
              })
 
-            ->add('movimientos', function (Venta $venta) {
+        ->add('movimientos', function (Venta $venta) {
 
             return Blade::render(
                 '<x-powergrid.movimientos :venta="$venta"/>',
@@ -140,7 +140,6 @@ final class EstadoCuentaVentaTable extends PowerGridComponent
             Filter::datepicker('fecha_limite_credito'),
             Filter::datepicker('fecha_cancelado_credito'),
             Filter::datepicker('fecha_anulado'),
-            
         ];
     }
 

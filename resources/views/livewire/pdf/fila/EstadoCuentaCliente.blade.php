@@ -254,12 +254,7 @@
                 }
             @endphp
             <td
-                style="
-                text-align:left;
-                    color: {{ $colorEstado }};
-                    font-weight:bold;
-                "
-            >
+                style="text-align:left; color: {{ $colorEstado }}; font-weight:bold;" >
                 {{ $estadoCredito }}
           
         </tr>
