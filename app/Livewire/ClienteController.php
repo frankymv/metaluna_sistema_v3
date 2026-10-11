@@ -244,7 +244,15 @@ class ClienteController extends Component
         }
 
     public function update($rowId){
-        $this->validate();
+
+            $this->validate([
+                'tipo_cliente_id' => 'required',
+                'nombres_cliente' => 'required',
+                'apellidos_cliente' => 'required',
+                'direccion_fisica' => 'required',
+                'direccion_departamento' => 'required',
+                'direccion_municipio' => 'required',
+            ]);
         Cliente::find($rowId)->update([
             'codigo_interno'=> $this->codigo_interno,
             'codigo_mayorista'=> $this->codigo_mayorista,
