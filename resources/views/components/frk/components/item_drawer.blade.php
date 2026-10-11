@@ -10,7 +10,6 @@
 
 <a
     href="{{ route($route) }}"
-
     class="group
            relative
            flex
@@ -48,8 +47,8 @@
         class="flex
                items-center
                justify-center
-               w-9
-               h-9
+               w-7
+               h-7
                rounded-lg
 
                {{ $active
@@ -64,25 +63,18 @@
 
     {{-- Texto --}}
     <div class="flex-1">
-
         <span class="font-medium">
-
             {{ $label }}
-
         </span>
-
     </div>
 
     {{-- Flecha opcional --}}
     @if($active)
-
         <i
             class="fa-solid
                    fa-chevron-right
                    text-xs
                    opacity-80"
         ></i>
-
     @endif
-
 </a>

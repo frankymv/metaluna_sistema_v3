@@ -24,25 +24,16 @@ new class extends Component
         <button id="menuBtn">
             <i class="fas fa-bars text-orange-500 text-lg"></i>
         </button>
-
-        <div>
-
-        </div>
-
-
-
-
         <div class="hidden sm:flex sm:items-center  sm:ml-6">
-
-
             <x-dropdown alig="right" width="48">
                 <x-slot name="trigger">
                     <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                         <div class="mr-2">
                             <i class="fas fa-user text-primaryColor text-lg"></i>
                         </div>
-
-
+                        <div>
+                            <p class="uppercase font-semibold text-sm ">{{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</p>
+                        </div>
 
                         <div class="ml-1">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -56,7 +47,6 @@ new class extends Component
                     <x-dropdown-link :href="route('profile')" wire:navigate>
                         {{ __('Perfil') }}
                     </x-dropdown-link>
-
                     <!-- Authentication -->
                     <button wire:click="logout" class="w-full text-start">
                         <x-dropdown-link>
@@ -64,15 +54,7 @@ new class extends Component
                         </x-dropdown-link>
                     </button>
                 </x-slot>
-
-
             </x-dropdown>
         </div>
-
-
-
     </div>
-
-
-
 </nav>

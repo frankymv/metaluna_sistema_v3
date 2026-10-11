@@ -8,17 +8,15 @@
         class="fixed z-50 lg:translate-x-0 transition-transform duration-300
                bg-primaryColor w-64 h-screen text-white shadow-xl"
     >
-
         <!-- LOGO -->
-        <div class="flex justify-center py-6 border-b border-white/20">
+        <div class="flex justify-center py-2 border-b border-white/20">
             <img
                 src="{{ asset('assets/imagenes/logo_metaluna_blanco.png') }}"
-                class="h-10"
+                class="h-11"
             >
         </div>
-
         <!-- MENU -->
-        <nav class="p-4 space-y-1 overflow-y-auto h-[calc(100vh-80px)]">
+        <nav class="p-1  overflow-y-auto h-[calc(100vh-80px)]">
 
             <!-- ITEM SIMPLE -->
             <x-frk.components.item_drawer

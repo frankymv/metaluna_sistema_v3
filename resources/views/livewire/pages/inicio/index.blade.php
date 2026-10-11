@@ -1,24 +1,7 @@
 <div class="w-full space-y-6">
-
-        <!-- METRICAS -->
-
-
     <!-- METRICAS -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 
-        <div class="bg-white rounded-xl shadow p-4 flex items-center gap-1">
-            <div class="p-3 bg-orange-100 text-orange-500 rounded-full">
-                <svg class="w-8 h-8 fill-current" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-            </div>
-            <div class="px-4">
-                @props(['label'=>'','font_size'=>'text-lg'])
-                <p class="uppercase font-semibold text-sm ">USUARIO: {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</p>
-                <p class="uppercase font-semibold text-sm ">ASIGNACION: {{ Auth::user()->sucursal->nombre  }}</p>
-                <p class="uppercase font-semibold text-sm ">ROL: {{ Auth::user()->roles[0]->name  }}</p>
-            </div>
-        </div>
 
         <!-- Ventas del día -->
         <div class="bg-white rounded-xl shadow p-4 flex items-center gap-5">

@@ -54,7 +54,7 @@
 
 <body style="padding:10px">
     @php
-        $bg_base64 = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado.png')));
+          $bg_base64 = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado_individual.jpeg')));
     @endphp
 
 <div style="width:100%;">
@@ -111,7 +111,7 @@
     </div>
 
     <!-- ===================== Encabezado Tabla ===================== -->
-  
+
 
 @php
     $movimientos = collect();

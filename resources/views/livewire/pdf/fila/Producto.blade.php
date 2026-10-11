@@ -69,52 +69,14 @@
 <body style="padding:10px">
 
 @php
-    $bg_base64 = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado.png')));
+    $bg_base64 = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado_individual.jpeg')));
 @endphp
 
 <div style="width:100%;">
 
     <!-- ENCABEZADO -->
-<div style="
-        position:relative;
-        width:100%;
-        height:80px;
-        overflow:hidden;
-        background-image:url('data:image/png;base64,{{$bg_base64}}');
-        background-size:cover;
-        background-repeat:no-repeat;
-        background-position:right center;
-        margin-bottom:10px;
-        ">
+<div style="position:relative; width:100%; height:80px; overflow:hidden; background-image:url('data:image/png;base64,{{$bg_base64}}'); background-size: 100% auto; background-repeat: no-repeat; background-position: top center; margin-bottom:10px;">
 
-        <div style="
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            bottom:0;
-            background:rgba(255,255,255,.82);
-        ">
-        </div>
-
-        <div style="
-            position:relative;
-            padding:12px 15px;
-            text-align:right;
-        ">
-
-            <h1>DISTRIBUIDORA METALUNA</h1>
-
-            <p>9 calle, Zona 3, Totonicapán</p>
-
-            <p>
-                <strong>Pedidos:</strong>
-                7766-4092 · 3023-9120 · 4642-7166 · 3059-7733
-            </p>
-
-            <p>metaluna@gmail.com</p>
-
-        </div>
 
     </div>
 

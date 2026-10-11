@@ -69,7 +69,7 @@
 <body style="padding:10px">
 
 @php
-    $bg_base64 = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado.png')));
+      $bg_base64 = base64_encode(file_get_contents(public_path('assets/imagenes/encabezado_individual.jpeg')));
 @endphp
 
 <div style="width:100%;">
@@ -87,7 +87,7 @@
         margin-bottom:10px;
         ">
 
-        <div style="
+        <!--<div style="
             position:absolute;
             top:0;
             left:0;
@@ -95,9 +95,9 @@
             bottom:0;
             background:rgba(255,255,255,.82);
         ">
-        </div>
+        </div>-->
 
-        <div style="
+        <!--<div style="
             position:relative;
             padding:12px 15px;
             text-align:right;
@@ -114,7 +114,7 @@
 
             <p>metaluna@gmail.com</p>
 
-        </div>
+        </div>-->
 
     </div>
 
